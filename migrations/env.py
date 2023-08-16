@@ -6,6 +6,9 @@ from sqlalchemy import engine_from_config, pool
 from ddl.base import Base
 from ddl.settings import get_settings
 
+# models
+import ddl.STG
+
 config = context.config
 settings = get_settings()
 
