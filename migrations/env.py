@@ -6,7 +6,6 @@ from sqlalchemy import engine_from_config, pool
 from ddl.base import Base
 from ddl.settings import get_settings
 
-
 config = context.config
 settings = get_settings()
 
@@ -50,7 +49,7 @@ def run_migrations_online():
 
     """
     configuration = config.get_section(config.config_ini_section)
-    configuration['sqlalchemy.url'] = str(settings.DB_DSN)
+    configuration["sqlalchemy.url"] = str(settings.DB_DSN)
     connectable = engine_from_config(
         configuration,
         prefix="sqlalchemy.",
