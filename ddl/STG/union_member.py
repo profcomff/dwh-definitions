@@ -1,0 +1,50 @@
+import logging
+
+from sqlalchemy import Boolean
+from sqlalchemy import ForeignKey, Integer, String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from ddl.base import Base
+
+logger = logging.getLogger(__name__)
+
+
+class Union_Member(Base):
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    type_of_learning: Mapped[str] = mapped_column(String, nullable=False)
+    rzd_status: Mapped[str] = mapped_column(String)
+    academic_level: Mapped[str] = mapped_column(String, nullable=False)
+    status: Mapped[str] = mapped_column(String, nullable=False)
+    faculty: Mapped[str] = mapped_column(
+        String, nullable=False
+    )  # Не уверен что это нам тут надо, мы все-таки БД студентов ФФ делаем
+    first_name: Mapped[str] = mapped_column(String, nullable=False)
+    last_name: Mapped[str] = mapped_column(String, nullable=False)
+    email: Mapped[str] = mapped_column(String, nullable=False)
+    date_of_birth: Mapped[str] = mapped_column(
+        String, nullable=False
+    )  # Можно попробовать добавить сюда datetime формат вместо простого str
+    phone_number: Mapped[str] = mapped_column(String, nullable=False)
+    image: Mapped[str] = mapped_column(
+        String, nullable=False
+    )  # А сюда добавить формат URL
+    rzd_datetime: Mapped[str] = mapped_column(String, nullable=False)
+    rzd_number: Mapped[str] = mapped_column(String, nullable=False)
+    grade_level: Mapped[int] = mapped_column(
+        Integer
+    )  # int8 есть в numpy, по дефолту его нет
+    has_student_id: Mapped[bool] = mapped_column(Boolean)
+    entry_date: Mapped[str] = mapped_column(
+        String, nullable=False
+    )  # Тут тоже datetime сделать можно
+    status_gain_date: Mapped[str] = mapped_column(String, nullable=False)
+    card_id: Mapped[int] = mapped_column(
+        Integer, nullable=False
+    )  # Не понимаю зачем для id использовать float
+    card_status: Mapped[str] = mapped_column(String, nullable=False)
+    card_date: Mapped[str] = mapped_column(String, nullable=False)
+    card_number: Mapped[str] = mapped_column(String, nullable=False)
+    card_user: Mapped[int] = mapped_column(String, nullable=False)
+    card: Mapped[int] = mapped_column(
+        String, nullable=False
+    )  # За что вообще эта строка отвечает?
