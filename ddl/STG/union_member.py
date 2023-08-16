@@ -8,7 +8,7 @@ from ddl.base import Base
 logger = logging.getLogger(__name__)
 
 
-class Union_Member(Base):
+class UnionMember(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     type_of_learning: Mapped[str] = mapped_column(String, nullable=False)
     rzd_status: Mapped[str] = mapped_column(String)
