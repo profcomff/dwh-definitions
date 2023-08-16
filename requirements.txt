@@ -1,4 +1,4 @@
 SQLAlchemy
-pydantic~=2.0.3
+pydantic
 setuptools
 alembic
