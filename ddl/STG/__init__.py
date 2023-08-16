@@ -1,3 +1,3 @@
-from .union_member import Union_Member
+from .union_member import UnionMember
 
-__all__ = ["Union_Member"]
+__all__ = ["UnionMember"]
