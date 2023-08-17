@@ -1,4 +1,5 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
+
 
 with open("README.md", "r", encoding="utf-8") as readme_file:
     readme = readme_file.read()
@@ -16,8 +17,5 @@ setup(
     install_requires=["SQLAlchemy", "alembic", "setuptools"],
     author_email="roslavtzev.stanislaw@yandex.ru",
     zip_safe=False,
-    classifiers=[
-        "Programming Language :: Python :: 3.11",
-        "License :: OSI Approved :: BSD License"
-    ],
+    classifiers=["Programming Language :: Python :: 3.11", "License :: OSI Approved :: BSD License"],
 )
