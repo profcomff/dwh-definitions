@@ -15,6 +15,11 @@ class Base:
         """
         return re.sub(r"(?<!^)(?=[A-Z])", "_", cls.__name__).lower()
 
+    @classmethod
+    @declared_attr
+    def __table_args__(cls) -> dict[str, str]:
+        return {'schema': f'{cls.__module__.split(".")[-2]}_{cls.__tablename__.upper()}'}
+
     def __repr__(self) -> str:
         attrs = []
         for c in self.__table__.columns:
