@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as readme_file:
 
 setup(
     name="profcomff_definitions",
-    version="2023.08.18",
+    version="2023.08.18.3",
     author="Stanislav Roslavtsev",
     url="https://github.com/profcomff/dwh-definitions",
     description="Data warehouse definitions and schemas",

@@ -3,7 +3,7 @@ import logging
 from sqlalchemy import Boolean, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
 
-from profcomff_definitions.ddl.base import Base
+from profcomff_definitions.base import Base
 
 
 logger = logging.getLogger(__name__)
