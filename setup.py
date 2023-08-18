@@ -9,7 +9,7 @@ with open("requirements.txt", "r", encoding="utf-8") as req_file:
 
 setup(
     name="profcomff_definitions",
-    version="2023.08.18.final",
+    version="2023.08.18.4",
     author="Stanislav Roslavtsev",
     url="https://github.com/profcomff/dwh-definitions",
     description="Data warehouse definitions and schemas",
