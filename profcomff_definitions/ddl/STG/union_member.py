@@ -1,9 +1,9 @@
 import logging
 
-from sqlalchemy import Boolean, ForeignKey, Integer, String
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import Boolean, Integer, String
+from sqlalchemy.orm import Mapped, mapped_column
 
-from ddl.base import Base
+from profcomff_definitions.ddl.base import Base
 
 
 logger = logging.getLogger(__name__)

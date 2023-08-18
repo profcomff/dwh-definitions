@@ -4,9 +4,9 @@ from logging.config import fileConfig
 from alembic import context
 from sqlalchemy import engine_from_config, pool
 
-import ddl
-from ddl.base import Base
+from profcomff_definitions.ddl.base import Base
 
+import profcomff_definitions.ddl
 
 config = context.config
 

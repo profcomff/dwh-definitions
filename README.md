@@ -1,5 +1,5 @@
 # dwh-definitions
-Библиотека, описывающая структуру всех баз данных профкома ФФ. Реализована с помощью разделения всех баз данных в 4 категории - [STG](ddl/STG/README.md), [DWH](ddl/DWH/README.md), [ODS](ddl/ODS/README.md) и [DM](ddl/DM/README.md).
+Библиотека, описывающая структуру всех баз данных профкома ФФ. Реализована с помощью разделения всех баз данных в 4 категории - [STG](profcomff_definitions/ddl/STG/README.md), [DWH](profcomff_definitions/ddl/DWH/README.md), [ODS](profcomff_definitions/ddl/ODS/README.md) и [DM](profcomff_definitions/ddl/DM/README.md).
 
 ## Функционал
 - Удобное и структурированное хранение данных
