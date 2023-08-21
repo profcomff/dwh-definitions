@@ -27,7 +27,7 @@ jobs:
       - name: Migrate DB
         run: |
           DB_DSN="postgresql://postgres:12345@192.168.1.6:5432/definitions"
-          python3 -m alembic upgrade head
+          docker run --rm python 'pip install -r requirements.txt -r requirements.dev.txt && alembic upgrade head'
 
   build-and-publish:
     name: Build and publish Python 🐍 distributions 📦 to PyPI and TestPyPI
