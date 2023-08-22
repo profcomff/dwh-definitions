@@ -6,13 +6,9 @@ on:
     tags:
       - 'v*'
 
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
-
 jobs:
   migrate:
-    name: Build and push
+    name: Migrate DB
     runs-on: ubuntu-latest
     permissions:
       contents: read
