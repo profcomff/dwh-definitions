@@ -18,7 +18,7 @@ class Base:
     @classmethod
     @declared_attr
     def __table_args__(cls) -> dict[str, str]:
-        return {'schema': f'{cls.__module__.split(".")[-2]}_{cls.__tablename__.upper()}'}
+        return {'schema': f'{cls.__module__.split(".")[-2]}_{cls.__module__.split(".")[-1].upper()}'}
 
     def __repr__(self) -> str:
         attrs = []
