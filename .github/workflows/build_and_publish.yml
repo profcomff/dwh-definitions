@@ -6,12 +6,22 @@ on:
     tags:
       - 'v*'
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
 jobs:
   migrate:
-    name: Pull new version and make migration
-    runs-on: [self-hosted, Linux]
+    name: Build and push
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     environment:
       name: Pre-release
+    env:
+      DB_DSN: ${{ secrets.DB_DSN }}
+
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python 3.11
@@ -21,33 +31,37 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python3 -m ensurepip
-          pip install alembic sqlalchemy psycopg2
-
+          python -m ensurepip 
+          pip install -r requirements.txt -r requirements.dev.txt
+          pip install build --user 
+          python -m build --wheel --sdist --outdir dist/
       - name: Migrate DB
         run: |
-          DB_DSN="postgresql://postgres:12345@192.168.1.6:5432/definitions"
-          docker run --rm python 'pip install -r requirements.txt -r requirements.dev.txt && alembic upgrade head'
+          alembic upgrade head
 
   build-and-publish:
     name: Build and publish Python 🐍 distributions 📦 to PyPI and TestPyPI
     needs: migrate
-    runs-on: [self-hosted, Linux]
+    runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v')
     environment:
       name: Release
+    env:
+      TWINE_USERNAME: "__token__"
+      TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python 3.11
         uses: actions/setup-python@v4
         with:
           python-version: "3.11"
-      - name: Install dependencies
+
+      - name: build wheel
         run: |
           python -m ensurepip 
-          pip install build --user 
-          python -m build --wheel --sdist --outdir dist/
-      - name: Publish a Python distribution to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          password: ${{ secrets.PYPI_API_TOKEN }}
+          pip install wheel
+          python setup.py bdist_wheel --universal
+      - name: upload wheel
+        run: |
+          pip install twine
+          twine upload dist/*
