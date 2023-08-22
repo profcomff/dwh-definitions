@@ -45,6 +45,7 @@ jobs:
     env:
       TWINE_USERNAME: "__token__"
       TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+      DB_DSN: @ {{ secrets.DB_DSN }}
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python 3.11
@@ -52,12 +53,19 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: build wheel
+      - name: Install dependencies
         run: |
           python -m ensurepip 
-          pip install wheel
-          python setup.py bdist_wheel --universal
-      - name: upload wheel
+          pip install -r requirements.txt -r requirements.dev.txt
+          pip install build --user 
+          python -m build --wheel --sdist --outdir dist/
+
+      - name: Migrate DB
         run: |
+          alembic upgrade head
+        
+      - name: build and upload wheel
+        run: |
+          python setup.py bdist_wheel --universal
           pip install twine
           twine upload dist/*
