@@ -45,7 +45,7 @@ jobs:
     env:
       TWINE_USERNAME: "__token__"
       TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-      DB_DSN: @ {{ secrets.DB_DSN }}
+      DB_DSN: ${{ secrets.DB_DSN }}
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python 3.11
@@ -63,7 +63,7 @@ jobs:
       - name: Migrate DB
         run: |
           alembic upgrade head
-        
+
       - name: build and upload wheel
         run: |
           python setup.py bdist_wheel --universal
