@@ -17,6 +17,7 @@ depends_on = None
 
 
 def upgrade():
+    op.execute('CREATE SCHEMA "STG_UNION_MEMBER";')
     op.create_table(
         'union_member',
         sa.Column('id', sa.Integer(), nullable=False),
@@ -50,3 +51,4 @@ def upgrade():
 
 def downgrade():
     op.drop_table('union_member', schema='STG_UNION_MEMBER')
+    op.execute('DROP SCHEMA "STG_UNION_MEMBER";')
