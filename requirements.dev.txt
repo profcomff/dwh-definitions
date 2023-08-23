@@ -1,3 +1,2 @@
 setuptools
 alembic
-psycopg2
