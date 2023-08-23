@@ -40,5 +40,6 @@ def create_group(operations, operation):
 @Operations.implementation_for(DeleteGroupOp)
 def delete_group(operations, operation):
     name = operation.group_name
-    operations.execute(f'DROP OWNED BY {name}')
+    schema = f'{name.split("_")[-3]}_{name.split("_")[-2]}'.upper()
+    operations.execute(f'REVOKE USAGE ON SCHEMA "{schema}" FROM {name}')
     operations.execute(f'DROP GROUP {name}')
