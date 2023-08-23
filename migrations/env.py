@@ -2,25 +2,11 @@ import os
 from logging.config import fileConfig
 
 from alembic import context
-from alembic import op as aop
-from alembic.autogenerate import rewriter
-from alembic.operations import ops
-
 from sqlalchemy import engine_from_config, pool
 
+import migrations.schema
 import profcomff_definitions
 from profcomff_definitions.base import Base
-
-writer = rewriter.Rewriter()
-
-
-@writer.rewrites(ops.CreateTableOp)
-def create_table(context, revision, op):
-    if op.schema:
-        aop.execute(f'CREATE SCHEMA IF NOT EXISTS "{op.schema}"')
-    return [
-        op
-    ]
 
 
 config = context.config
@@ -29,6 +15,18 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 target_metadata = Base.metadata
+
+
+def process_revision_directives(context, revision, directives):
+    script = directives[0].upgrade_ops_list[0].ops
+    names = [obj.__class__.__name__ for obj in script]
+    indexes = [i for i, ltr in enumerate(names) if ltr == "CreateTableSchemaOp"]
+    i = 0
+    for index in indexes:
+        tmp = script[i]
+        script[i] = script[index]
+        script[index] = tmp
+        i += 1
 
 
 def run_migrations_offline():
@@ -51,7 +49,7 @@ def run_migrations_offline():
         dialect_opts={"paramstyle": "named"},
         include_schemas=True,
         version_table_schema='public',
-        process_revision_directives=writer
+        process_revision_directives=process_revision_directives,
     )
 
     with context.begin_transaction():
@@ -79,7 +77,7 @@ def run_migrations_online():
             target_metadata=target_metadata,
             include_schemas=True,
             version_table_schema='public',
-            process_revision_directives=writer
+            process_revision_directives=process_revision_directives,
         )
 
         with context.begin_transaction():
