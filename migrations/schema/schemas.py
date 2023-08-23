@@ -26,15 +26,10 @@ def compare_sequences(autogen_context, upgrade_ops, schemas):
             ]
         )
 
-    # get the collection of Sequence objects we're storing with
-    # our MetaData
     metadata_schemas = autogen_context.metadata.info.setdefault("table_schemas", set())
 
-    # for new names, produce CreateSequenceOp directives
     for sch in metadata_schemas.difference(all_conn_schemas):
         upgrade_ops.ops.append(CreateTableSchemaOp(sch))
 
-    # for names that are going away, produce DropSequenceOp
-    # directives
     for sch in all_conn_schemas.difference(metadata_schemas):
         upgrade_ops.ops.append(DropTableSchemaOp(sch))
