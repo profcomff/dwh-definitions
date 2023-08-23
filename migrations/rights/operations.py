@@ -34,7 +34,7 @@ def create_group(operations, operation):
     name = operation.group_name
     operations.execute(f'CREATE GROUP {name}')
     schema = f'{name.split("_")[-3]}_{name.split("_")[-2]}'.upper()
-    operations.execute(f'GRANT USAGE ON SCHEMA {schema} TO {name}')
+    operations.execute(f'GRANT USAGE ON SCHEMA "{schema}" TO {name}')
 
 
 @Operations.implementation_for(DeleteGroupOp)
