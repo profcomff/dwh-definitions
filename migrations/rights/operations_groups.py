@@ -32,7 +32,7 @@ class DeleteGroupOp(MigrateOperation):
 @Operations.implementation_for(CreateGroupOp)
 def create_group(operations, operation):
     name = operation.group_name
-    schema = f'{name.split("_")[-3]}_{name.split("_")[-2]}'.upper()
+    schema = "_".join(name.split("_")[1:-1])
     operations.execute(f'CREATE GROUP {name}')
     operations.execute(f'GRANT USAGE ON SCHEMA "{schema}" TO {name}')
 

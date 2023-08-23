@@ -5,7 +5,6 @@ from sqlalchemy.orm import Mapped, mapped_column
 
 from profcomff_definitions.base import Base
 
-
 logger = logging.getLogger(__name__)
 
 

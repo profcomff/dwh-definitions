@@ -9,7 +9,7 @@ def add_table_schema_to_model(table_schema, metadata):
 
 
 @comparators.dispatch_for("schema")
-def compare_sequences(autogen_context, upgrade_ops, schemas):
+def compare_schemas(autogen_context, upgrade_ops, schemas):
     all_conn_schemas = set()
 
     for sch in schemas:

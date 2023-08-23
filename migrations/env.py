@@ -18,7 +18,7 @@ target_metadata = Base.metadata
 
 
 def process_revision_directives(context, revision, directives):
-    # Upgrade sort
+    # Upgrade sort schemas
     script = directives[0].upgrade_ops_list[0].ops
     names = [obj.__class__.__name__ for obj in script]
     indexes = [i for i, ltr in enumerate(names) if ltr == "CreateTableSchemaOp"]
@@ -29,7 +29,7 @@ def process_revision_directives(context, revision, directives):
         script[index] = tmp
         i += 1
 
-    # Downgrade sort
+    # Downgrade sort schemas
     script = directives[0].downgrade_ops_list[0].ops
     names = [obj.__class__.__name__ for obj in script]
     indexes = [i for i, ltr in enumerate(names) if ltr == "DropTableSchemaOp"]
@@ -40,6 +40,26 @@ def process_revision_directives(context, revision, directives):
         script[index] = tmp
         i -= 1
 
+    # Upgrade sort rights
+    script = directives[0].upgrade_ops_list[0].ops
+    names = [obj.__class__.__name__ for obj in script]
+    indexes = [i for i, ltr in enumerate(names) if ltr == "RevokeRightsOp"]
+    i = 0
+    for index in indexes:
+        tmp = script[i]
+        script[i] = script[index]
+        script[index] = tmp
+        i += 1
+
+    script = directives[0].downgrade_ops_list[0].ops
+    names = [obj.__class__.__name__ for obj in script]
+    indexes = [i for i, ltr in enumerate(names) if ltr == "GrantRightsOp"]
+    i = -1
+    for index in indexes:
+        tmp = script[i]
+        script[i] = script[index]
+        script[index] = tmp
+        i -= 1
 
 def run_migrations_offline():
     """Run migrations in 'offline' mode.
