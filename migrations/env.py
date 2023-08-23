@@ -4,7 +4,7 @@ from logging.config import fileConfig
 from alembic import context
 from sqlalchemy import engine_from_config, pool
 
-import migrations.schema
+from migrations import schema, rights
 import profcomff_definitions
 from profcomff_definitions.base import Base
 
