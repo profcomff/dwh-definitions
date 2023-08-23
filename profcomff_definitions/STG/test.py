@@ -11,4 +11,3 @@ logger = logging.getLogger(__name__)
 
 class Test(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-

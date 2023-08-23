@@ -5,8 +5,8 @@ Revises: 0a24041f09d1
 Create Date: 2023-08-23 18:25:50.795465
 
 """
-from alembic import op
 import sqlalchemy as sa
+from alembic import op
 
 
 # revision identifiers, used by Alembic.
@@ -18,10 +18,8 @@ depends_on = None
 
 def upgrade():
     op.create_table_schema("STG_TEST")
-    op.create_table('test',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.PrimaryKeyConstraint('id'),
-    schema='STG_TEST'
+    op.create_table(
+        'test', sa.Column('id', sa.Integer(), nullable=False), sa.PrimaryKeyConstraint('id'), schema='STG_TEST'
     )
     op.create_group("dwh_STG_TEST_read")
     op.create_group("dwh_STG_TEST_write")

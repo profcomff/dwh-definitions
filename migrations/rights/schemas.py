@@ -30,4 +30,3 @@ def compare_sequences(autogen_context, upgrade_ops, schemas):
 
     for sch in all_conn_groups.difference(metadata_schemas):
         upgrade_ops.ops.append(DeleteGroupOp(sch))
-

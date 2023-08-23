@@ -4,6 +4,7 @@ from sqlalchemy.ext.declarative import as_declarative, declared_attr
 
 from migrations.schema.schemas import add_table_schema_to_model
 
+
 @as_declarative()
 class Base:
     """Base class for all database entities"""

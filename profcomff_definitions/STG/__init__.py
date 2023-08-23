@@ -1,5 +1,5 @@
-from .union_member import UnionMember
 from .test import Test
+from .union_member import UnionMember
 
 
 __all__ = ["UnionMember", "Test"]
