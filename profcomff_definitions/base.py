@@ -2,6 +2,8 @@ import re
 
 from sqlalchemy.ext.declarative import as_declarative, declared_attr
 
+from migrations.schema.schemas import add_table_schema_to_model
+
 
 @as_declarative()
 class Base:
@@ -18,7 +20,9 @@ class Base:
     @classmethod
     @declared_attr
     def __table_args__(cls) -> dict[str, str]:
-        return {'schema': f'{cls.__module__.split(".")[-2]}_{cls.__tablename__.upper()}'}
+        schema = f'{cls.__module__.split(".")[-2]}_{cls.__module__.split(".")[-1].upper()}'
+        add_table_schema_to_model(schema, Base.metadata)
+        return {'schema': schema}
 
     def __repr__(self) -> str:
         attrs = []
