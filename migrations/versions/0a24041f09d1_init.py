@@ -1,7 +1,7 @@
 """Init
 
 Revision ID: 0a24041f09d1
-Revises: 
+Revises:
 Create Date: 2023-08-18 16:23:26.831231
 
 """
@@ -17,7 +17,7 @@ depends_on = None
 
 
 def upgrade():
-    op.execute('CREATE SCHEMA "STG_UNION_MEMBER";')
+    op.create_table_schema("STG_UNION_MEMBER")
     op.create_table(
         'union_member',
         sa.Column('id', sa.Integer(), nullable=False),
@@ -51,4 +51,4 @@ def upgrade():
 
 def downgrade():
     op.drop_table('union_member', schema='STG_UNION_MEMBER')
-    op.execute('DROP SCHEMA "STG_UNION_MEMBER";')
+    op.drop_table_schema("STG_UNION_MEMBER")
