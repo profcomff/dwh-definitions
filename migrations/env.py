@@ -2,10 +2,25 @@ import os
 from logging.config import fileConfig
 
 from alembic import context
+from alembic import op as aop
+from alembic.autogenerate import rewriter
+from alembic.operations import ops
+
 from sqlalchemy import engine_from_config, pool
 
 import profcomff_definitions
 from profcomff_definitions.base import Base
+
+writer = rewriter.Rewriter()
+
+
+@writer.rewrites(ops.CreateTableOp)
+def create_table(context, revision, op):
+    if op.schema:
+        aop.execute(f'CREATE SCHEMA IF NOT EXISTS "{op.schema}"')
+    return [
+        op
+    ]
 
 
 config = context.config
@@ -36,6 +51,7 @@ def run_migrations_offline():
         dialect_opts={"paramstyle": "named"},
         include_schemas=True,
         version_table_schema='public',
+        process_revision_directives=writer
     )
 
     with context.begin_transaction():
@@ -59,7 +75,11 @@ def run_migrations_online():
 
     with connectable.connect() as connection:
         context.configure(
-            connection=connection, target_metadata=target_metadata, include_schemas=True, version_table_schema='public'
+            connection=connection,
+            target_metadata=target_metadata,
+            include_schemas=True,
+            version_table_schema='public',
+            process_revision_directives=writer
         )
 
         with context.begin_transaction():
