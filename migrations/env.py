@@ -45,6 +45,7 @@ def process_revision_directives(context, revision, directives):
     for i in range(len(script)):
         script[i] = new_scripts[i]
 
+    # Sort downgrade
     script = directives[0].downgrade_ops_list[0].ops
     names = [obj.__class__.__name__ for obj in script]
     pattern_list = ['RevokeRightsOp', 'DropTableOp', 'DeleteGroupOp', 'DropTableSchemaOp',
