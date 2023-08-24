@@ -18,11 +18,14 @@ def render_drop_group(autogen_context, op):
 def render_grant_rights(autogen_context, op):
     match op.group_name.split("_")[-1]:
         case 'read':
-            return f'op.grant_rights("{op.group_name}", "{op.table_name}")'
+            table = f"""'"{op.table_name.split(".")[0]}".{op.table_name.split(".")[1]}'"""
+            return f'op.grant_rights("{op.group_name}", {table})'
         case 'write':
-            return f'op.grant_rights("{op.group_name}", "{op.table_name}")'
+            table = f"""'"{op.table_name.split(".")[0]}".{op.table_name.split(".")[1]}'"""
+            return f'op.grant_rights("{op.group_name}", {table})'
         case 'all':
-            return f'op.grant_rights("{op.group_name}", "{op.table_name}")'
+            table = f"""'"{op.table_name.split(".")[0]}".{op.table_name.split(".")[1]}'"""
+            return f'op.grant_rights("{op.group_name}", {table})'
 
 
 @renderers.dispatch_for(RevokeRightsOp)

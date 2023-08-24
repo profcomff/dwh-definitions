@@ -29,7 +29,7 @@ def compare_groups(autogen_context, upgrade_ops, schemas):
     for sch in metadata_schemas.difference(all_conn_schemas):
         tables = autogen_context.metadata.tables
         for scope in ['read', 'write', 'all']:
-            group_name = f'dwh_{sch}_{scope}'
+            group_name = f'dwh_{sch}_{scope}'.lower()
             upgrade_ops.ops.append(CreateGroupOp(group_name))
             for table in tables:
                 if sch == table.split(".")[0]:
@@ -39,7 +39,7 @@ def compare_groups(autogen_context, upgrade_ops, schemas):
     for sch in all_conn_schemas.difference(metadata_schemas):
         tables = autogen_context.metadata.tables
         for scope in ['read', 'write', 'all']:
-            group_name = f'dwh_{sch}_{scope}'
+            group_name = f'dwh_{sch}_{scope}'.lower()
             upgrade_ops.ops.append(DeleteGroupOp(group_name))
             for table in tables:
                 if sch == table.split(".")[0]:
@@ -63,7 +63,7 @@ def compare_groups(autogen_context, upgrade_ops, schemas):
                 table[1] for table in all_conn_tables
             ]:
                 for scope in ['read', 'write', 'all']:
-                    group_name = f'dwh_{sch}_{scope}'
+                    group_name = f'dwh_{sch}_{scope}'.lower()
                     upgrade_ops.ops.append(GrantRightsOp(group_name, new_table))
 
     # Revoke rights on removed tables in existing schemas
@@ -81,5 +81,5 @@ def compare_groups(autogen_context, upgrade_ops, schemas):
         for removed_table in all_conn_tables:
             if removed_table[1] not in [table.split('.')[1] for table in metadata_tables]:
                 for scope in ['read', 'write', 'all']:
-                    group_name = f'dwh_{sch}_{scope}'
+                    group_name = f'dwh_{sch}_{scope}'.lower()
                     upgrade_ops.ops.append(RevokeRightsOp(group_name, ".".join([removed_table[0], removed_table[1]])))

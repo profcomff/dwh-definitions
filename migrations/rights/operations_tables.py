@@ -33,27 +33,27 @@ class RevokeRightsOp(MigrateOperation):
 
 @Operations.implementation_for(GrantRightsOp)
 def grant_rights(operations, operation):
-    group = operation.group_name
+    group = operation.group_name.lower()
     table = operation.table_name.split('.')
     scope = group.split("_")[-1]
     match scope:
         case 'read':
-            operations.execute(f'GRANT SELECT ON TABLE "{table[0]}".{table[1]} TO {group}')
+            operations.execute(f'GRANT SELECT ON TABLE {table[0]}.{table[1]} TO {group}')
         case 'write':
-            operations.execute(f'GRANT SELECT, UPDATE, DELETE, TRUNCATE ON TABLE "{table[0]}".{table[1]} TO {group}')
+            operations.execute(f'GRANT SELECT, UPDATE, DELETE, TRUNCATE ON TABLE {table[0]}.{table[1]} TO {group}')
         case 'all':
-            operations.execute(f'GRANT ALL ON TABLE "{table[0]}".{table[1]} TO {group}')
+            operations.execute(f'GRANT ALL ON TABLE {table[0]}.{table[1]} TO {group}')
 
 
 @Operations.implementation_for(RevokeRightsOp)
 def revoke_rights(operations, operation):
-    group = operation.group_name
+    group = operation.group_name.lower()
     table = operation.table_name.split('.')
     scope = group.split("_")[-1]
     match scope:
         case 'read':
-            operations.execute(f'REVOKE SELECT ON TABLE "{table[0]}".{table[1]} FROM {group}')
+            operations.execute(f'REVOKE SELECT ON TABLE {table[0]}.{table[1]} FROM {group}')
         case 'write':
-            operations.execute(f'REVOKE SELECT, UPDATE, DELETE, TRUNCATE ON TABLE "{table[0]}".{table[1]} FROM {group}')
+            operations.execute(f'REVOKE SELECT, UPDATE, DELETE, TRUNCATE ON TABLE {table[0]}.{table[1]} FROM {group}')
         case 'all':
-            operations.execute(f'REVOKE ALL ON TABLE "{table[0]}".{table[1]} FROM {group}')
+            operations.execute(f'REVOKE ALL ON TABLE {table[0]}.{table[1]} FROM {group}')
