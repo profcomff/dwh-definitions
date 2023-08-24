@@ -1,6 +1,6 @@
 """init
 
-Revision ID: bf0a7ee749a6
+Revision ID: 0a24041f09d1
 Revises: 
 Create Date: 2023-08-24 20:31:05.038708
 
