@@ -8,6 +8,7 @@ import profcomff_definitions
 from migrations import rights, schema
 from profcomff_definitions.base import Base
 
+
 config = context.config
 
 if config.config_file_name is not None:
@@ -17,8 +18,16 @@ target_metadata = Base.metadata
 
 
 def patern_sort(x):
-    pattern_list = ['RevokeRightsOP', 'DropTableOp', 'DeleteGroupOp', 'DropTableSchemaOp',
-                    'CreateTableSchemaOp', 'CreateTableOp', 'CreateGroupOp', 'GrantRightsOp']
+    pattern_list = [
+        'RevokeRightsOP',
+        'DropTableOp',
+        'DeleteGroupOp',
+        'DropTableSchemaOp',
+        'CreateTableSchemaOp',
+        'CreateTableOp',
+        'CreateGroupOp',
+        'GrantRightsOp',
+    ]
     for i in range(len(pattern_list)):
         pattern = pattern_list[i]
         if x.find(pattern) == 0:
@@ -31,8 +40,16 @@ def process_revision_directives(context, revision, directives):
     # Sort upgrade
     script = directives[0].upgrade_ops_list[0].ops
     names = [obj.__class__.__name__ for obj in script]
-    pattern_list = ['RevokeRightsOp', 'DropTableOp', 'DeleteGroupOp', 'DropTableSchemaOp',
-                    'CreateTableSchemaOp', 'CreateTableOp', 'CreateGroupOp', 'GrantRightsOp']
+    pattern_list = [
+        'RevokeRightsOp',
+        'DropTableOp',
+        'DeleteGroupOp',
+        'DropTableSchemaOp',
+        'CreateTableSchemaOp',
+        'CreateTableOp',
+        'CreateGroupOp',
+        'GrantRightsOp',
+    ]
     indexes = []
     for pattern in pattern_list:
         index = [i for i, x in enumerate(names) if x == pattern]
@@ -48,8 +65,16 @@ def process_revision_directives(context, revision, directives):
     # Sort downgrade
     script = directives[0].downgrade_ops_list[0].ops
     names = [obj.__class__.__name__ for obj in script]
-    pattern_list = ['RevokeRightsOp', 'DropTableOp', 'DeleteGroupOp', 'DropTableSchemaOp',
-                    'CreateTableSchemaOp', 'CreateTableOp', 'CreateGroupOp', 'GrantRightsOp']
+    pattern_list = [
+        'RevokeRightsOp',
+        'DropTableOp',
+        'DeleteGroupOp',
+        'DropTableSchemaOp',
+        'CreateTableSchemaOp',
+        'CreateTableOp',
+        'CreateGroupOp',
+        'GrantRightsOp',
+    ]
     indexes = []
     for pattern in pattern_list:
         index = [i for i, x in enumerate(names) if x == pattern]
@@ -61,6 +86,7 @@ def process_revision_directives(context, revision, directives):
 
     for i in range(len(script)):
         script[i] = new_scripts[i]
+
 
 def run_migrations_offline():
     """Run migrations in 'offline' mode.

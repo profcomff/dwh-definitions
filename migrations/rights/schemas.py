@@ -18,8 +18,8 @@ def compare_groups(autogen_context, upgrade_ops, schemas):
             [
                 sch
                 for row in autogen_context.connection.execute(
-                query, {"nspname": autogen_context.dialect.default_schema_name if sch is None else sch}
-            )
+                    query, {"nspname": autogen_context.dialect.default_schema_name if sch is None else sch}
+                )
             ]
         )
 
@@ -51,12 +51,17 @@ def compare_groups(autogen_context, upgrade_ops, schemas):
         all_conn_tables = set()
         all_conn_tables.update(
             [
-                table for table in autogen_context.connection.execute(text(f"SELECT * FROM pg_tables WHERE schemaname='{sch}'"))
+                table
+                for table in autogen_context.connection.execute(
+                    text(f"SELECT * FROM pg_tables WHERE schemaname='{sch}'")
+                )
             ]
         )
 
         for new_table in metadata_tables:
-            if new_table.split('.')[0] == sch and new_table.split('.')[1] not in [table[1] for table in all_conn_tables]:
+            if new_table.split('.')[0] == sch and new_table.split('.')[1] not in [
+                table[1] for table in all_conn_tables
+            ]:
                 for scope in ['read', 'write', 'all']:
                     group_name = f'dwh_{sch}_{scope}'
                     upgrade_ops.ops.append(GrantRightsOp(group_name, new_table))
@@ -67,7 +72,10 @@ def compare_groups(autogen_context, upgrade_ops, schemas):
         all_conn_tables = set()
         all_conn_tables.update(
             [
-                table for table in autogen_context.connection.execute(text(f"SELECT * FROM pg_tables WHERE schemaname='{sch}'"))
+                table
+                for table in autogen_context.connection.execute(
+                    text(f"SELECT * FROM pg_tables WHERE schemaname='{sch}'")
+                )
             ]
         )
         for removed_table in all_conn_tables:
