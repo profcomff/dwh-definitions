@@ -5,8 +5,8 @@ Revises:
 Create Date: 2023-08-24 20:31:05.038708
 
 """
-from alembic import op
 import sqlalchemy as sa
+from alembic import op
 
 
 # revision identifiers, used by Alembic.
@@ -53,6 +53,7 @@ def upgrade():
     op.grant_rights("dwh_stg_union_member_read", '"STG_UNION_MEMBER".union_member')
     op.grant_rights("dwh_stg_union_member_write", '"STG_UNION_MEMBER".union_member')
     op.grant_rights("dwh_stg_union_member_all", '"STG_UNION_MEMBER".union_member')
+
 
 def downgrade():
     op.revoke_rights("dwh_stg_union_member_all", "STG_UNION_MEMBER.union_member")
