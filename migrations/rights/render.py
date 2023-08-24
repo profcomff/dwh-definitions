@@ -15,7 +15,7 @@ def render_drop_group(autogen_context, op):
 
 
 @renderers.dispatch_for(GrantRightsOp)
-def render_create_group(autogen_context, op):
+def render_grant_rights(autogen_context, op):
     match op.group_name.split("_")[-1]:
         case 'read':
             return f'op.grant_rights("{op.group_name}", "{op.table_name}")'
@@ -26,7 +26,7 @@ def render_create_group(autogen_context, op):
 
 
 @renderers.dispatch_for(RevokeRightsOp)
-def render_drop_group(autogen_context, op):
+def render_revoke_rights(autogen_context, op):
     match op.group_name.split("_")[-1]:
         case 'read':
             return f'op.revoke_rights("{op.group_name}", "{op.table_name}")'
