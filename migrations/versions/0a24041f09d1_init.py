@@ -47,20 +47,8 @@ def upgrade():
         sa.PrimaryKeyConstraint('id'),
         schema='STG_UNION_MEMBER',
     )
-    op.create_group("dwh_stg_union_member_read")
-    op.create_group("dwh_stg_union_member_write")
-    op.create_group("dwh_stg_union_member_all")
-    op.grant_rights("dwh_stg_union_member_read", '"STG_UNION_MEMBER".union_member')
-    op.grant_rights("dwh_stg_union_member_write", '"STG_UNION_MEMBER".union_member')
-    op.grant_rights("dwh_stg_union_member_all", '"STG_UNION_MEMBER".union_member')
 
 
 def downgrade():
-    op.revoke_rights("dwh_stg_union_member_all", "STG_UNION_MEMBER.union_member")
-    op.revoke_rights("dwh_stg_union_member_write", "STG_UNION_MEMBER.union_member")
-    op.revoke_rights("dwh_stg_union_member_read", "STG_UNION_MEMBER.union_member")
     op.drop_table('union_member', schema='STG_UNION_MEMBER')
-    op.delete_group("dwh_stg_union_member_all")
-    op.delete_group("dwh_stg_union_member_write")
-    op.delete_group("dwh_stg_union_member_read")
     op.drop_table_schema("STG_UNION_MEMBER")

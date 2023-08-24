@@ -17,25 +17,6 @@ if config.config_file_name is not None:
 target_metadata = Base.metadata
 
 
-def patern_sort(x):
-    pattern_list = [
-        'RevokeRightsOP',
-        'DropTableOp',
-        'DeleteGroupOp',
-        'DropTableSchemaOp',
-        'CreateTableSchemaOp',
-        'CreateTableOp',
-        'CreateGroupOp',
-        'GrantRightsOp',
-    ]
-    for i in range(len(pattern_list)):
-        pattern = pattern_list[i]
-        if x.find(pattern) == 0:
-            return i, x.replace(pattern, '')
-
-    return len(pattern_list) + 1, x
-
-
 def process_revision_directives(context, revision, directives):
     # Sort upgrade
     script = directives[0].upgrade_ops_list[0].ops
