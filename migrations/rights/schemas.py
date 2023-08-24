@@ -30,7 +30,6 @@ def compare_groups(autogen_context, upgrade_ops, schemas):
         tables = autogen_context.metadata.tables
         for scope in ['read', 'write', 'all']:
             group_name = f'dwh_{sch}_{scope}'
-            print(group_name)
             upgrade_ops.ops.append(CreateGroupOp(group_name))
             for table in tables:
                 if sch == table.split(".")[0]:
@@ -41,7 +40,7 @@ def compare_groups(autogen_context, upgrade_ops, schemas):
         tables = autogen_context.metadata.tables
         for scope in ['read', 'write', 'all']:
             group_name = f'dwh_{sch}_{scope}'
-            upgrade_ops.ops.append(DeleteGroupOp(sch))
+            upgrade_ops.ops.append(DeleteGroupOp(group_name))
             for table in tables:
                 if sch == table.split(".")[0]:
                     upgrade_ops.ops.append(RevokeRightsOp(group_name, table))

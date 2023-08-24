@@ -29,135 +29,37 @@ def patern_sort(x):
 
 def process_revision_directives(context, revision, directives):
     # Sort upgrade
-    script = directives[0].upgrade_ops_list[0].ops  
+    script = directives[0].upgrade_ops_list[0].ops
     names = [obj.__class__.__name__ for obj in script]
-    print(names)
-    names.sort(key=patern_sort)
-    print(names, '\n')
+    pattern_list = ['RevokeRightsOp', 'DropTableOp', 'DeleteGroupOp', 'DropTableSchemaOp',
+                    'CreateTableSchemaOp', 'CreateTableOp', 'CreateGroupOp', 'GrantRightsOp']
+    indexes = []
+    for pattern in pattern_list:
+        index = [i for i, x in enumerate(names) if x == pattern]
+        indexes.extend(index)
 
-    # Sort donwgrade
+    new_scripts = []
+    for i in range(len(script)):
+        new_scripts.append(script[indexes[i]])
+
+    for i in range(len(script)):
+        script[i] = new_scripts[i]
+
     script = directives[0].downgrade_ops_list[0].ops
     names = [obj.__class__.__name__ for obj in script]
-    print(names)
-    names.sort(key=patern_sort)
-    print(names)
+    pattern_list = ['RevokeRightsOp', 'DropTableOp', 'DeleteGroupOp', 'DropTableSchemaOp',
+                    'CreateTableSchemaOp', 'CreateTableOp', 'CreateGroupOp', 'GrantRightsOp']
+    indexes = []
+    for pattern in pattern_list:
+        index = [i for i, x in enumerate(names) if x == pattern]
+        indexes.extend(index)
 
-    # i = 0
-    # for index in indexes:
-    #     tmp = script[i]
-    #     script[i] = script[index]
-    #     script[index] = tmp
-    #     i += 1
-    # script = directives[0].downgrade_ops_list[0].ops
-    # names = [obj.__class__.__name__ for obj in script]
-    # indexes = [i for i, ltr in enumerate(names) if ltr == "CreateTableSchemaOp"]
-    # i = 0
-    # for index in indexes:
-    #     tmp = script[i]
-    #     script[i] = script[index]
-    #     script[index] = tmp
-    #     i += 1
-    #
-    # # Delete schema sort
-    # script = directives[0].downgrade_ops_list[0].ops
-    # names = [obj.__class__.__name__ for obj in script]
-    # indexes = [i for i, ltr in enumerate(names) if ltr == "DropTableSchemaOp"]
-    # i = -1
-    # for index in indexes:
-    #     tmp = script[i]
-    #     script[i] = script[index]
-    #     script[index] = tmp
-    #     i -= 1
-    # script = directives[0].upgrade_ops_list[0].ops
-    # names = [obj.__class__.__name__ for obj in script]
-    # indexes = [i for i, ltr in enumerate(names) if ltr == "DropTableSchemaOp"]
-    # i = -1
-    # for index in indexes:
-    #     tmp = script[i]
-    #     script[i] = script[index]
-    #     script[index] = tmp
-    #     i -= 1
-    #
-    # # Delete group sort
-    # script = directives[0].upgrade_ops_list[0].ops
-    # names = [obj.__class__.__name__ for obj in script]
-    # indexes = [i for i, ltr in enumerate(names) if ltr == "DeleteGroupOp"]
-    # i = 0
-    # for index in indexes:
-    #     tmp = script[i]
-    #     script[i] = script[index]
-    #     script[index] = tmp
-    #     i += 1
-    # script = directives[0].downgrade_ops_list[0].ops
-    # names = [obj.__class__.__name__ for obj in script]
-    # indexes = [i for i, ltr in enumerate(names) if ltr == "DeleteGroupOp"]
-    # i = 0
-    # for index in indexes:
-    #     tmp = script[i]
-    #     script[i] = script[index]
-    #     script[index] = tmp
-    #     i += 1
-    #
-    # # Create group sort
-    # script = directives[0].upgrade_ops_list[0].ops
-    # names = [obj.__class__.__name__ for obj in script]
-    # indexes = [i for i, ltr in enumerate(names) if ltr == "CreateGroupOp"]
-    # i = -1
-    # for index in indexes:
-    #     tmp = script[i]
-    #     script[i] = script[index]
-    #     script[index] = tmp
-    #     i -= 1
-    # script = directives[0].downgrade_ops_list[0].ops
-    # names = [obj.__class__.__name__ for obj in script]
-    # indexes = [i for i, ltr in enumerate(names) if ltr == "CreateGroupOp"]
-    # i = -1
-    # for index in indexes:
-    #     tmp = script[i]
-    #     script[i] = script[index]
-    #     script[index] = tmp
-    #     i -= 1
-    #
-    #     # Revoke rights sort
-    #     script = directives[0].upgrade_ops_list[0].ops
-    #     names = [obj.__class__.__name__ for obj in script]
-    #     indexes = [i for i, ltr in enumerate(names) if ltr == "RevokeRightsOp"]
-    #     i = 0
-    #     for index in indexes:
-    #         tmp = script[i]
-    #         script[i] = script[index]
-    #         script[index] = tmp
-    #         i += 1
-    #     script = directives[0].downgrade_ops_list[0].ops
-    #     names = [obj.__class__.__name__ for obj in script]
-    #     indexes = [i for i, ltr in enumerate(names) if ltr == "RevokeRightsOp"]
-    #     i = 0
-    #     for index in indexes:
-    #         tmp = script[i]
-    #         script[i] = script[index]
-    #         script[index] = tmp
-    #         i += 1
-    #
-    #     # Grant rights sort
-    #     script = directives[0].downgrade_ops_list[0].ops
-    #     names = [obj.__class__.__name__ for obj in script]
-    #     indexes = [i for i, ltr in enumerate(names) if ltr == "GrantRightsOp"]
-    #     i = -1
-    #     for index in indexes:
-    #         tmp = script[i]
-    #         script[i] = script[index]
-    #         script[index] = tmp
-    #         i -= 1
-    #     script = directives[0].upgrade_ops_list[0].ops
-    #     names = [obj.__class__.__name__ for obj in script]
-    #     indexes = [i for i, ltr in enumerate(names) if ltr == "GrantRightsOp"]
-    #     i = -1
-    #     for index in indexes:
-    #         tmp = script[i]
-    #         script[i] = script[index]
-    #         script[index] = tmp
-    #         i -= 1
+    new_scripts = []
+    for i in range(len(script)):
+        new_scripts.append(script[indexes[i]])
 
+    for i in range(len(script)):
+        script[i] = new_scripts[i]
 
 def run_migrations_offline():
     """Run migrations in 'offline' mode.
