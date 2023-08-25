@@ -16,10 +16,10 @@ def compare_groups(autogen_context, upgrade_ops, schemas):
         )
         all_conn_schemas.update(
             [
-                sch
-                for row in autogen_context.connection.execute(
-                query, {"nspname": autogen_context.dialect.default_schema_name if sch is None else sch}
-            )
+                sch for sch in
+                autogen_context.connection.execute(
+                    query, {"nspname": autogen_context.dialect.default_schema_name if sch is None else sch}
+                )
             ]
         )
 
@@ -32,8 +32,9 @@ def compare_groups(autogen_context, upgrade_ops, schemas):
             group_name = f'dwh_{sch}_{scope}'.lower()
 
             # Group existing check
-            if group_name not in [group[0] for group in
-                                  autogen_context.connection.execute(text(f'SELECT * FROM pg_group'))]:
+            if group_name not in [
+                group[0] for group in autogen_context.connection.execute(text(f'SELECT * FROM pg_group'))
+            ]:
                 upgrade_ops.ops.append(CreateGroupOp(group_name))
             scopes = []
             match scope:
@@ -47,13 +48,19 @@ def compare_groups(autogen_context, upgrade_ops, schemas):
             # Scopes check
             upgrade_scopes = []
             for table in tables:
-                all_conn_scopes = list(autogen_context.connection.execute(
-                        text(f"SELECT privilege_type FROM information_schema.role_table_grants WHERE "
-                             f"table_schema='{sch}' and grantee='{group_name}'")))
+                all_conn_scopes = list(
+                    autogen_context.connection.execute(
+                        text(
+                            f"SELECT privilege_type FROM information_schema.role_table_grants WHERE "
+                            f"table_schema='{sch}' and grantee='{group_name}'"
+                        )
+                    )
+                )
                 for scope in scopes:
-                    if scope not in all_conn_scopes or not all_conn_scopes:
+                    if (scope not in all_conn_scopes or not all_conn_scopes) and (table.split(".")[0] == sch):
                         upgrade_scopes.append(scope)
-                upgrade_ops.ops.append(GrantRightsOp(group_name, upgrade_scopes, table))
+                if table.split(".")[0] == sch:
+                    upgrade_ops.ops.append(GrantRightsOp(group_name, upgrade_scopes, table))
 
     # Revoke rights from deleted schemas
     for sch in all_conn_schemas.difference(metadata_schemas):
@@ -61,9 +68,18 @@ def compare_groups(autogen_context, upgrade_ops, schemas):
         for scope in ['read', 'write', 'all']:
             group_name = f'dwh_{sch}_{scope}'.lower()
             upgrade_ops.ops.append(DeleteGroupOp(group_name))
+            all_conn_scopes = list(
+                autogen_context.connection.execute(
+                    text(
+                        f"SELECT privilege_type FROM information_schema.role_table_grants WHERE "
+                        f"table_schema='{sch}' and grantee='{group_name}'"
+                    )
+                )
+            )
+            delete_scopes = [scope for scope in all_conn_scopes]
             for table in tables:
                 if sch == table.split(".")[0]:
-                    upgrade_ops.ops.append(RevokeRightsOp(group_name, table))
+                    upgrade_ops.ops.append(RevokeRightsOp(group_name, delete_scopes, table))
 
     # Grant rights on new tables in existing schemas
     for sch in all_conn_schemas.intersection(metadata_schemas):
@@ -73,8 +89,8 @@ def compare_groups(autogen_context, upgrade_ops, schemas):
             [
                 table
                 for table in autogen_context.connection.execute(
-                text(f"SELECT * FROM pg_tables WHERE schemaname='{sch}'")
-            )
+                    text(f"SELECT * FROM pg_tables WHERE schemaname='{sch}'")
+                )
             ]
         )
 
@@ -94,8 +110,8 @@ def compare_groups(autogen_context, upgrade_ops, schemas):
             [
                 table
                 for table in autogen_context.connection.execute(
-                text(f"SELECT * FROM pg_tables WHERE schemaname='{sch}'")
-            )
+                    text(f"SELECT * FROM pg_tables WHERE schemaname='{sch}'")
+                )
             ]
         )
         for removed_table in all_conn_tables:
