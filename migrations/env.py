@@ -6,8 +6,8 @@ from sqlalchemy import engine_from_config, pool
 
 import profcomff_definitions
 from migrations import rights, schema
+from tests.database import Test
 from profcomff_definitions.base import Base
-
 
 config = context.config
 
@@ -15,6 +15,21 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 target_metadata = Base.metadata
+IGNORE_TABLES = ['alembic_version']
+
+
+def include_object(object, name, type_, reflected, compare_to):
+    """
+    Should you include this table or not?
+    """
+
+    if type_ == 'table' and (name in IGNORE_TABLES or object.info.get("skip_autogenerate", False)):
+        return False
+
+    elif type_ == "column" and object.info.get("skip_autogenerate", False):
+        return False
+
+    return True
 
 
 def process_revision_directives(context, revision, directives):
@@ -46,16 +61,6 @@ def process_revision_directives(context, revision, directives):
     # Sort downgrade
     script = directives[0].downgrade_ops_list[0].ops
     names = [obj.__class__.__name__ for obj in script]
-    pattern_list = [
-        'RevokeRightsOp',
-        'DropTableOp',
-        'DeleteGroupOp',
-        'DropTableSchemaOp',
-        'CreateTableSchemaOp',
-        'CreateTableOp',
-        'CreateGroupOp',
-        'GrantRightsOp',
-    ]
     indexes = []
     for pattern in pattern_list:
         index = [i for i, x in enumerate(names) if x == pattern]
@@ -81,13 +86,14 @@ def run_migrations_offline():
     script output.
 
     """
-    url = os.getenv('DB_DSN', 'postgresql://postgres:12345@localhost:5432/postgres')
+    url = os.getenv('DB_DSN', 'postgresql://postgres:12345@localhost:5432/test')
     context.configure(
         url=url,
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
         include_schemas=True,
+        include_object=include_object,
         version_table_schema='public',
         process_revision_directives=process_revision_directives,
     )
@@ -104,7 +110,7 @@ def run_migrations_online():
 
     """
     configuration = config.get_section(config.config_ini_section)
-    configuration["sqlalchemy.url"] = os.getenv('DB_DSN', 'postgresql://postgres:12345@localhost:5432/postgres')
+    configuration["sqlalchemy.url"] = os.getenv('DB_DSN', 'postgresql://postgres:12345@localhost:5432/test')
     connectable = engine_from_config(
         configuration,
         prefix="sqlalchemy.",
@@ -116,6 +122,7 @@ def run_migrations_online():
             connection=connection,
             target_metadata=target_metadata,
             include_schemas=True,
+            include_object=include_object,
             version_table_schema='public',
             process_revision_directives=process_revision_directives,
         )
