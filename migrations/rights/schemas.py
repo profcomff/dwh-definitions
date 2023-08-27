@@ -16,8 +16,8 @@ def compare_groups(autogen_context, upgrade_ops, schemas):
         )
         all_conn_schemas.update(
             [
-                sch for sch in
-                autogen_context.connection.execute(
+                sch
+                for sch in autogen_context.connection.execute(
                     query, {"nspname": autogen_context.dialect.default_schema_name if sch is None else sch}
                 )
             ]
