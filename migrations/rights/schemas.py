@@ -1,7 +1,9 @@
+import os
+from pathlib import Path
+
+import dotenv
 from alembic.autogenerate import comparators
 from sqlalchemy import text
-import dotenv, os
-from pathlib import Path
 
 from .operations_groups import CreateGroupOp, DeleteGroupOp
 from .operations_tables import GrantRightsOp, RevokeRightsOp
@@ -35,8 +37,11 @@ def compare_groups(autogen_context, upgrade_ops, schemas):
     for sch in metadata_schemas.difference(all_conn_schemas):
         tables = autogen_context.metadata.tables
         for scope in ['read', 'write', 'all']:
-            group_name = f'prod_dwh_{sch}_{scope}'.lower() if os.getenv("ENVIRONMENT") == "production" \
-                                                           else f'test_dwh_{sch}_{scope}'
+            group_name = (
+                f'prod_dwh_{sch}_{scope}'.lower()
+                if os.getenv("ENVIRONMENT") == "production"
+                else f'test_dwh_{sch}_{scope}'
+            )
 
             # Group existing check
             if group_name not in [
