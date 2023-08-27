@@ -2,11 +2,11 @@
 
 Revision ID: 0a24041f09d1
 Revises: 
-Create Date: 2023-08-27 10:44:38.775438
+Create Date: 2023-08-27 12:50:44.855630
 
 """
-import sqlalchemy as sa
 from alembic import op
+import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.

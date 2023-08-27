@@ -24,12 +24,9 @@ jobs:
           python -m ensurepip
           python -m pip install --upgrade pip
           pip install --upgrade -r requirements.txt -r requirements.dev.txt
-#      - name: Migrate DB
-#        run: |
-#          DB_DSN=postgresql://postgres@localhost:5432/postgres alembic upgrade head
       - name: Build coverage file
         run: |
-          DB_DSN=postgresql://postgres@localhost:5432/postgres pytest --junitxml=pytest.xml --cov-report=term-missing:skip-covered --cov=services_backend tests/ | tee pytest-coverage.txt
+          DB_DSN=postgresql://postgres@localhost:5432/postgres pytest --junitxml=pytest.xml --cov-report=term-missing:skip-covered --cov=services_backend tests/ | tee pytest-coverage.txt exit ${PIPESTATUS[0]}
       - name: Print report
         if: always()
         run: |
@@ -48,6 +45,9 @@ jobs:
           remove-link-from-badge: false
           junitxml-path: ./pytest.xml
           junitxml-title: Summary
+      - name: Fail
+        if: always() && steps.pytest.outcome == 'failure'
+        run: exit 1
   linting:
     runs-on: ubuntu-latest
     steps:
@@ -60,8 +60,12 @@ jobs:
           requirementsFiles: "requirements.txt requirements.dev.txt"
       - uses: psf/black@stable
       - name: Comment if linting failed
-        if: ${{ failure() }}
+        if: failure()
+        id: comment
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: |
             :poop: Code linting failed, use `black` and `isort` to fix it.
+      - name: Fail
+        if: steps.comment.conclusion != 'failure' && steps.comment.conclusion != 'skipped'
+        run: exit 1
