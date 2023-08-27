@@ -1,7 +1,6 @@
 import os
 from pathlib import Path
 
-import dotenv
 import pytest
 from alembic import command
 from alembic.config import Config
@@ -10,8 +9,6 @@ from sqlalchemy.engine import Engine
 
 
 REPO_ROOT = Path(os.path.abspath(os.path.dirname(__file__))).parent.resolve()
-dotenv.load_dotenv("../.env")
-DB_DSN = os.getenv("TEST_DB")
 
 
 @pytest.fixture(scope='session')

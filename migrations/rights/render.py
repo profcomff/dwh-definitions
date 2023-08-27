@@ -16,27 +16,11 @@ def render_drop_group(autogen_context, op):
 
 @renderers.dispatch_for(GrantRightsOp)
 def render_grant_rights(autogen_context, op):
-    match op.group_name.split("_")[-1]:
-        case 'read':
-            table = f"""'"{op.table_name.split(".")[0]}".{op.table_name.split(".")[1]}'"""
-            return f'op.grant_rights("{op.group_name}", "{op.scopes}", {table})'
-        case 'write':
-            table = f"""'"{op.table_name.split(".")[0]}".{op.table_name.split(".")[1]}'"""
-            return f'op.grant_rights("{op.group_name}", "{op.scopes}", {table})'
-        case 'all':
-            table = f"""'"{op.table_name.split(".")[0]}".{op.table_name.split(".")[1]}'"""
-            return f'op.grant_rights("{op.group_name}", "{op.scopes}", {table})'
+    table = f"""'"{op.table_name.split(".")[0]}".{op.table_name.split(".")[1]}'"""
+    return f'op.grant_rights("{op.group_name}", "{op.scopes}", {table})'
 
 
 @renderers.dispatch_for(RevokeRightsOp)
 def render_revoke_rights(autogen_context, op):
-    match op.group_name.split("_")[-1]:
-        case 'read':
-            table = f"""'"{op.table_name.split(".")[0]}".{op.table_name.split(".")[1]}'"""
-            return f'op.revoke_rights("{op.group_name}", "{op.scopes}", {table})'
-        case 'write':
-            table = f"""'"{op.table_name.split(".")[0]}".{op.table_name.split(".")[1]}'"""
-            return f'op.revoke_rights("{op.group_name}", "{op.scopes}", {table})'
-        case 'all':
-            table = f"""'"{op.table_name.split(".")[0]}".{op.table_name.split(".")[1]}'"""
-            return f'op.revoke_rights("{op.group_name}", "{op.scopes}", {table})'
+    table = f"""'"{op.table_name.split(".")[0]}".{op.table_name.split(".")[1]}'"""
+    return f'op.revoke_rights("{op.group_name}", "{op.scopes}", {table})'
