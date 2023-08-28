@@ -13,7 +13,7 @@ def test_group_creation(engine, migration):
     with engine.connect() as conn:
         query = text("SELECT * FROM pg_group")
         result = set(obj[0] for obj in conn.execute(query))
-        check = {'dwh_tests_database_read', 'dwh_tests_database_write', 'dwh_tests_database_all'}
+        check = {'test_dwh_tests_database_read', 'test_dwh_tests_database_write', 'test_dwh_tests_database_all'}
 
         assert check.issubset(result)
 
@@ -21,10 +21,10 @@ def test_group_creation(engine, migration):
 def test_table_rights(engine, migration):
     scopes = [
         {'SELECT'},
-        {'SELECT', 'UPDATE', 'DELETE', 'TRUNCATE'},
+        {'SELECT', 'INSERT', 'UPDATE', 'DELETE', 'TRUNCATE'},
         {'SELECT', 'UPDATE', 'TRIGGER', 'DELETE', 'TRUNCATE', 'INSERT', 'REFERENCES'},
     ]
-    groups = ['dwh_tests_database_read', 'dwh_tests_database_write', 'dwh_tests_database_all']
+    groups = ['test_dwh_tests_database_read', 'test_dwh_tests_database_write', 'test_dwh_tests_database_all']
     with engine.connect() as conn:
         for i in range(len(groups)):
             query = text(f"SELECT privilege_type FROM information_schema.role_table_grants WHERE grantee='{groups[i]}'")
