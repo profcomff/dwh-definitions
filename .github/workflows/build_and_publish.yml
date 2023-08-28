@@ -16,6 +16,7 @@ jobs:
     environment:
       name: Testing
     env:
+      ENIVIROMENT: 'testing'
       DB_DSN: ${{ secrets.DB_DSN }}
 
     steps:
@@ -44,6 +45,7 @@ jobs:
     environment:
       name: Production
     env:
+      ENIVIROMENT: 'production'
       DB_DSN: ${{ secrets.DB_DSN }}
 
     steps:

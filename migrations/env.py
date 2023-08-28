@@ -45,9 +45,11 @@ def process_revision_directives(context, revision, directives):
         'DropTableSchemaOp',
         'CreateTableSchemaOp',
         'CreateTableOp',
+        'AddColumn',
         'CreateGroupOp',
         'GrantOnSchemaOp',
         'GrantRightsOp',
+        'ModifyTableOps',
     ]
     indexes = []
     for pattern in pattern_list:
@@ -89,7 +91,7 @@ def run_migrations_offline():
     script output.
 
     """
-    url = os.getenv('DB_DSN', 'postgresql://postgres:12345@localhost:5432/test')
+    url = os.getenv('DB_DSN', 'postgresql://postgres@localhost:5432/postgres')
     context.configure(
         url=url,
         target_metadata=target_metadata,
