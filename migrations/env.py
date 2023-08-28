@@ -45,7 +45,6 @@ def process_revision_directives(context, revision, directives):
         'DropTableSchemaOp',
         'CreateTableSchemaOp',
         'CreateTableOp',
-        'AddColumn',
         'CreateGroupOp',
         'GrantOnSchemaOp',
         'GrantRightsOp',
