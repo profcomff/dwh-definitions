@@ -1,8 +1,8 @@
-"""init
+"""Init
 
 Revision ID: 0a24041f09d1
 Revises: 
-Create Date: 2023-08-27 12:50:44.855630
+Create Date: 2023-08-28 13:34:04.141947
 
 """
 import sqlalchemy as sa

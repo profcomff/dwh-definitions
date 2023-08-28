@@ -9,8 +9,8 @@ from .operations_groups import CreateGroupOp, DeleteGroupOp
 from .operations_tables import GrantRightsOp, RevokeRightsOp
 
 
-REPO_ROOT = Path(os.path.abspath(os.path.dirname(__file__))).parent.resolve()
-dotenv.load_dotenv(".env")
+REPO_ROOT = Path(os.path.abspath(os.path.dirname(__file__))).parent.parent.resolve()
+dotenv.load_dotenv(REPO_ROOT / ".env")
 
 
 @comparators.dispatch_for("schema")
@@ -36,24 +36,26 @@ def compare_groups(autogen_context, upgrade_ops, schemas):
     # Grant rights on new schemas
     for sch in metadata_schemas.difference(all_conn_schemas):
         tables = autogen_context.metadata.tables
-        for scope in ['read', 'write', 'all']:
-            group_name = (
-                f'prod_dwh_{sch}_{scope}'.lower()
-                if os.getenv("ENVIRONMENT") == "production"
-                else f'test_dwh_{sch}_{scope}'
-            )
+        for render_scope in ['read', 'write', 'all']:
+            group_name = f'dwh_{sch}_{render_scope}'.lower()
 
             # Group existing check
             if group_name not in [
-                group[0] for group in autogen_context.connection.execute(text(f'SELECT * FROM pg_group'))
+                group[0][1:] for group in autogen_context.connection.execute(text(f'SELECT * FROM pg_group'))
             ]:
                 upgrade_ops.ops.append(CreateGroupOp(group_name))
+
+            group_name = (
+                f'test_dwh_{sch}_{render_scope}'.lower()
+                if os.getenv("ENVIRONMENT") != "production"
+                else f'prod_dwh_{sch}_{render_scope}'.lower()
+            )  # Так надо
             scopes = []
-            match scope:
+            match render_scope:
                 case 'read':
                     scopes = ['SELECT']
                 case 'write':
-                    scopes = ['SELECT', 'UPDATE', 'DELETE', 'TRUNCATE']
+                    scopes = ['SELECT', 'UPDATE', 'DELETE', 'TRUNCATE', 'INSERT']
                 case 'all':
                     scopes = ['ALL']
 
@@ -64,7 +66,7 @@ def compare_groups(autogen_context, upgrade_ops, schemas):
                     autogen_context.connection.execute(
                         text(
                             f"SELECT privilege_type FROM information_schema.role_table_grants WHERE "
-                            f"table_schema='{sch}' and grantee='{group_name}'"
+                            f"table_schema='{sch}' and grantee='{group_name}'"  # Потому что тут сравнение по УЖЕ СУЩЕСТВУЮЩИМ группам идет
                         )
                     )
                 )
@@ -72,13 +74,18 @@ def compare_groups(autogen_context, upgrade_ops, schemas):
                     if (scope not in all_conn_scopes or not all_conn_scopes) and (table.split(".")[0] == sch):
                         upgrade_scopes.append(scope)
                 if table.split(".")[0] == sch:
+                    group_name = f'dwh_{sch}_{render_scope}'.lower()
                     upgrade_ops.ops.append(GrantRightsOp(group_name, upgrade_scopes, table))
 
     # Revoke rights from deleted schemas
     for sch in all_conn_schemas.difference(metadata_schemas):
         tables = autogen_context.metadata.tables
-        for scope in ['read', 'write', 'all']:
-            group_name = f'dwh_{sch}_{scope}'.lower()
+        for render_scope in ['read', 'write', 'all']:
+            group_name = (
+                f'test_dwh_{sch}_{render_scope}'.lower()
+                if os.getenv("ENVIRONMENT") != "production"
+                else f'prod_dwh_{sch}_{render_scope}'.lower()
+            )
             upgrade_ops.ops.append(DeleteGroupOp(group_name))
             all_conn_scopes = list(
                 autogen_context.connection.execute(
