@@ -31,17 +31,11 @@ class DropTableSchemaOp(MigrateOperation):
 
 @Operations.implementation_for(CreateTableSchemaOp)
 def create_table_schema(operations, operation):
-    if operation.table_schema_name is not None:
-        name = "%s" % operation.table_schema_name
-    else:
-        name = operation.table_schema_name
-    operations.execute('CREATE SCHEMA "%s"' % name.upper())
+    name = operation.table_schema_name.upper()
+    operations.execute(f'CREATE SCHEMA "{name}"')
 
 
 @Operations.implementation_for(DropTableSchemaOp)
 def drop_table_schema(operations, operation):
-    if operation.table_schema_name is not None:
-        name = "%s" % operation.table_schema_name
-    else:
-        name = operation.table_schema_name
-    operations.execute('DROP SCHEMA "%s"' % name.upper())
+    name = operation.table_schema_name.upper()
+    operations.execute(f'DROP SCHEMA "{name}"')
