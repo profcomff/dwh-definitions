@@ -1,4 +1,3 @@
 alembic
 black
 setuptools
-python-dotenv
