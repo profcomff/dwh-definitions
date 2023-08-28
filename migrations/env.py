@@ -114,7 +114,7 @@ def run_migrations_online():
 
     """
     configuration = config.get_section(config.config_ini_section)
-    configuration["sqlalchemy.url"] = os.getenv('DB_DSN', 'postgresql://postgres:12345@localhost:5432/test')
+    configuration["sqlalchemy.url"] = os.getenv('DB_DSN', 'postgresql://postgres@localhost:5432/postgres')
     connectable = engine_from_config(
         configuration,
         prefix="sqlalchemy.",
