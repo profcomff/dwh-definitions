@@ -20,12 +20,7 @@ def compare_groups(autogen_context, upgrade_ops, schemas):
 
     for sch in schemas:
         query = text("select schema_name from information_schema.schemata")
-        all_conn_schemas.update(
-            [
-                sch[0]
-                for sch in autogen_context.connection.execute(query)
-            ]
-        )
+        all_conn_schemas.update([sch[0] for sch in autogen_context.connection.execute(query)])
 
     for schema in default_pg_schemas:
         all_conn_schemas.remove(schema)
@@ -74,7 +69,7 @@ def compare_groups(autogen_context, upgrade_ops, schemas):
                     autogen_context.connection.execute(
                         text(
                             f"SELECT privilege_type FROM information_schema.role_table_grants WHERE "
-                            f"table_schema='{sch}' and grantee='{group_name}'" # Потому что тут сравнение по УЖЕ СУЩЕСТВУЮЩИМ группам идет
+                            f"table_schema='{sch}' and grantee='{group_name}'"  # Потому что тут сравнение по УЖЕ СУЩЕСТВУЮЩИМ группам идет
                         )
                     )
                 )
