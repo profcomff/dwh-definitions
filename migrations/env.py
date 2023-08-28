@@ -39,12 +39,14 @@ def process_revision_directives(context, revision, directives):
     names = [obj.__class__.__name__ for obj in script]
     pattern_list = [
         'RevokeRightsOp',
+        'RevokeOnSchemaOp',
         'DropTableOp',
         'DeleteGroupOp',
         'DropTableSchemaOp',
         'CreateTableSchemaOp',
         'CreateTableOp',
         'CreateGroupOp',
+        'GrantOnSchemaOp',
         'GrantRightsOp',
     ]
     indexes = []

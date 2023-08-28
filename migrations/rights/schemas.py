@@ -5,7 +5,7 @@ import dotenv
 from alembic.autogenerate import comparators
 from sqlalchemy import text
 
-from .operations_groups import CreateGroupOp, DeleteGroupOp
+from .operations_groups import CreateGroupOp, DeleteGroupOp, GrantOnSchemaOp, RevokeOnSchemaOp
 from .operations_tables import GrantRightsOp, RevokeRightsOp
 
 
@@ -15,21 +15,20 @@ dotenv.load_dotenv(REPO_ROOT / ".env")
 
 @comparators.dispatch_for("schema")
 def compare_groups(autogen_context, upgrade_ops, schemas):
+    default_pg_schemas = ['pg_toast', 'information_schema', 'public', 'pg_catalog']
     all_conn_schemas = set()
 
     for sch in schemas:
-        query = text(
-            "SELECT relname FROM pg_class c join pg_namespace n on n.oid=c.relnamespace where relkind='S' and "
-            "n.nspname=:nspname"
-        )
+        query = text("select schema_name from information_schema.schemata")
         all_conn_schemas.update(
             [
-                sch
-                for sch in autogen_context.connection.execute(
-                    query, {"nspname": autogen_context.dialect.default_schema_name if sch is None else sch}
-                )
+                sch[0]
+                for sch in autogen_context.connection.execute(query)
             ]
         )
+
+    for schema in default_pg_schemas:
+        all_conn_schemas.remove(schema)
 
     metadata_schemas = autogen_context.metadata.info.setdefault("table_schemas", set())
 
@@ -44,12 +43,21 @@ def compare_groups(autogen_context, upgrade_ops, schemas):
                 group[0][1:] for group in autogen_context.connection.execute(text(f'SELECT * FROM pg_group'))
             ]:
                 upgrade_ops.ops.append(CreateGroupOp(group_name))
-
             group_name = (
                 f'test_dwh_{sch}_{render_scope}'.lower()
                 if os.getenv("ENVIRONMENT") != "production"
                 else f'prod_dwh_{sch}_{render_scope}'.lower()
             )  # Так надо
+            all_conn_schemas_rights = list(
+                autogen_context.connection.execute(
+                    text(
+                        f"SELECT privilege_type FROM information_schema.usage_privileges WHERE object_schema='{sch}' "
+                        f"and grantee='{group_name}'"
+                    )
+                )
+            )
+            if 'USAGE' not in all_conn_schemas_rights:
+                upgrade_ops.ops.append(GrantOnSchemaOp("_".join(group_name.split("_")[1:]), sch))
             scopes = []
             match render_scope:
                 case 'read':
@@ -66,7 +74,7 @@ def compare_groups(autogen_context, upgrade_ops, schemas):
                     autogen_context.connection.execute(
                         text(
                             f"SELECT privilege_type FROM information_schema.role_table_grants WHERE "
-                            f"table_schema='{sch}' and grantee='{group_name}'"  # Потому что тут сравнение по УЖЕ СУЩЕСТВУЮЩИМ группам идет
+                            f"table_schema='{sch}' and grantee='{group_name}'" # Потому что тут сравнение по УЖЕ СУЩЕСТВУЮЩИМ группам идет
                         )
                     )
                 )
@@ -79,6 +87,7 @@ def compare_groups(autogen_context, upgrade_ops, schemas):
 
     # Revoke rights from deleted schemas
     for sch in all_conn_schemas.difference(metadata_schemas):
+        print(sch)
         tables = autogen_context.metadata.tables
         for render_scope in ['read', 'write', 'all']:
             group_name = (
