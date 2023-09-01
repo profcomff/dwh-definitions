@@ -5,7 +5,7 @@ import dotenv
 from alembic.autogenerate import comparators
 from sqlalchemy import text
 
-from .operations_groups import CreateGroupOp, DeleteGroupOp, GrantOnSchemaOp, RevokeOnSchemaOp
+from .operations_groups import CreateGroupOp, DeleteGroupOp, GrantOnSchemaOp
 from .operations_tables import GrantRightsOp, RevokeRightsOp
 
 
