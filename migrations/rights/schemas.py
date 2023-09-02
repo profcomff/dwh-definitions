@@ -79,6 +79,7 @@ def compare_groups(autogen_context, upgrade_ops, schemas):
                 if table.split(".")[0] == sch:
                     group_name = f'dwh_{sch}_{render_scope}'.lower()
                     upgrade_ops.ops.append(GrantRightsOp(group_name, upgrade_scopes, table))
+                    upgrade_scopes = []
 
     # Revoke rights from deleted schemas
     for sch in all_conn_schemas.difference(metadata_schemas):
