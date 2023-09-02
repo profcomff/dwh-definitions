@@ -17,4 +17,4 @@ test: venv migrate
 	source ./venv/bin/activate && python3 -m pytest --verbosity=2 --showlocals --log-level=DEBUG
 
 migrate: venv
-	source ./venv/bin/activate && alembic upgrade head
+source ./venv/bin/activate && alembic upgrade head
