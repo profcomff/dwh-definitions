@@ -90,7 +90,7 @@ def run_migrations_offline():
     script output.
 
     """
-    url = os.getenv('DB_DSN', 'postgresql://postgres:12345@localhost:5432/postgres')
+    url = os.getenv('DB_DSN', 'postgresql://postgres:postgres@localhost:5432/postgres')
     context.configure(
         url=url,
         target_metadata=target_metadata,
@@ -114,7 +114,7 @@ def run_migrations_online():
 
     """
     configuration = config.get_section(config.config_ini_section)
-    configuration["sqlalchemy.url"] = os.getenv('DB_DSN', 'postgresql://postgres:12345@localhost:5432/postgres')
+    configuration["sqlalchemy.url"] = os.getenv('DB_DSN', 'postgresql://postgres:postgres@localhost:5432/postgres')
     connectable = engine_from_config(
         configuration,
         prefix="sqlalchemy.",
