@@ -1,17 +1,7 @@
-import enum
-from datetime import datetime
-
 import sqlalchemy as sa
 from sqlalchemy import Column
 
 from profcomff_definitions.base import Base
-
-
-class Actions(str, enum.Enum):
-    LOGGED_IN: str = "logged_in"
-    LOGGED_OUT: str = "logged_out"
-    AUTHORIZED: str = "authorized"
-    INSTALLED: str = "installed"
 
 
 class User(Base):

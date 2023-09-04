@@ -1,28 +1,13 @@
 from __future__ import annotations
 
 from datetime import datetime
-from enum import Enum
-from typing import Final
 
 from sqlalchemy import Boolean, DateTime
 from sqlalchemy import Enum as DbEnum
-from sqlalchemy import ForeignKey, Integer, String
+from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from profcomff_definitions.base import Base
-
-
-class ViewType(str, Enum):
-    """
-    Тип отображения пользоватльских данных в ответе `GET /user/{user_id}`
-    ALL: {category: {param: [val1, val2, ...]}}
-    LAST: {category: {param: last_modified_value}}
-    MOST_TRUSTED: {category: {param: most_trusted_value}}
-    """
-
-    ALL: Final[str] = "all"
-    LAST: Final[str] = "last"
-    MOST_TRUSTED: Final[str] = "most_trusted"
 
 
 class Category(Base):
@@ -52,7 +37,7 @@ class Param(Base):
     category_id: Mapped[int] = mapped_column(Integer, primary_key=True)
     is_required: Mapped[bool] = mapped_column(Boolean)
     changeable: Mapped[bool] = mapped_column(Boolean)
-    type: Mapped[ViewType] = mapped_column(DbEnum(ViewType, native_enum=False))
+    type: Mapped[str] = mapped_column(String)
     create_ts: Mapped[datetime] = mapped_column(DateTime)
     modify_ts: Mapped[datetime] = mapped_column(DateTime)
     is_deleted: Mapped[bool] = mapped_column(Boolean)

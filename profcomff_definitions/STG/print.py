@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from datetime import datetime
 
 from sqlalchemy import Boolean, Column, DateTime, Integer, String
@@ -9,8 +7,6 @@ from profcomff_definitions.base import Base
 
 
 class UnionMember(Base):
-    __tablename__ = 'union_member'
-
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     surname: Mapped[str] = mapped_column(String)
     union_number: Mapped[str] = mapped_column(String)
@@ -18,8 +14,6 @@ class UnionMember(Base):
 
 
 class File(Base):
-    __tablename__ = 'file'
-
     id: Mapped[int] = Column(Integer, primary_key=True)
     pin: Mapped[str] = Column(String)
     file: Mapped[str] = Column(String)
@@ -34,8 +28,6 @@ class File(Base):
 
 
 class PrintFact(Base):
-    __tablename__ = 'print_fact'
-
     id: Mapped[int] = Column(Integer, primary_key=True)
     file_id: Mapped[int] = Column(Integer)
     owner_id: Mapped[int] = Column(Integer)

@@ -3,11 +3,8 @@
 from __future__ import annotations
 
 from datetime import datetime
-from enum import Enum
 
-from sqlalchemy import JSON, Boolean, DateTime
-from sqlalchemy import Enum as DbEnum
-from sqlalchemy import ForeignKey, Integer, String, Text
+from sqlalchemy import JSON, Boolean, DateTime, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from profcomff_definitions.base import Base
@@ -25,14 +22,9 @@ class Credentials(Base):
     update_ts: Mapped[datetime] = mapped_column(DateTime)
 
 
-class Direction(str, Enum):
-    NORTH: str = "North"
-    SOUTH: str = "South"
-
-
 class Room(Base):
     name: Mapped[str] = mapped_column(String, primary_key=True)
-    direction: Mapped[Direction] = mapped_column(DbEnum(Direction, native_enum=False))
+    direction: Mapped[str] = mapped_column(String)
     building: Mapped[str] = mapped_column(String)
     building_url: Mapped[str] = mapped_column(String)
     is_deleted: Mapped[bool] = mapped_column(Boolean)
@@ -77,16 +69,10 @@ class EventsGroups(Base):
     group_id: Mapped[int] = mapped_column(Integer)
 
 
-class ApproveStatuses(str, Enum):
-    APPROVED: str = "Approved"
-    DECLINED: str = "Declined"
-    PENDING: str = "Pending"
-
-
 class Photo(Base):
     lecturer_id: Mapped[int] = mapped_column(Integer, primary_key=True)
     link: Mapped[str] = mapped_column(String)
-    approve_status: Mapped[ApproveStatuses] = mapped_column(DbEnum(ApproveStatuses, native_enum=False))
+    approve_status: Mapped[str] = mapped_column(String)
     is_deleted: Mapped[bool] = mapped_column(Boolean)
 
 
@@ -94,7 +80,7 @@ class CommentLecturer(Base):
     lecturer_id: Mapped[int] = mapped_column(Integer, primary_key=True)
     author_name: Mapped[str] = mapped_column(String)
     text: Mapped[str] = mapped_column(String)
-    approve_status: Mapped[ApproveStatuses] = mapped_column(DbEnum(ApproveStatuses, native_enum=False))
+    approve_status: Mapped[str] = mapped_column(String)
     create_ts: Mapped[datetime] = mapped_column(DateTime)
     update_ts: Mapped[datetime] = mapped_column(DateTime)
     is_deleted: Mapped[bool] = mapped_column(Boolean)
@@ -104,7 +90,7 @@ class CommentEvent(Base):
     event_id: Mapped[int] = mapped_column(Integer, primary_key=True)
     author_name: Mapped[str] = mapped_column(String)
     text: Mapped[str] = mapped_column(String)
-    approve_status: Mapped[ApproveStatuses] = mapped_column(DbEnum(ApproveStatuses, native_enum=False))
+    approve_status: Mapped[str] = mapped_column(String)
     create_ts: Mapped[datetime] = mapped_column(DateTime)
     update_ts: Mapped[datetime] = mapped_column(DateTime)
     is_deleted: Mapped[bool] = mapped_column(Boolean)
