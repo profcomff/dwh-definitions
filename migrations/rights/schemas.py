@@ -1,16 +1,10 @@
 import os
-from pathlib import Path
 
-import dotenv
 from alembic.autogenerate import comparators
 from sqlalchemy import text
 
 from .operations_groups import CreateGroupOp, DeleteGroupOp, GrantOnSchemaOp, RevokeOnSchemaOp  # noqa
 from .operations_tables import GrantRightsOp, RevokeRightsOp
-
-
-REPO_ROOT = Path(os.path.abspath(os.path.dirname(__file__))).parent.parent.resolve()
-dotenv.load_dotenv(REPO_ROOT / ".env")
 
 
 @comparators.dispatch_for("schema")
