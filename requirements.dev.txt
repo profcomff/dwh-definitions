@@ -1,3 +1,4 @@
+alembic
 autoflake
 black
 setuptools

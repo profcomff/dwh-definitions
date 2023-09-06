@@ -1,15 +1,9 @@
 import os
-from pathlib import Path
 
-import dotenv
 from alembic.autogenerate import renderers
 
 from .operations_groups import CreateGroupOp, DeleteGroupOp, GrantOnSchemaOp, RevokeOnSchemaOp
 from .operations_tables import GrantRightsOp, RevokeRightsOp
-
-
-REPO_ROOT = Path(os.path.abspath(os.path.dirname(__file__))).parent.parent.resolve()
-dotenv.load_dotenv(REPO_ROOT / ".env")
 
 
 @renderers.dispatch_for(CreateGroupOp)
