@@ -1,4 +1,4 @@
-from . import DM, DWH, ODS, STG
-
-
-__all__ = ["DM", "DWH", "ODS", "STG"]
+from .ODS import *
+from .DWH import *
+from .DM import *
+from STG import *

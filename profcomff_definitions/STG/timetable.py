@@ -1,7 +1,3 @@
-"""Database common classes and methods
-"""
-from __future__ import annotations
-
 from datetime import datetime
 
 from sqlalchemy import JSON, Boolean, DateTime, Integer, String, Text
