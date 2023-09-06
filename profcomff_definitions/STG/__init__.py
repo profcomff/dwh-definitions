@@ -1,13 +1,10 @@
-from os import listdir
-from os.path import isfile, join
 import ast
 import os
+from os import listdir
+from os.path import isfile, join
 
-ROOT_DIR = os.path.dirname(
-    os.path.dirname(
-        os.path.abspath(__file__)
-    )
-)
+
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 for folder in ['DM', 'DWH', 'ODS', 'STG']:
     onlyfiles = [f for f in listdir(ROOT_DIR + '/' + folder) if isfile(join(ROOT_DIR + '/' + folder, f))]
     onlyfiles.remove('README.md')
