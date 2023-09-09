@@ -1,21 +1,70 @@
-import ast
-import os
-from os import listdir
-from os.path import isfile, join
+from .auth import AuthMethod, Group, GroupScope, Scope, User, UserGroup, UserMessageDelay, UserSession, UserSessionScope
+from .marketing import ActionsInfo, User
+from .pinger import Alert, Fetcher, Metric, Receiver
+from .print import File, PrintFact
+from .print import UnionMember as PrintUnionMember
+from .services import Button, Category
+from .services import Scope as ServicesScope
+from .social import VkGroups, WebhookStorage
+from .tgbot import TgUser
+from .timetable import (
+    CommentEvent,
+    CommentLecturer,
+    Credentials,
+    Event,
+    EventsGroups,
+    EventsLecturers,
+    EventsRooms,
+    Group,
+    Lecturer,
+    Photo,
+    Room,
+)
+from .union_member import UnionMember
+from .userdata import Category, Info, Param, Source
+from .vkbot import VkUser
 
 
-ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-for folder in ['DM', 'DWH', 'ODS', 'STG']:
-    onlyfiles = [f for f in listdir(ROOT_DIR + '/' + folder) if isfile(join(ROOT_DIR + '/' + folder, f))]
-    onlyfiles.remove('README.md')
-    onlyfiles.remove('__init__.py')
-    __all__ = []
-
-    for file in onlyfiles:
-        file_path = ROOT_DIR + '/' + folder + '/' + file
-        with open(file_path, 'r', encoding='utf-8') as f:
-            tree = ast.parse(f.read())
-
-        for node in ast.walk(tree):
-            if isinstance(node, ast.ClassDef):
-                __all__.append(node.name)
+__all__ = [
+    "UnionMember",
+    'AuthMethod',
+    'Group',
+    'GroupScope',
+    'Scope',
+    'User',
+    'UserGroup',
+    'UserMessageDelay',
+    'UserSession',
+    'UserSessionScope',
+    'ActionsInfo',
+    'User',
+    'Alert',
+    'Fetcher',
+    'Metric',
+    'Receiver',
+    'File',
+    'PrintFact',
+    'PrintUnionMember',
+    'Button',
+    'Category',
+    'ServicesScope',
+    'VkGroups',
+    'WebhookStorage',
+    'TgUser',
+    'CommentEvent',
+    'CommentLecturer',
+    'Credentials',
+    'Event',
+    'EventsGroups',
+    'EventsLecturers',
+    'EventsRooms',
+    'Group',
+    'Lecturer',
+    'Photo',
+    'Room',
+    'Category',
+    'Info',
+    'Param',
+    'Source',
+    'VkUser',
+]

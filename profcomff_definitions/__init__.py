@@ -1,5 +1,4 @@
-from STG import *
-
-from .DM import *
-from .DWH import *
-from .ODS import *
+from .DM import *  # noqa
+from .DWH import *  # noqa
+from .ODS import *  # noqa
+from .STG import *  # noqa

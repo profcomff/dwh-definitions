@@ -77,7 +77,6 @@ def compare_groups(autogen_context, upgrade_ops, schemas):
 
     # Revoke rights from deleted schemas
     for sch in all_conn_schemas.difference(metadata_schemas):
-        print(sch)
         tables = autogen_context.metadata.tables
         for render_scope in ['read', 'write', 'all']:
             group_name = (
@@ -116,9 +115,31 @@ def compare_groups(autogen_context, upgrade_ops, schemas):
             if new_table.split('.')[0] == sch and new_table.split('.')[1] not in [
                 table[1] for table in all_conn_tables
             ]:
-                for scope in ['read', 'write', 'all']:
-                    group_name = f'dwh_{sch}_{scope}'.lower()
-                    upgrade_ops.ops.append(GrantRightsOp(group_name, new_table))
+                for render_scope in ['read', 'write', 'all']:
+                    render_group_name = f'dwh_{sch}_{render_scope}'.lower()
+                    group_name = (
+                        f'test_dwh_{sch}_{render_scope}'.lower()
+                        if os.getenv("ENVIRONMENT") != "production"
+                        else f'prod_dwh_{sch}_{render_scope}'.lower()
+                    )
+                    upgrade_scopes = []
+                    all_conn_scopes = list(
+                        autogen_context.connection.execute(
+                            text(
+                                f"SELECT privilege_type FROM information_schema.role_table_grants WHERE "
+                                f"table_schema='{sch}' and grantee='{group_name}'"
+                                # Потому что тут сравнение по УЖЕ СУЩЕСТВУЮЩИМ группам идет
+                            )
+                        )
+                    )
+                    if (render_scope not in all_conn_scopes or not all_conn_scopes) and (
+                        new_table.split(".")[0] == sch
+                    ):
+                        upgrade_scopes.append(render_scope)
+                    if new_table.split(".")[0] == sch:
+                        group_name = f'dwh_{sch}_{render_scope}'.lower()
+                        upgrade_ops.ops.append(GrantRightsOp(group_name, upgrade_scopes, new_table))
+                        upgrade_scopes = []
 
     # Revoke rights on removed tables in existing schemas
     for sch in all_conn_schemas:
@@ -134,6 +155,19 @@ def compare_groups(autogen_context, upgrade_ops, schemas):
         )
         for removed_table in all_conn_tables:
             if removed_table[1] not in [table.split('.')[1] for table in metadata_tables]:
-                for scope in ['read', 'write', 'all']:
-                    group_name = f'dwh_{sch}_{scope}'.lower()
-                    upgrade_ops.ops.append(RevokeRightsOp(group_name, ".".join([removed_table[0], removed_table[1]])))
+                for render_scope in ['read', 'write', 'all']:
+                    group_name = (
+                        f'test_dwh_{sch}_{render_scope}'.lower()
+                        if os.getenv("ENVIRONMENT") != "production"
+                        else f'prod_dwh_{sch}_{render_scope}'.lower()
+                    )
+                    all_conn_scopes = list(
+                        autogen_context.connection.execute(
+                            text(
+                                f"SELECT privilege_type FROM information_schema.role_table_grants WHERE "
+                                f"table_schema='{sch}' and grantee='{group_name}'"
+                            )
+                        )
+                    )
+                    delete_scopes = [scope for scope in all_conn_scopes]
+                    upgrade_ops.ops.append(RevokeRightsOp(group_name, delete_scopes, ".".join(removed_table[0:2])))
