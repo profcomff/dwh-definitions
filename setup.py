@@ -11,7 +11,7 @@ with open("requirements.txt", "r", encoding="utf-8") as req_file:
 
 setup(
     name="profcomff_definitions",
-    version="2023.08.22",
+    version="2023.09.10",
     author="Stanislav Roslavtsev",
     author_email="roslavtzev.stanislaw@yandex.ru",
     url="https://github.com/profcomff/dwh-definitions",
