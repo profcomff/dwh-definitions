@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Boolean, Column, DateTime, Integer, String
+from sqlalchemy import BIGINT, Boolean, Column, DateTime, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from profcomff_definitions.base import Base
@@ -33,3 +33,15 @@ class PrintFact(Base):
     owner_id: Mapped[int] = Column(Integer)
     created_at: Mapped[datetime] = Column(DateTime)
     sheets_used: Mapped[int] = Column(Integer)
+
+
+class VkUser(Base):
+    vk_id: Mapped[int] = mapped_column(BIGINT, primary_key=True)
+    surname: Mapped[int] = mapped_column(String)
+    number: Mapped[int] = mapped_column(String)
+
+
+class TgUser(Base):
+    tg_id: Mapped[int] = mapped_column(BIGINT, primary_key=True)
+    surname: Mapped[int] = mapped_column(String)
+    number: Mapped[int] = mapped_column(String)

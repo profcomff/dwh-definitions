@@ -19,7 +19,8 @@ class Credentials(Base):
 
 
 class Room(Base):
-    name: Mapped[str] = mapped_column(String, primary_key=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    name: Mapped[str] = mapped_column(String)
     direction: Mapped[str] = mapped_column(String)
     building: Mapped[str] = mapped_column(String)
     building_url: Mapped[str] = mapped_column(String)
@@ -37,8 +38,9 @@ class Lecturer(Base):
 
 
 class Group(Base):
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
     name: Mapped[str] = mapped_column(String)
-    number: Mapped[str] = mapped_column(String, primary_key=True)
+    number: Mapped[str] = mapped_column(String)
     is_deleted: Mapped[bool] = mapped_column(Boolean)
 
 
@@ -51,29 +53,34 @@ class Event(Base):
 
 
 class EventsLecturers(Base):
-    event_id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    event_id: Mapped[int] = mapped_column(Integer)
     lecturer_id: Mapped[int] = mapped_column(Integer)
 
 
 class EventsRooms(Base):
-    event_id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    event_id: Mapped[int] = mapped_column(Integer)
     room_id: Mapped[int] = mapped_column(Integer)
 
 
 class EventsGroups(Base):
-    event_id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    event_id: Mapped[int] = mapped_column(Integer)
     group_id: Mapped[int] = mapped_column(Integer)
 
 
 class Photo(Base):
-    lecturer_id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    lecturer_id: Mapped[int] = mapped_column(Integer)
     link: Mapped[str] = mapped_column(String)
     approve_status: Mapped[str] = mapped_column(String)
     is_deleted: Mapped[bool] = mapped_column(Boolean)
 
 
 class CommentLecturer(Base):
-    lecturer_id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    lecturer_id: Mapped[int] = mapped_column(Integer)
     author_name: Mapped[str] = mapped_column(String)
     text: Mapped[str] = mapped_column(String)
     approve_status: Mapped[str] = mapped_column(String)
@@ -83,7 +90,8 @@ class CommentLecturer(Base):
 
 
 class CommentEvent(Base):
-    event_id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    event_id: Mapped[int] = mapped_column(Integer)
     author_name: Mapped[str] = mapped_column(String)
     text: Mapped[str] = mapped_column(String)
     approve_status: Mapped[str] = mapped_column(String)

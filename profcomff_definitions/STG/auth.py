@@ -23,13 +23,15 @@ class Group(Base):
 
 
 class UserGroup(Base):
-    user_id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    user_id: Mapped[int] = mapped_column(Integer)
     group_id: Mapped[int] = mapped_column(Integer)
     is_deleted: Mapped[bool] = mapped_column(Boolean)
 
 
 class AuthMethod(Base):
-    user_id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    user_id: Mapped[int] = mapped_column(Integer)
     auth_method: Mapped[str] = mapped_column(String)
     param: Mapped[str] = mapped_column(String)
     value: Mapped[str] = mapped_column(String)
@@ -39,8 +41,9 @@ class AuthMethod(Base):
 
 
 class UserSession(Base):
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
     session_name: Mapped[str] = mapped_column(String)
-    user_id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    user_id: Mapped[int] = mapped_column(Integer)
     expires: Mapped[datetime.datetime] = mapped_column(DateTime)
     token: Mapped[str] = mapped_column(String)
     last_activity: Mapped[datetime.datetime] = mapped_column(DateTime)
@@ -48,20 +51,23 @@ class UserSession(Base):
 
 
 class Scope(Base):
-    creator_id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    creator_id: Mapped[int] = mapped_column(Integer)
     name: Mapped[str] = mapped_column(String)
     comment: Mapped[str] = mapped_column(String)
     is_deleted: Mapped[bool] = mapped_column(Boolean)
 
 
 class GroupScope(Base):
-    group_id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    group_id: Mapped[int] = mapped_column(Integer)
     scope_id: Mapped[int] = mapped_column(Integer)
     is_deleted: Mapped[bool] = mapped_column(Boolean)
 
 
 class UserSessionScope(Base):
-    user_session_id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    user_session_id: Mapped[int] = mapped_column(Integer)
     scope_id: Mapped[int] = mapped_column(Integer)
     is_deleted: Mapped[bool] = mapped_column(Boolean)
 
