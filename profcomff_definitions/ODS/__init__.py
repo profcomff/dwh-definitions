@@ -13,4 +13,3 @@ for f in files_in_dir:
             setattr(sys.modules[__name__], i.__name__, i)
         except AttributeError:
             pass
-
