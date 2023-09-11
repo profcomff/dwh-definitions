@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import DateTime, Integer, String
+from sqlalchemy import DateTime, Integer, String, func
 from sqlalchemy.orm import Mapped, mapped_column
 
 from profcomff_definitions.base import Base
@@ -12,4 +12,4 @@ class Contacts(Base):
     email: Mapped[int] = mapped_column(String, nullable=True)
     phone: Mapped[int] = mapped_column(String, nullable=True)
     workplace: Mapped[int] = mapped_column(String, nullable=True)
-    upload_ts: Mapped[datetime] = mapped_column(DateTime, default="now()")
+    upload_ts: Mapped[datetime] = mapped_column(DateTime, default=func.now())

@@ -1,17 +1,18 @@
 """physics contacts
 
-Revision ID: 909b6b81f76d
+Revision ID: 1e868db5c6ea
 Revises: 77d9cf76373d
-Create Date: 2023-09-11 21:14:05.276811
+Create Date: 2023-09-11 21:26:56.710172
 
 """
-from alembic import op
-import sqlalchemy as sa
 import os
+
+import sqlalchemy as sa
+from alembic import op
 
 
 # revision identifiers, used by Alembic.
-revision = '909b6b81f76d'
+revision = '1e868db5c6ea'
 down_revision = '77d9cf76373d'
 branch_labels = None
 depends_on = None
@@ -26,7 +27,7 @@ def upgrade():
         sa.Column('email', sa.String(), nullable=True),
         sa.Column('phone', sa.String(), nullable=True),
         sa.Column('workplace', sa.String(), nullable=True),
-        sa.Column('upload_ts', sa.DateTime(), nullable=False),
+        sa.Column('upload_ts', sa.DateTime(), server_default=sa.func.now(), nullable=False),
         sa.PrimaryKeyConstraint('id'),
         schema='STG_PHYSICS',
     )
