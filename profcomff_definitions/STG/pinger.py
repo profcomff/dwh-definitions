@@ -1,5 +1,3 @@
-"""Классы хранения настроек нотификаций
-"""
 from datetime import datetime
 
 from sqlalchemy import JSON, Boolean, DateTime, Float, Integer, String

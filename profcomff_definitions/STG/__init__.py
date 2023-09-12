@@ -1,5 +1,6 @@
 from .auth import AuthMethod, Group, GroupScope, Scope, User, UserGroup, UserMessageDelay, UserSession, UserSessionScope
 from .marketing import ActionsInfo, User
+from .physics import Contacts
 from .pinger import Alert, Fetcher, Metric, Receiver
 from .print import File, PrintFact, TgUser
 from .print import UnionMember as PrintUnionMember
@@ -66,4 +67,5 @@ __all__ = [
     'Param',
     'Source',
     'VkUser',
+    'Contacts',
 ]

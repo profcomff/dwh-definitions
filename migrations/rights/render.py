@@ -1,5 +1,3 @@
-import os
-
 from alembic.autogenerate import renderers
 
 from .operations_groups import CreateGroupOp, DeleteGroupOp, GrantOnSchemaOp, RevokeOnSchemaOp

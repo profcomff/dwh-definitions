@@ -14,8 +14,6 @@ class User(Base):
 
 
 class ActionsInfo(Base):
-    """Actions from user"""
-
     id = Column(sa.Integer, primary_key=True)
     user_id = Column(sa.Integer)
     action = Column(sa.String)
