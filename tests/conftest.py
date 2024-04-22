@@ -16,6 +16,7 @@ def migration() -> None:
     alembic_cfg = Config()
     alembic_cfg.set_main_option('script_location', str(REPO_ROOT / "migrations"))
     alembic_cfg.set_main_option('sqlalchemy.url', "postgresql://postgres:postgres@localhost:5432/postgres")
+    command.upgrade(alembic_cfg, 'head')
     command.revision(alembic_cfg, autogenerate=True, message="tests")
     command.upgrade(alembic_cfg, 'head')
     yield migration
