@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import JSON, Boolean, DateTime, Integer, String, Text, VARCHAR
+from sqlalchemy import JSON, VARCHAR, Boolean, DateTime, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from profcomff_definitions.base import Base
