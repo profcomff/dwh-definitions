@@ -97,11 +97,15 @@ class CommentEvent(Base):
     update_ts: Mapped[datetime] = mapped_column(DateTime)
     is_deleted: Mapped[bool] = mapped_column(Boolean)
 
+
 class RawHtml(Base):
     url: Mapped[str] = mapped_column(VARCHAR(256), default=None)
-    raw_html: Mapped[str] = mapped_column(String, default=None)
+    raw_html: Mapped[str] = mapped_column(Text, default=None)
+
+    __mapper_args__ = {"primary_key": [url, raw_html]}  # Used only to correctly map ORM object to sql table
 
 
 class RawHtmlOld(Base):
     url: Mapped[str] = mapped_column(VARCHAR(256), default=None)
-    raw_html: Mapped[str] = mapped_column(String, default=None)
+    raw_html: Mapped[str] = mapped_column(Text, default=None)
+    __mapper_args__ = {"primary_key": [url, raw_html]}  # Used only to correctly map ORM object to sql table
