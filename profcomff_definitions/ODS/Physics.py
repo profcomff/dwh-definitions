@@ -1,6 +1,7 @@
 from datetime import datetime
 
-from sqlalchemy import DateTime, Integer, String, func, EmailType
+from sqlalchemy import DateTime, Integer, String, func
+from sqlalchemy_utils import EmailType
 from sqlalchemy.orm import Mapped, mapped_column
 
 from profcomff_definitions.base import Base
