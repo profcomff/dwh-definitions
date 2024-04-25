@@ -1,4 +1,5 @@
-from sqlalchemy import Integer, String,  URLType
+from sqlalchemy import Integer, String
+from sqlalchemy_utils import URLType
 from sqlalchemy.orm import Mapped, mapped_column
 
 from profcomff_definitions.base import Base
