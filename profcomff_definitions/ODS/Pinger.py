@@ -1,6 +1,7 @@
 from datetime import datetime
 
-from sqlalchemy import JSON, Boolean, DateTime, Float, Integer, String,  URLType
+from sqlalchemy import JSON, Boolean, DateTime, Float, Integer, String
+from sqlalchemy_utils import URLType
 from sqlalchemy.orm import Mapped, mapped_column
 
 from profcomff_definitions.base import Base
