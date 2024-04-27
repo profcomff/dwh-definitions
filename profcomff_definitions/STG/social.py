@@ -10,12 +10,12 @@ class WebhookStorage(Base):
     id: Mapped[int] = mapped_column(sa.Integer, primary_key=True)
     system: Mapped[str] = mapped_column(sa.String)
     message: Mapped[sa.JSON] = mapped_column(sa.JSON(True))
+    event_ts: Mapped[datetime] = mapped_column(sa.DateTime)
 
 
-class VkGroups(Base):
+class VkGroup(Base):
     id: Mapped[int] = mapped_column(sa.Integer, primary_key=True)
     group_id: Mapped[int] = mapped_column(sa.Integer)
     confirmation_token: Mapped[str] = mapped_column(sa.String)
     secret_key: Mapped[str] = mapped_column(sa.String)
-    create_ts: Mapped[datetime] = mapped_column(sa.DateTime)
-    update_ts: Mapped[datetime] = mapped_column(sa.DateTime)
+    
