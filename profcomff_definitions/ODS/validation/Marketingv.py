@@ -1,34 +1,30 @@
-from pydantic import BaseModel, model_validator
-from sqlalchemy import Integer, Boolean, Column, String, DateTime
-from sqlalchemy_utils import EmailType
-from sqlalchemy.orm import mapped_column, Mapped
-from datetime import datetime
+
 
 
 #Marketing
 class UserM(BaseModel):
-    id = Column(sa.Integer, primary_key=True)
-    union_number = Column(sa.Integer)
-    user_agent = Column(sa.String)
-    auth_user_id = Column(sa.Integer)
-    modify_ts = Column(sa.DateTime)
-    create_ts = Column(sa.DateTime)
+    id: int =  Field(primary_key=True)
+    union_number: int
+    user_agent: str
+    auth_user_id: int
+    modify_ts: datetime.datetime
+    create_ts: datetime.datetime
 class ActionsInfoM(BaseModel):
-    id = Column(sa.Integer, primary_key=True)
-    user_id = Column(sa.Integer)
-    action = Column(sa.String)
-    path_from = Column(sa.String)
-    path_to = Column(sa.String)
-    additional_data = Column(sa.String)
-    create_ts = Column(sa.DateTime)
+    id: int = Field(primary_key=True)
+    user_id: int
+    action: str
+    path_from: str
+    path_to: str
+    additional_data: str
+    create_ts: datetime.datetime
 #Physics
 class ContactsPh(BaseModel):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    name: Mapped[str] = mapped_column(String, nullable=True)
-    email = sa.Column(EmailType)
-    phone: Mapped[int] = mapped_column(Integer, nullable=True)
-    workplace: Mapped[int] = mapped_column(Integer, nullable=True)
-    upload_ts: Mapped[datetime] = mapped_column(DateTime, default=func.now())
+    id: int = Field(primary_key=True)
+    name: str = Field(nullable=True)
+    email: EmailStr
+    phone: int = Field(nullable=True)
+    workplace: int = Field(nullable=True)
+    upload_ts: datetime =Field(default=func.now())
 
     @model_validator(mode='before')
     def validate_card(self):
