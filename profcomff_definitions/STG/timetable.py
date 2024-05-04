@@ -1,111 +1,97 @@
 from datetime import datetime
 
-from sqlalchemy import JSON, VARCHAR, Boolean, DateTime, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from profcomff_definitions.base import Base
 
 
 class Credentials(Base):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    group: Mapped[str] = mapped_column(String)
-    email: Mapped[str] = mapped_column(String)
-    scope: Mapped[JSON] = mapped_column(JSON)
-    token: Mapped[JSON] = mapped_column(JSON)
-    create_ts: Mapped[datetime] = mapped_column(DateTime)
-    update_ts: Mapped[datetime] = mapped_column(DateTime)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    group: Mapped[str | None]
+    email: Mapped[str | None]
+    scope: Mapped[str | None]
+    token: Mapped[str | None]
+    create_ts: Mapped[datetime | None]
+    update_ts: Mapped[datetime | None]
 
 
 class Room(Base):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    name: Mapped[str] = mapped_column(String)
-    direction: Mapped[str] = mapped_column(String)
-    building: Mapped[str] = mapped_column(String)
-    building_url: Mapped[str] = mapped_column(String)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str | None]
+    direction: Mapped[str | None]
+    building: Mapped[str | None]
+    building_url: Mapped[str | None]
+    is_deleted: Mapped[bool | None]
 
 
 class Lecturer(Base):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    first_name: Mapped[str] = mapped_column(String)
-    middle_name: Mapped[str] = mapped_column(String)
-    last_name: Mapped[str] = mapped_column(String)
-    avatar_id: Mapped[int] = mapped_column(Integer)
-    description: Mapped[str] = mapped_column(Text)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    first_name: Mapped[str | None]
+    middle_name: Mapped[str | None]
+    last_name: Mapped[str | None]
+    avatar_id: Mapped[int | None]
+    description: Mapped[str | None]
+    is_deleted: Mapped[bool | None]
 
 
 class Group(Base):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    name: Mapped[str] = mapped_column(String)
-    number: Mapped[str] = mapped_column(String)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str | None]
+    number: Mapped[str | None]
+    is_deleted: Mapped[bool | None]
 
 
 class Event(Base):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    name: Mapped[str] = mapped_column(String)
-    start_ts: Mapped[datetime] = mapped_column(DateTime)
-    end_ts: Mapped[datetime] = mapped_column(DateTime)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str | None]
+    start_ts: Mapped[datetime | None]
+    end_ts: Mapped[datetime | None]
+    is_deleted: Mapped[bool | None]
 
 
 class EventsLecturers(Base):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    event_id: Mapped[int] = mapped_column(Integer)
-    lecturer_id: Mapped[int] = mapped_column(Integer)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    event_id: Mapped[int | None]
+    lecturer_id: Mapped[int | None]
 
 
 class EventsRooms(Base):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    event_id: Mapped[int] = mapped_column(Integer)
-    room_id: Mapped[int] = mapped_column(Integer)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    event_id: Mapped[int | None]
+    room_id: Mapped[int | None]
 
 
 class EventsGroups(Base):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    event_id: Mapped[int] = mapped_column(Integer)
-    group_id: Mapped[int] = mapped_column(Integer)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    event_id: Mapped[int | None]
+    group_id: Mapped[int | None]
 
 
 class Photo(Base):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    lecturer_id: Mapped[int] = mapped_column(Integer)
-    link: Mapped[str] = mapped_column(String)
-    approve_status: Mapped[str] = mapped_column(String)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    lecturer_id: Mapped[int | None]
+    link: Mapped[str | None]
+    approve_status: Mapped[str | None]
+    is_deleted: Mapped[bool | None]
 
 
 class CommentLecturer(Base):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    lecturer_id: Mapped[int] = mapped_column(Integer)
-    author_name: Mapped[str] = mapped_column(String)
-    text: Mapped[str] = mapped_column(String)
-    approve_status: Mapped[str] = mapped_column(String)
-    create_ts: Mapped[datetime] = mapped_column(DateTime)
-    update_ts: Mapped[datetime] = mapped_column(DateTime)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    lecturer_id: Mapped[int | None]
+    author_name: Mapped[str | None]
+    text: Mapped[str | None]
+    approve_status: Mapped[str | None]
+    create_ts: Mapped[datetime | None]
+    update_ts: Mapped[datetime | None]
+    is_deleted: Mapped[bool | None]
 
 
 class CommentEvent(Base):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    event_id: Mapped[int] = mapped_column(Integer)
-    author_name: Mapped[str] = mapped_column(String)
-    text: Mapped[str] = mapped_column(String)
-    approve_status: Mapped[str] = mapped_column(String)
-    create_ts: Mapped[datetime] = mapped_column(DateTime)
-    update_ts: Mapped[datetime] = mapped_column(DateTime)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
-
-
-class RawHtml(Base):
-    url: Mapped[str] = mapped_column(VARCHAR(256), default=None)
-    raw_html: Mapped[str] = mapped_column(Text, default=None)
-
-    __mapper_args__ = {"primary_key": [url, raw_html]}  # Used only to correctly map ORM object to sql table
-
-
-class RawHtmlOld(Base):
-    url: Mapped[str] = mapped_column(VARCHAR(256), default=None)
-    raw_html: Mapped[str] = mapped_column(Text, default=None)
-    __mapper_args__ = {"primary_key": [url, raw_html]}  # Used only to correctly map ORM object to sql table
+    id: Mapped[int] = mapped_column(primary_key=True)
+    event_id: Mapped[int | None]
+    author_name: Mapped[str | None]
+    text: Mapped[str | None]
+    approve_status: Mapped[str | None]
+    create_ts: Mapped[datetime | None]
+    update_ts: Mapped[datetime | None]
+    is_deleted: Mapped[bool | None]
