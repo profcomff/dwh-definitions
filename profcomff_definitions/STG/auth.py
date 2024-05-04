@@ -1,6 +1,6 @@
 import datetime
 
-from sqlalchemy import Boolean, DateTime, Integer, String
+from sqlalchemy import Boolean, DateTime, Integer, String, Double
 from sqlalchemy.orm import Mapped, mapped_column
 
 from profcomff_definitions.base import Base
@@ -77,3 +77,13 @@ class UserMessageDelay(Base):
     delay_time: Mapped[datetime.datetime] = mapped_column(DateTime)
     user_email: Mapped[str] = mapped_column(String)
     user_ip: Mapped[str] = mapped_column(String)
+
+
+class DynamicOption(Base):
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    create_ts: Mapped[datetime.datetime] = mapped_column(DateTime)
+    value_integer: Mapped[int] = mapped_column(Integer)
+    value_string: Mapped[str] = mapped_column(String)
+    value_double: Mapped[float] = mapped_column(Double)
+    update_ts: Mapped[datetime.datetime] = mapped_column(DateTime)
+    name: Mapped[str] = mapped_column(String)
