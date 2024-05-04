@@ -1,14 +1,14 @@
-from pydantic import BaseModel, model_validator
-from sqlalchemy import Integer, Boolean, Column, String, DateTime
-from sqlalchemy.orm import mapped_column, Mapped
-from sqlalchemy_utils import URLType 
+ from pydantic import BaseModel, model_validator
+from pydantic import int, str, Field, EmailStr, AnyURL, Json
+from datetime import datetime
+
 
 
 class CategorySv(BaseModel):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    order: Mapped[int] = mapped_column(Integer)
-    name: Mapped[str] = mapped_column(String)
-    type: Mapped[str] = mapped_column(String)
+    id: int = Field(primary_key=True)
+    order: int
+    name: str
+    type: str
 
     @model_validator(mode='before')
     def validate_card(self):
@@ -43,13 +43,13 @@ class CategorySv(BaseModel):
         return self
 
 class ButtonSv(BaseModel):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    name: Mapped[str] = mapped_column(String)
-    order: Mapped[int] = mapped_column(Integer)
-    category_id: Mapped[int] = mapped_column(Integer)
-    icon: Mapped[str] = mapped_column(String)
-    link = sa.Column(URLType)
-    type: Mapped[str] = mapped_column(String)
+    id: int = Field(primary_key=True)
+    name: str
+    order: int
+    category_id: int
+    icon: str
+    link: AnyURL
+    type: str
 
     @model_validator(mode='before')
     def validate_card(self):
@@ -84,10 +84,9 @@ class ButtonSv(BaseModel):
         return self
 
 class ScopeSv(BaseModel):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    name: Mapped[str] = mapped_column(String)
-    category_id: Mapped[int] = mapped_column(Integer)
-
+    id: int = Field(primary_key=True)
+    name: str
+    category_id: int
     @model_validator(mode='before')
     def validate_card(self):
 
