@@ -1,23 +1,23 @@
-import sqlalchemy as sa
-from sqlalchemy import Column
+from datetime import datetime
+from sqlalchemy.orm import mapped_column, Mapped
 
 from profcomff_definitions.base import Base
 
 
 class User(Base):
-    id = Column(sa.Integer, primary_key=True)
-    union_number = Column(sa.String, nullable=True)
-    user_agent = Column(sa.String, nullable=True)
-    auth_user_id = Column(sa.Integer, nullable=True)
-    modify_ts = Column(sa.DateTime, nullable=True)
-    create_ts = Column(sa.DateTime, nullable=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    union_number: Mapped[str | None]
+    user_agent: Mapped[str | None]
+    auth_user_id: Mapped[int | None]
+    modify_ts: Mapped[datetime | None]
+    create_ts: Mapped[datetime | None]
 
 
 class ActionsInfo(Base):
-    id = Column(sa.Integer, primary_key=True)
-    user_id = Column(sa.Integer, nullable=True)
-    action = Column(sa.String, nullable=True)
-    path_from = Column(sa.String, nullable=True)
-    path_to = Column(sa.String, nullable=True)
-    additional_data = Column(sa.String, nullable=True)
-    create_ts = Column(sa.DateTime, nullable=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int | None]
+    action: Mapped[str | None]
+    path_from: Mapped[str | None]
+    path_to: Mapped[str | None]
+    additional_data: Mapped[str | None]
+    create_ts: Mapped[datetime | None]
