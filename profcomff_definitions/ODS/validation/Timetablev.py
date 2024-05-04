@@ -1,30 +1,26 @@
 from pydantic import BaseModel, model_validator
-from sqlalchemy import Integer, Boolean, Column, String, DateTime, JSON, Text 
-from sqlalchemy.orm import mapped_column, Mapped
-from sqlalchemy_utils import URLType, EmailType 
-from datetime import datetime 
-from sqlalchemy import Base 
-
+from pydantic import int, str, Field, EmailStr, AnyURL, Json
+from datetime import datetime
 
 
 
 class CredentialsT(BaseModel):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    group: Mapped[str] = mapped_column(String) #группа string? это номер группы, который "109"... и тд?
-    email = sa.Column(EmailType)
-    scope: Mapped[JSON] = mapped_column(JSON)
-    token: Mapped[JSON] = mapped_column(JSON)
-    create_ts: Mapped[datetime] = mapped_column(DateTime)
-    update_ts: Mapped[datetime] = mapped_column(DateTime)
+    id: int = Field(primary_key=True)
+    group: str
+    email = EmailStr
+    scope: Json[Any]
+    token: Json[Any]
+    create_ts: datetime.datetime
+    update_ts: datetime.datetime
 
 
 class RoomT(BaseModel):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    name: Mapped[str] = mapped_column(String)
-    direction: Mapped[str] = mapped_column(String)
-    building: Mapped[str] = mapped_column(String)
-    building_url = sa.Column(URLType)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    id: int =  Field(primary_key=True)
+    name: str
+    direction: str
+    building: str
+    building_url: AnyURL
+    is_deleted: bool
 
     @model_validator(mode='before')
     def validate_card(self):
@@ -59,13 +55,13 @@ class RoomT(BaseModel):
         return self
 
 class LecturerT(BaseModel):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    first_name: Mapped[str] = mapped_column(String)
-    middle_name: Mapped[str] = mapped_column(String)
-    last_name: Mapped[str] = mapped_column(String)
-    avatar_id: Mapped[int] = mapped_column(Integer)
-    description: Mapped[str] = mapped_column(Text)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    id: int = Field(primary_key=True)
+    first_name: str
+    middle_name: str
+    last_name: str
+    avatar_id: str
+    description: str
+    is_deleted: bool
 
     @model_validator(mode='before')
     def validate_card(self):
@@ -124,11 +120,10 @@ class LecturerT(BaseModel):
 
 
 class GroupT(BaseModel):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    name: Mapped[str] = mapped_column(String)
-    number: Mapped[int] = mapped_column(Integer)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
-
+    id: int =Field(primary_key=True)
+    name: str
+    number: int
+    is_deleted: bool
     @model_validator(mode='before')
     def validate_card(self):
         id = self["id"]
@@ -162,11 +157,11 @@ class GroupT(BaseModel):
 
 
 class EventT(BaseModel):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    name: Mapped[str] = mapped_column(String)
-    start_ts: Mapped[datetime] = mapped_column(DateTime)
-    end_ts: Mapped[datetime] = mapped_column(DateTime)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    id: int = Field(primary_key=True)
+    name: str
+    start_ts: datetime.datetime
+    end_ts: datetime.datetime
+    is_deleted: bool
 
     @model_validator(mode='before')
     def validate_card(self):
@@ -201,9 +196,9 @@ class EventT(BaseModel):
 
 
 class EventsLecturersT(BaseModel):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    event_id: Mapped[int] = mapped_column(Integer)
-    lecturer_id: Mapped[int] = mapped_column(Integer)
+    id: int = Field(primary_key=True)
+    event_id: int
+    lecturer_id: int
 
     @model_validator(mode='before')
     def validate_card(self):
@@ -223,9 +218,9 @@ class EventsLecturersT(BaseModel):
 
 
 class EventsRoomsT(Base):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    event_id: Mapped[int] = mapped_column(Integer)
-    room_id: Mapped[int] = mapped_column(Integer)
+    id: int = Field(primary_key=True)
+    event_id: int
+    room_id: int
 
     @model_validator(mode='before')
     def validate_card(self):
@@ -243,9 +238,9 @@ class EventsRoomsT(Base):
         return self
 
 class EventsGroupsT(BaseModel):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    event_id: Mapped[int] = mapped_column(Integer)
-    group_id: Mapped[int] = mapped_column(Integer)
+    id: int = Field(primary_key=True)
+    event_id: int
+    group_id: int
 
     @model_validator(mode='before')
     def validate_card(self):
@@ -264,12 +259,11 @@ class EventsGroupsT(BaseModel):
 
 
 class PhotoT(BaseModel):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    lecturer_id: Mapped[int] = mapped_column(Integer)
-    link =  sa.Column(URLType)
-    approve_status: Mapped[str] = mapped_column(String)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
-
+    id: int = Field(primary_key=True)
+    lecturer_id: int
+    link: AnyURL
+    approve_status: str
+    is_deleted: bool
     @model_validator(mode='before')
     def validate_card(self):
         id = self["id"]
@@ -283,14 +277,14 @@ class PhotoT(BaseModel):
 
 
 class CommentLecturerT(BaseModel):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    lecturer_id: Mapped[int] = mapped_column(Integer)
-    author_name: Mapped[str] = mapped_column(String)
-    text: Mapped[str] = mapped_column(String)
-    approve_status: Mapped[str] = mapped_column(String)
-    create_ts: Mapped[datetime] = mapped_column(DateTime)
-    update_ts: Mapped[datetime] = mapped_column(DateTime)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    id: int = Field(primary_key=True)
+    lecturer_id: int
+    author_name: str
+    text: str
+    approve_status: str
+    create_ts: datetime.datetime
+    update_ts: datetime.datetime
+    is_deleted: bool
 
 
     @model_validator(mode='before')
@@ -304,14 +298,14 @@ class CommentLecturerT(BaseModel):
         return self
 
 class CommentEventT(Base):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    event_id: Mapped[int] = mapped_column(Integer)
-    author_name: Mapped[str] = mapped_column(String)
-    text: Mapped[str] = mapped_column(String)
-    approve_status: Mapped[str] = mapped_column(String)
-    create_ts: Mapped[datetime] = mapped_column(DateTime)
-    update_ts: Mapped[datetime] = mapped_column(DateTime)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    id: int = Field(primary_key=True)
+    event_id: int
+    author_name: str
+    text: str
+    approve_status: str
+    create_ts: datetime.datetime
+    update_ts: datetime.datetime
+    is_deleted: bool
 
     @model_validator(mode='before')
     def validate_card(self):
