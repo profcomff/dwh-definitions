@@ -1,19 +1,15 @@
 from pydantic import BaseModel, model_validator
-from sqlalchemy import Integer, Boolean, Column, String, DateTime, JSON, Text
-from sqlalchemy.orm import mapped_column, Mapped
-from sqlalchemy_utils import URLType, EmailType
+from pydantic import int, str, Field, EmailStr, AnyURL, Json
 from datetime import datetime
-from sqlalchemy import Base
-
 
 class CategoryUd(BaseModel):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    name: Mapped[str] = mapped_column(String)
-    read_scope: Mapped[str] = mapped_column(String)
-    update_scope: Mapped[str] = mapped_column(String)
-    create_ts: Mapped[datetime] = mapped_column(DateTime)
-    modify_ts: Mapped[datetime] = mapped_column(DateTime)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    id: int = Field(primary_key=True)
+    name: str
+    read_scope: str
+    update_scope: str
+    create_ts: datetime.datetime
+    modify_ts: datetime.datetime
+    is_deleted: bool
 
     @model_validator(mode='before')
     def validate_card(self):
@@ -49,15 +45,15 @@ class CategoryUd(BaseModel):
 
 
 class ParamUd(BaseModel):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    name: Mapped[str] = mapped_column(String)
-    category_id: Mapped[int] = mapped_column(Integer)
-    is_required: Mapped[bool] = mapped_column(Boolean)
-    changeable: Mapped[bool] = mapped_column(Boolean)
-    type: Mapped[str] = mapped_column(String)
-    create_ts: Mapped[datetime] = mapped_column(DateTime)
-    modify_ts: Mapped[datetime] = mapped_column(DateTime)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    id: int = Field(primary_key=True)
+    name: str
+    category_id: int
+    is_required: bool
+    changeable: bool
+    type: str
+    create_ts: datetime.datetime
+    modify_ts: datetime.datetime
+    is_deleted: bool
 
     @model_validator(mode='before')
     def validate_card(self):
@@ -93,12 +89,12 @@ class ParamUd(BaseModel):
 
 
 class SourceUd(BaseModel):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    name: Mapped[str] = mapped_column(String)
-    trust_level: Mapped[int] = mapped_column(Integer)
-    create_ts: Mapped[datetime] = mapped_column(DateTime)
-    modify_ts: Mapped[datetime] = mapped_column(DateTime)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    id: int = Field(primary_key=True)
+    name: str
+    trust_level: int
+    create_ts: datetime.datetime
+    modify_ts: datetime.datetime
+    is_deleted: bool
 
     @model_validator(mode='before')
     def validate_card(self):
@@ -134,14 +130,14 @@ class SourceUd(BaseModel):
 
 
 class InfoUd(BaseModel):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    param_id: Mapped[int] = mapped_column(Integer)
-    source_id: Mapped[int] = mapped_column(Integer)
-    owner_id: Mapped[int] = mapped_column(Integer)
-    value: Mapped[str] = mapped_column(String)
-    create_ts: Mapped[datetime] = mapped_column(DateTime)
-    modify_ts: Mapped[datetime] = mapped_column(DateTime)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    id: int =  Field(primary_key=True)
+    param_id: int
+    source_id: int
+    owner_id: int
+    value: str
+    create_ts: datetime.datetime
+    modify_ts: datetime.datetime
+    is_deleted: bool
 
     @model_validator(mode='before')
     def validate_card(self):
