@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from sqlalchemy import BIGINT
 from sqlalchemy.orm import Mapped, mapped_column
 
 from profcomff_definitions.base import Base
@@ -40,12 +41,12 @@ class VkGroup(Base):
 
 class TelegramChannel(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
-    channel_id: Mapped[int | None]
+    channel_id: Mapped[int | None] = mapped_column(BIGINT)
 
 
 class TelegramChat(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
-    chat_id: Mapped[int | None]
+    chat_id: Mapped[int | None] = mapped_column(BIGINT)
 
 
 class VkChat(Base):
