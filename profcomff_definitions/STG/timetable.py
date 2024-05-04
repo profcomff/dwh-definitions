@@ -8,91 +8,91 @@ from profcomff_definitions.base import Base
 
 class Credentials(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    group: Mapped[str] = mapped_column(String)
-    email: Mapped[str] = mapped_column(String)
-    scope: Mapped[JSON] = mapped_column(JSON)
-    token: Mapped[JSON] = mapped_column(JSON)
-    create_ts: Mapped[datetime] = mapped_column(DateTime)
-    update_ts: Mapped[datetime] = mapped_column(DateTime)
+    group: Mapped[str] = mapped_column(String, nullable=True)
+    email: Mapped[str] = mapped_column(String, nullable=True)
+    scope: Mapped[JSON] = mapped_column(JSON, nullable=True)
+    token: Mapped[JSON] = mapped_column(JSON, nullable=True)
+    create_ts: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    update_ts: Mapped[datetime] = mapped_column(DateTime, nullable=True)
 
 
 class Room(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    name: Mapped[str] = mapped_column(String)
-    direction: Mapped[str] = mapped_column(String)
-    building: Mapped[str] = mapped_column(String)
-    building_url: Mapped[str] = mapped_column(String)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    name: Mapped[str] = mapped_column(String, nullable=True)
+    direction: Mapped[str] = mapped_column(String, nullable=True)
+    building: Mapped[str] = mapped_column(String, nullable=True)
+    building_url: Mapped[str] = mapped_column(String, nullable=True)
+    is_deleted: Mapped[bool] = mapped_column(Boolean, nullable=True)
 
 
 class Lecturer(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    first_name: Mapped[str] = mapped_column(String)
-    middle_name: Mapped[str] = mapped_column(String)
-    last_name: Mapped[str] = mapped_column(String)
-    avatar_id: Mapped[int] = mapped_column(Integer)
-    description: Mapped[str] = mapped_column(Text)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    first_name: Mapped[str] = mapped_column(String, nullable=True)
+    middle_name: Mapped[str] = mapped_column(String, nullable=True)
+    last_name: Mapped[str] = mapped_column(String, nullable=True)
+    avatar_id: Mapped[int] = mapped_column(Integer, nullable=True)
+    description: Mapped[str] = mapped_column(Text, nullable=True)
+    is_deleted: Mapped[bool] = mapped_column(Boolean, nullable=True)
 
 
 class Group(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    name: Mapped[str] = mapped_column(String)
-    number: Mapped[str] = mapped_column(String)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    name: Mapped[str] = mapped_column(String, nullable=True)
+    number: Mapped[str] = mapped_column(String, nullable=True)
+    is_deleted: Mapped[bool] = mapped_column(Boolean, nullable=True)
 
 
 class Event(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    name: Mapped[str] = mapped_column(String)
-    start_ts: Mapped[datetime] = mapped_column(DateTime)
-    end_ts: Mapped[datetime] = mapped_column(DateTime)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    name: Mapped[str] = mapped_column(String, nullable=True)
+    start_ts: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    end_ts: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    is_deleted: Mapped[bool] = mapped_column(Boolean, nullable=True)
 
 
 class EventsLecturers(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    event_id: Mapped[int] = mapped_column(Integer)
-    lecturer_id: Mapped[int] = mapped_column(Integer)
+    event_id: Mapped[int] = mapped_column(Integer, nullable=True)
+    lecturer_id: Mapped[int] = mapped_column(Integer, nullable=True)
 
 
 class EventsRooms(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    event_id: Mapped[int] = mapped_column(Integer)
-    room_id: Mapped[int] = mapped_column(Integer)
+    event_id: Mapped[int] = mapped_column(Integer, nullable=True)
+    room_id: Mapped[int] = mapped_column(Integer, nullable=True)
 
 
 class EventsGroups(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    event_id: Mapped[int] = mapped_column(Integer)
-    group_id: Mapped[int] = mapped_column(Integer)
+    event_id: Mapped[int] = mapped_column(Integer, nullable=True)
+    group_id: Mapped[int] = mapped_column(Integer, nullable=True)
 
 
 class Photo(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    lecturer_id: Mapped[int] = mapped_column(Integer)
-    link: Mapped[str] = mapped_column(String)
-    approve_status: Mapped[str] = mapped_column(String)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    lecturer_id: Mapped[int] = mapped_column(Integer, nullable=True)
+    link: Mapped[str] = mapped_column(String, nullable=True)
+    approve_status: Mapped[str] = mapped_column(String, nullable=True)
+    is_deleted: Mapped[bool] = mapped_column(Boolean, nullable=True)
 
 
 class CommentLecturer(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    lecturer_id: Mapped[int] = mapped_column(Integer)
-    author_name: Mapped[str] = mapped_column(String)
-    text: Mapped[str] = mapped_column(String)
-    approve_status: Mapped[str] = mapped_column(String)
-    create_ts: Mapped[datetime] = mapped_column(DateTime)
-    update_ts: Mapped[datetime] = mapped_column(DateTime)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    lecturer_id: Mapped[int] = mapped_column(Integer, nullable=True)
+    author_name: Mapped[str] = mapped_column(String, nullable=True)
+    text: Mapped[str] = mapped_column(String, nullable=True)
+    approve_status: Mapped[str] = mapped_column(String, nullable=True)
+    create_ts: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    update_ts: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    is_deleted: Mapped[bool] = mapped_column(Boolean, nullable=True)
 
 
 class CommentEvent(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    event_id: Mapped[int] = mapped_column(Integer)
-    author_name: Mapped[str] = mapped_column(String)
-    text: Mapped[str] = mapped_column(String)
-    approve_status: Mapped[str] = mapped_column(String)
-    create_ts: Mapped[datetime] = mapped_column(DateTime)
-    update_ts: Mapped[datetime] = mapped_column(DateTime)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    event_id: Mapped[int] = mapped_column(Integer, nullable=True)
+    author_name: Mapped[str] = mapped_column(String, nullable=True)
+    text: Mapped[str] = mapped_column(String, nullable=True)
+    approve_status: Mapped[str] = mapped_column(String, nullable=True)
+    create_ts: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    update_ts: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    is_deleted: Mapped[bool] = mapped_column(Boolean, nullable=True)
