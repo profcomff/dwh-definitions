@@ -1,43 +1,38 @@
 from pydantic import BaseModel, model_validator
-from sqlalchemy import Integer, Boolean, Column, String, DateTime, func, Float, JSON
-from sqlalchemy_utils import EmailType, URLType
-from sqlalchemy.orm import mapped_column, Mapped
+from pydantic import int, str, Field, EmailStr, AnyURL, Json
 from datetime import datetime
-
 
 
 #Pinger
 class ReceiverPi(BaseModel):
-    id_: Mapped[int] = mapped_column("id", Integer, primary_key=True)
-    url = sa.Column(URLType)
-    method: Mapped[str] = mapped_column(String)
-    receiver_body: Mapped[dict] = mapped_column(JSON)
-    create_ts: Mapped[datetime] = mapped_column(DateTime)
+    id_: int = Field(description = "id", primary_key=True)
+    url: AnyURL
+    method: str
+    receiver_body: Json[Any]
+    create_ts: datetime.datetime
 
 
 class AlertPi(BaseModel):
-    id_: Mapped[int] = mapped_column("id", Integer, primary_key=True)
-    data = mapped_column(JSON)
-    filter = mapped_column(String)
-    create_ts = mapped_column(DateTime)
+    id_: int = Field(description = "id", primary_key=True)
+    data: Json[Any]
+    filter: str
+    create_ts: datetime.datetime
 
 
 class FetcherPi(BaseModel):
-    id_: Mapped[int] = mapped_column("id", Integer, primary_key=True)
-    type_: Mapped[str] = mapped_column("type", String)
-    address: Mapped[str] = mapped_column(String)
-    fetch_data: Mapped[str] = mapped_column(String)
-    delay_ok: Mapped[int] = mapped_column(Integer)
-    delay_fail: Mapped[int] = mapped_column(Integer)
-    create_ts: Mapped[datetime] = mapped_column(DateTime)
-
+    id_: int = (description = "id", primary_key=True)
+    type_: str = Field(description = "type")
+    address: str
+    fetch_data: str
+    delay_ok: int
+    delay_fail: int
+    create_ts: datetime.datetime
 
 class MetricPi(BaseModel):
-    id_: Mapped[int] = mapped_column("id", Integer, primary_key=True)
-    name: Mapped[str] = mapped_column("name", String)
-    ok: Mapped[bool] = mapped_column("ok", Boolean)
-    time_delta: Mapped[float] = mapped_column(Float)
-
+    id_: int = Field(description = "id", primary_key=True)
+    name: str = Field(description = "name")
+    ok: bool = Field(description = "ok")
+    time_delta: float
     @model_validator(mode='before')
     def validate_card(self):
 
