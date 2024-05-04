@@ -1,4 +1,6 @@
-
+from pydantic import BaseModel, model_validator
+from pydantic import int, str, Field, EmailStr
+from datetime import datetime
 
 
 #Marketing
