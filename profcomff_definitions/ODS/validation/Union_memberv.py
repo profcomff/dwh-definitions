@@ -1,36 +1,34 @@
 from pydantic import BaseModel, model_validator
-from sqlalchemy import Integer, Boolean, Column, String, DateTime, JSON, Text
-from sqlalchemy.orm import mapped_column, Mapped
-from sqlalchemy_utils import URLType, EmailType
+from pydantic import int, str, Field, EmailStr, AnyURL, Json
 from datetime import datetime
-from sqlalchemy import Base
+
 
 
 class UnionMemberUnimember(BaseModel):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    type_of_learning: Mapped[str] = mapped_column(String, nullable=False)
-    rzd_status: Mapped[str] = mapped_column(String)
-    academic_level: Mapped[str] = mapped_column(String, nullable=False)
-    status: Mapped[str] = mapped_column(String, nullable=False) #что лежит в статусе я просто не поняла
-    faculty: Mapped[str] = mapped_column(String, nullable=False)
-    first_name: Mapped[str] = mapped_column(String, nullable=False)
-    last_name: Mapped[str] = mapped_column(String, nullable=False)
-    email = sa.Column(EmailType)
-    date_of_birth: Mapped[str] = mapped_column(String, nullable=False)
-    phone_number: Mapped[int] = mapped_column(Integer, nullable=False)
-    image: Mapped[str] = mapped_column(String, nullable=False) #картинки ихихихихихих я схожу с ума помогите
-    rzd_datetime: Mapped[datetime] = mapped_column(DateTime, nullable=False)
-    rzd_number: Mapped[int] = mapped_column(Integer, nullable=False)
-    grade_level: Mapped[int] = mapped_column(Integer)
-    has_student_id: Mapped[bool] = mapped_column(Boolean)
-    entry_date: Mapped[datetime] = mapped_column(DateTime, nullable=False)
-    status_gain_date: Mapped[datetime] = mapped_column(DateTime, nullable=False)
-    card_id: Mapped[int] = mapped_column(Integer, nullable=False)
-    card_status: Mapped[str] = mapped_column(String, nullable=False) #какие статусы могут быть у карты?
-    card_date: Mapped[datetime] = mapped_column(DateTime, nullable=False)
-    card_number: Mapped[int] = mapped_column(Integer, nullable=False)
-    card_user: Mapped[str] = mapped_column(String, nullable=False)
-    card: Mapped[int] = mapped_column(Integer, nullable=False)
+    id: int = Field(primary_key=True)
+    type_of_learning: str = Field(nullable=False)
+    rzd_status: str
+    academic_level: str = Field(nullable=False)
+    status: str =Field(nullable=False) 
+    faculty: str = Field(nullable=False)
+    first_name: str = Field(nullable=False)
+    last_name: str = Field(nullable=False)
+    email: EmailStr
+    date_of_birth: str = Field(nullable=False)
+    phone_number: int = Field(nullable=False)
+    image: str = Field(nullable=False)
+    rzd_datetime: datetime.datetime = Field(nullable = False)
+    rzd_number: int = Field(nullable=False)
+    grade_level: int
+    has_student_id: bool
+    entry_date: datetime.datetime = Field(nullable=False)
+    status_gain_date: datetime.datetime = Field(nullable=False)
+    card_id: int = Field(nullable=False)
+    card_status: str = Field(nullable=False)
+    card_date: datetime.datetime = Field(nullable=False)
+    card_number: int = Field(nullable=False)
+    card_user: str = Field(nullable=False)
+    card:int = Field(nullable=False)
 
     @model_validator(mode='before')
     def validate_card(self):
