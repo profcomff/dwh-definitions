@@ -1,4 +1,5 @@
 from datetime import datetime
+
 from sqlalchemy import BIGINT
 from sqlalchemy.orm import Mapped, mapped_column
 
