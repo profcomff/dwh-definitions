@@ -1,14 +1,12 @@
 from pydantic import BaseModel, model_validator
-from sqlalchemy import Integer, Boolean, Column, String, DateTime
-from sqlalchemy_utils import EmailType
-from sqlalchemy.orm import mapped_column, Mapped
+from pydantic import int, str, Field, EmailStr
 from datetime import datetime
 
 class UserAuth(BaseModel):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
-    create_ts: Mapped[datetime.datetime] = mapped_column(DateTime)
-    update_ts: Mapped[datetime.datetime] = mapped_column(DateTime)
+    id:int = Field(primary_key=True)
+    is_deleted: bool
+    create_ts: datetime.datetime
+    update_ts: datetime.datetime
 
     @model_validator(mode='before')
     def validate_card(self):
@@ -20,12 +18,12 @@ class UserAuth(BaseModel):
         return self
 
 class GroupAuth(BaseModel):
-        id: Mapped[int] = mapped_column(Integer, primary_key=True)
-        name: Mapped[str] = mapped_column(String)
-        parent_id: Mapped[int] = mapped_column(Integer)
-        create_ts: Mapped[datetime.datetime] = mapped_column(DateTime)
-        update_ts: Mapped[datetime.datetime] = mapped_column(DateTime)
-        is_deleted: Mapped[bool] = (mapped_column(Boolean)
+        id: int =Field(primary_key=True)
+        name: str
+        parent_id: int 
+        create_ts: datetime.datetime 
+        update_ts: datetime.datetime
+        is_deleted: bool 
 
         @model_validator(mode='before'))
         def validate_card(self):
@@ -61,10 +59,10 @@ class GroupAuth(BaseModel):
                 return self
 #невалидируемый класс
 class UserGroupAuth(BaseModel):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    user_id: Mapped[int] = mapped_column(Integer)
-    group_id: Mapped[int] = mapped_column(Integer)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    id: int = Field(primary_key=True)
+    user_id: int
+    group_id: int
+    is_deleted: bool
 
     @model_validator(mode='before')
     def validate_card(self):
@@ -80,14 +78,14 @@ class UserGroupAuth(BaseModel):
 
         return self
 class AuthMethodAuth(BaseModel):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    user_id: Mapped[int] = mapped_column(Integer)
-    auth_method: Mapped[str] = mapped_column(String)
-    param: Mapped[str] = mapped_column(String)
-    value: Mapped[str] = mapped_column(String)
-    create_ts: Mapped[datetime.datetime] = mapped_column(DateTime)
-    update_ts: Mapped[datetime.datetime] = mapped_column(DateTime)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    id: int = Field(primary_key=True)
+    user_id: int 
+    auth_method: str
+    param: str
+    value: str
+    create_ts: datetime.datetime
+    update_ts: datetime.datetime
+    is_deleted: bool
 
     @model_validator(mode='before')
     def validate_card(self):
@@ -99,13 +97,13 @@ class AuthMethodAuth(BaseModel):
             raise ValueError("нет uder_id")
         return self
 class UserSessionAuth(BaseModel):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    session_name: Mapped[str] = mapped_column(String)
-    user_id: Mapped[int] = mapped_column(Integer)
-    expires: Mapped[datetime.datetime] = mapped_column(DateTime)
-    token: Mapped[str] = mapped_column(String)
-    last_activity: Mapped[datetime.datetime] = mapped_column(DateTime)
-    create_ts: Mapped[datetime.datetime] = mapped_column(DateTime)
+    id: int = Field(primary_key=True)
+    session_name: str
+    user_id: int
+    expires: datetime.datetime
+    token: str
+    last_activity: datetime.datetime
+    create_ts: datetime.datetime
 
     @model_validator(mode='before')
     def validate_card(self):
@@ -119,12 +117,12 @@ class UserSessionAuth(BaseModel):
         return self
 
 class ScopeAuth(BaseModel):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    creator_id: Mapped[int] = mapped_column(Integer)
-    name: Mapped[str] = mapped_column(String)
-    comment: Mapped[str] = mapped_column(String)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
-
+    id: int = Field(primary_key=True)
+    creator_id: int
+    name: str
+    comment: str
+    is_deleted: bool
+    
     @model_validator(mode='before')
     def validate_card(self):
 
@@ -159,10 +157,10 @@ class ScopeAuth(BaseModel):
         return self
 
 class GroupScopeAuth(BaseModel):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    group_id: Mapped[int] = mapped_column(Integer)
-    scope_id: Mapped[int] = mapped_column(Integer)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    id: int = Field(primary_key=True)
+    group_id: int 
+    scope_id: int
+    is_deleted: bool
 
     @model_validator(mode='before')
     def validate_card(self):
@@ -176,13 +174,13 @@ class GroupScopeAuth(BaseModel):
         return self
 
 class UserSessionScopeAuth(BaseModel):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    user_session_id: Mapped[int] = mapped_column(Integer)
-    scope_id: Mapped[int] = mapped_column(Integer)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    id: int = Field(primary_key=True)
+    user_session_id: int
+    scope_id: int
+    is_deleted: bool
 
     @model_validator(mode='before')
-    def validate_card(self):
+    def validate_card(self): 
          id = self["id"]
          user_id = self["user_session_id"]
          if (not id):
@@ -193,7 +191,7 @@ class UserSessionScopeAuth(BaseModel):
          return self
 
 class UserMessageDelayAuth(BaseModel):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    delay_time: Mapped[datetime.datetime] = mapped_column(DateTime)
-    user_email = Column(EmailType)
-    user_ip: Mapped[str] = mapped_column(String)
+    id: int = Field(primary_key=True)
+    delay_time: datetime.datetime
+    user_email = EmailStr
+    user_ip: str
