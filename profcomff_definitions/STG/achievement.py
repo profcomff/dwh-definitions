@@ -15,7 +15,7 @@ class Achievement(Base):
     update_ts: Mapped[datetime | None]
 
 
-class AchievementReceiver(Base):
+class AchievementReciever(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     user_id: Mapped[int | None]
     achievement_id: Mapped[int | None]
