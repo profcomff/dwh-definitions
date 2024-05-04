@@ -1,17 +1,15 @@
 from pydantic import BaseModel, model_validator
-from sqlalchemy import Integer, Boolean, Column, String, DateTime, func
-from sqlalchemy_utils import EmailType
-from sqlalchemy.orm import mapped_column, Mapped
+from pydantic import int, str, Field, EmailStr
 from datetime import datetime
 
 
 class ContactsPh(BaseModel):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    name: Mapped[str] = mapped_column(String, nullable=True)
-    email = sa.Column(EmailType)
-    phone: Mapped[int] = mapped_column(Integer, nullable=True)
-    workplace: Mapped[int] = mapped_column(Integer, nullable=True)
-    upload_ts: Mapped[datetime] = mapped_column(DateTime, default=func.now())
+    id: int = Field(primary_key=True)
+    name: str = Field(nullable=True)
+    email: EmailStr
+    phone: int = Field(nullable=True)
+    workplace: int= Field(nullable=True)
+    upload_ts: datetime = Field(default=func.now())
 
     @model_validator(mode='before')
     def validate_card(self):
