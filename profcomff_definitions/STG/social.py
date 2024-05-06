@@ -9,7 +9,7 @@ from profcomff_definitions.base import Base
 class Group(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     owner_id: Mapped[int | None]
-    
+
     name: Mapped[str | None]
     description: Mapped[str | None]
     invite_link: Mapped[str | None]
