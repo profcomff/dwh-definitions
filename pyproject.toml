@@ -1,3 +1,45 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "profcomff_definitions"
+authors = [
+    {name = "profcomff.com", email = "admin@profcomff.com"},
+    {name = "Roman Dyakov", email = "roman@dyakov.space"},
+    {name = "Stanislav Roslavtsev", email = "roslavtzev.stanislaw@yandex.ru"}
+]
+description = "Data warehouse definitions and schemas"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {file = "LICENSE"}
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11"
+]
+dependencies = ["SQLAlchemy", "psycopg2-binary", "alembic"]
+dynamic = ["version"]
+
+[project.urls]
+Homepage = "https://app.profcomff.com"
+Documentation = "https://github.com/profcomff/dwh-definitions/blob/main/README.md"
+Repository = "https://github.com/profcomff/dwh-definitions"
+Issues = "https://github.com/profcomff/dwh-definitions/issues"
+Changelog = "https://github.com/profcomff/dwh-definitions/releases"
+
+[tool.setuptools]
+packages = ["profcomff_definitions"]
+
+[tool.setuptools.dynamic]
+version = {attr = "profcomff_definitions.__version__"}
+
+[project.optional-dependencies]
+airflow = ["apache-airflow"]
+testing = ["pytest", "pytest-cov", "pytest-mock", "httpx", "requests"]
+style = ["black", "isort", "pydocstyle", "autoflake"]
+
 [tool.black]
 line-length = 120
 target-version = ['py311']

@@ -2,6 +2,9 @@ import os
 import sys
 
 
+__version__ = '2024.05.05.2'
+
+
 dir_path = os.path.dirname(os.path.abspath(__file__))
 for folder in ['STG', 'DWH', 'DM', 'ODS']:
     files_in_dir = [f[:-3] for f in os.listdir(dir_path + '/' + folder) if f.endswith('.py') and f != '__init__.py']

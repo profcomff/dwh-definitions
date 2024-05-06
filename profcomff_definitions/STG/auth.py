@@ -1,79 +1,88 @@
-import datetime
+from datetime import datetime
 
-from sqlalchemy import Boolean, DateTime, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from profcomff_definitions.base import Base
 
 
 class User(Base):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
-    create_ts: Mapped[datetime.datetime] = mapped_column(DateTime)
-    update_ts: Mapped[datetime.datetime] = mapped_column(DateTime)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    is_deleted: Mapped[bool | None]
+    create_ts: Mapped[datetime | None]
+    update_ts: Mapped[datetime | None]
 
 
 class Group(Base):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    name: Mapped[str] = mapped_column(String)
-    parent_id: Mapped[int] = mapped_column(Integer)
-    create_ts: Mapped[datetime.datetime] = mapped_column(DateTime)
-    update_ts: Mapped[datetime.datetime] = mapped_column(DateTime)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str | None]
+    parent_id: Mapped[int | None]
+    create_ts: Mapped[datetime | None]
+    update_ts: Mapped[datetime | None]
+    is_deleted: Mapped[bool | None]
 
 
 class UserGroup(Base):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    user_id: Mapped[int] = mapped_column(Integer)
-    group_id: Mapped[int] = mapped_column(Integer)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int | None]
+    group_id: Mapped[int | None]
+    is_deleted: Mapped[bool | None]
 
 
 class AuthMethod(Base):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    user_id: Mapped[int] = mapped_column(Integer)
-    auth_method: Mapped[str] = mapped_column(String)
-    param: Mapped[str] = mapped_column(String)
-    value: Mapped[str] = mapped_column(String)
-    create_ts: Mapped[datetime.datetime] = mapped_column(DateTime)
-    update_ts: Mapped[datetime.datetime] = mapped_column(DateTime)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int | None]
+    auth_method: Mapped[str | None]
+    param: Mapped[str | None]
+    value: Mapped[str | None]
+    create_ts: Mapped[datetime | None]
+    update_ts: Mapped[datetime | None]
+    is_deleted: Mapped[bool | None]
 
 
 class UserSession(Base):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    session_name: Mapped[str] = mapped_column(String)
-    user_id: Mapped[int] = mapped_column(Integer)
-    expires: Mapped[datetime.datetime] = mapped_column(DateTime)
-    token: Mapped[str] = mapped_column(String)
-    last_activity: Mapped[datetime.datetime] = mapped_column(DateTime)
-    create_ts: Mapped[datetime.datetime] = mapped_column(DateTime)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    session_name: Mapped[str | None]
+    user_id: Mapped[int | None]
+    expires: Mapped[datetime | None]
+    token: Mapped[str | None]
+    last_activity: Mapped[datetime | None]
+    create_ts: Mapped[datetime | None]
 
 
 class Scope(Base):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    creator_id: Mapped[int] = mapped_column(Integer)
-    name: Mapped[str] = mapped_column(String)
-    comment: Mapped[str] = mapped_column(String)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    creator_id: Mapped[int | None]
+    name: Mapped[str | None]
+    comment: Mapped[str | None]
+    is_deleted: Mapped[bool | None]
 
 
 class GroupScope(Base):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    group_id: Mapped[int] = mapped_column(Integer)
-    scope_id: Mapped[int] = mapped_column(Integer)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    group_id: Mapped[int | None]
+    scope_id: Mapped[int | None]
+    is_deleted: Mapped[bool | None]
 
 
 class UserSessionScope(Base):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    user_session_id: Mapped[int] = mapped_column(Integer)
-    scope_id: Mapped[int] = mapped_column(Integer)
-    is_deleted: Mapped[bool] = mapped_column(Boolean)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    user_session_id: Mapped[int | None]
+    scope_id: Mapped[int | None]
+    is_deleted: Mapped[bool | None]
 
 
 class UserMessageDelay(Base):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    delay_time: Mapped[datetime.datetime] = mapped_column(DateTime)
-    user_email: Mapped[str] = mapped_column(String)
-    user_ip: Mapped[str] = mapped_column(String)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    delay_time: Mapped[datetime | None]
+    user_email: Mapped[str | None]
+    user_ip: Mapped[str | None]
+
+
+class DynamicOption(Base):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    create_ts: Mapped[datetime | None]
+    value_integer: Mapped[int | None]
+    value_string: Mapped[str | None]
+    value_double: Mapped[float | None]
+    update_ts: Mapped[datetime | None]
+    name: Mapped[str | None]
