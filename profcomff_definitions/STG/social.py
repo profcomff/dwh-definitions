@@ -8,10 +8,16 @@ from profcomff_definitions.base import Base
 
 class Group(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
+    owner_id: Mapped[int | None]
+    
+    name: Mapped[str | None]
+    description: Mapped[str | None]
+    invite_link: Mapped[str | None]
+    hidden: Mapped[bool | None]
+
     update_ts: Mapped[datetime | None]
     create_ts: Mapped[datetime | None]
     last_active_ts: Mapped[datetime | None]
-    owner_id: Mapped[int | None]
     is_deleted: Mapped[bool | None]
     type: Mapped[str | None]
 
