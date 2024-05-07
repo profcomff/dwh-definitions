@@ -23,7 +23,7 @@ class Base:
         schema = f'{cls.__module__.split(".")[-2].upper()}_{cls.__module__.split(".")[-1].upper()}'
         add_table_schema_to_model(schema, Base.metadata)
 
-        return {'schema': schema}
+        return {'schema': schema, 'comment': cls.__doc__}
 
     def __repr__(self) -> str:
         attrs = []
