@@ -25,6 +25,7 @@ def upgrade():
         'container_log',
         sa.Column('id', sa.Integer(), nullable=False),
         sa.Column('record', sa.String(), nullable=True),
+        sa.Column('container_name', sa.String(), nullable=True),
         sa.Column('create_ts', sa.DateTime(), server_default=sa.text('now()'), nullable=True),
         sa.PrimaryKeyConstraint('id'),
         schema='STG_INFRA',
