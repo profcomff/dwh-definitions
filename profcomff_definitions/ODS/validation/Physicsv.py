@@ -4,11 +4,11 @@ from datetime import datetime
 
 
 class ContactsPh(BaseModel):
-    id: int = Field(primary_key=True)
-    name: str = Field(nullable=True)
+    id: int 
+    name: Optional[str] = Field(nullable=True)
     email: EmailStr
-    phone: int = Field(nullable=True)
-    workplace: int= Field(nullable=True)
+    phone: Optional[int] = Field(nullable=True)
+    workplace: Optional[int]= Field(nullable=True)
     upload_ts: datetime = Field(default=func.now())
 
     @model_validator(mode='before')
