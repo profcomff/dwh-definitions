@@ -5,7 +5,7 @@ from datetime import datetime
 
 #Marketing
 class UserM(BaseModel):
-    id: int =  Field(primary_key=True)
+    id: int 
     union_number: int
     user_agent: str
     auth_user_id: int
@@ -21,12 +21,12 @@ class ActionsInfoM(BaseModel):
     create_ts: datetime.datetime
 #Physics
 class ContactsPh(BaseModel):
-    id: int = Field(primary_key=True)
-    name: str = Field(nullable=True)
+    id: int 
+    name: Optional[str] = Field(nullable=True)
     email: EmailStr
-    phone: int = Field(nullable=True)
-    workplace: int = Field(nullable=True)
-    upload_ts: datetime =Field(default=func.now())
+    phone: Optional[int] = Field(nullable=True)
+    workplace: Optional[int] = Field(nullable=True)
+    upload_ts: Optional[datetime] =Field(default=func.now())
 
     @model_validator(mode='before')
     def validate_card(self):
