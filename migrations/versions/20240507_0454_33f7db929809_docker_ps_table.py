@@ -42,9 +42,9 @@ def upgrade():
         ['ALL'],
         '"STG_INFRA".container_processes',
     )
-    op.alter_column('container_log', 'container_name', new_column_name='logfile')
+    op.alter_column('container_log', 'container_name', new_column_name='logfile', schema='STG_INFRA')
 
 
 def downgrade():
     op.drop_table('container_processes', schema='STG_INFRA')
-    op.alter_column('container_log', 'logfile', new_column_name='container_name')
+    op.alter_column('container_log', 'logfile', new_column_name='container_name', schema='STG_INFRA')
