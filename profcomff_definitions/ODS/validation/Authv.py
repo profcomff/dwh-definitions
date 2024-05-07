@@ -3,7 +3,7 @@ from pydantic import int, str, Field, EmailStr
 from datetime import datetime
 
 class UserAuth(BaseModel):
-    id:int = Field(primary_key=True)
+    id: int 
     is_deleted: bool
     create_ts: datetime.datetime
     update_ts: datetime.datetime
@@ -18,7 +18,7 @@ class UserAuth(BaseModel):
         return self
 
 class GroupAuth(BaseModel):
-        id: int =Field(primary_key=True)
+        id: int 
         name: str
         parent_id: int 
         create_ts: datetime.datetime 
@@ -59,7 +59,7 @@ class GroupAuth(BaseModel):
                 return self
 #невалидируемый класс
 class UserGroupAuth(BaseModel):
-    id: int = Field(primary_key=True)
+    id: int 
     user_id: int
     group_id: int
     is_deleted: bool
@@ -78,7 +78,7 @@ class UserGroupAuth(BaseModel):
 
         return self
 class AuthMethodAuth(BaseModel):
-    id: int = Field(primary_key=True)
+    id: int 
     user_id: int 
     auth_method: str
     param: str
@@ -97,7 +97,7 @@ class AuthMethodAuth(BaseModel):
             raise ValueError("нет uder_id")
         return self
 class UserSessionAuth(BaseModel):
-    id: int = Field(primary_key=True)
+    id: int 
     session_name: str
     user_id: int
     expires: datetime.datetime
@@ -117,7 +117,7 @@ class UserSessionAuth(BaseModel):
         return self
 
 class ScopeAuth(BaseModel):
-    id: int = Field(primary_key=True)
+    id: int 
     creator_id: int
     name: str
     comment: str
@@ -157,7 +157,7 @@ class ScopeAuth(BaseModel):
         return self
 
 class GroupScopeAuth(BaseModel):
-    id: int = Field(primary_key=True)
+    id: int 
     group_id: int 
     scope_id: int
     is_deleted: bool
@@ -174,7 +174,7 @@ class GroupScopeAuth(BaseModel):
         return self
 
 class UserSessionScopeAuth(BaseModel):
-    id: int = Field(primary_key=True)
+    id: int 
     user_session_id: int
     scope_id: int
     is_deleted: bool
@@ -191,7 +191,7 @@ class UserSessionScopeAuth(BaseModel):
          return self
 
 class UserMessageDelayAuth(BaseModel):
-    id: int = Field(primary_key=True)
+    id: int 
     delay_time: datetime.datetime
     user_email = EmailStr
     user_ip: str
