@@ -7,7 +7,7 @@ from datetime import datetime
 class CredentialsT(BaseModel):
     id: int 
     group: str
-    email = EmailStr
+    email: EmailStr
     scope: Json[Any]
     token: Json[Any]
     create_ts: datetime
