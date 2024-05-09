@@ -5,33 +5,33 @@ from datetime import datetime
 
 #Pinger
 class ReceiverPi(BaseModel):
-    id_: int = Field(description = "id", primary_key=True)
+    id_: int 
     url: AnyURL
     method: str
     receiver_body: Json[Any]
-    create_ts: datetime.datetime
+    create_ts: datetime
 
 
 class AlertPi(BaseModel):
-    id_: int = Field(description = "id", primary_key=True)
+    id_: int
     data: Json[Any]
     filter: str
-    create_ts: datetime.datetime
+    create_ts: datetime
 
 
 class FetcherPi(BaseModel):
-    id_: int = (description = "id", primary_key=True)
-    type_: str = Field(description = "type")
+    id_: int
+    type_: str
     address: str
     fetch_data: str
     delay_ok: int
     delay_fail: int
-    create_ts: datetime.datetime
+    create_ts: datetime
 
 class MetricPi(BaseModel):
-    id_: int = Field(description = "id", primary_key=True)
-    name: str = Field(description = "name")
-    ok: bool = Field(description = "ok")
+    id_: int 
+    name: str
+    ok: bool 
     time_delta: float
     @model_validator(mode='before')
     def validate_card(self):
