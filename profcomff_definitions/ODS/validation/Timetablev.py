@@ -5,17 +5,17 @@ from datetime import datetime
 
 
 class CredentialsT(BaseModel):
-    id: int = Field(primary_key=True)
+    id: int 
     group: str
     email = EmailStr
     scope: Json[Any]
     token: Json[Any]
-    create_ts: datetime.datetime
-    update_ts: datetime.datetime
+    create_ts: datetime
+    update_ts: datetime
 
 
 class RoomT(BaseModel):
-    id: int =  Field(primary_key=True)
+    id: int 
     name: str
     direction: str
     building: str
@@ -55,7 +55,7 @@ class RoomT(BaseModel):
         return self
 
 class LecturerT(BaseModel):
-    id: int = Field(primary_key=True)
+    id: int 
     first_name: str
     middle_name: str
     last_name: str
@@ -120,7 +120,7 @@ class LecturerT(BaseModel):
 
 
 class GroupT(BaseModel):
-    id: int =Field(primary_key=True)
+    id: int 
     name: str
     number: int
     is_deleted: bool
@@ -157,10 +157,10 @@ class GroupT(BaseModel):
 
 
 class EventT(BaseModel):
-    id: int = Field(primary_key=True)
+    id: int
     name: str
-    start_ts: datetime.datetime
-    end_ts: datetime.datetime
+    start_ts: datetime
+    end_ts: datetime
     is_deleted: bool
 
     @model_validator(mode='before')
@@ -196,7 +196,7 @@ class EventT(BaseModel):
 
 
 class EventsLecturersT(BaseModel):
-    id: int = Field(primary_key=True)
+    id: int
     event_id: int
     lecturer_id: int
 
@@ -218,7 +218,7 @@ class EventsLecturersT(BaseModel):
 
 
 class EventsRoomsT(Base):
-    id: int = Field(primary_key=True)
+    id: int 
     event_id: int
     room_id: int
 
@@ -238,7 +238,7 @@ class EventsRoomsT(Base):
         return self
 
 class EventsGroupsT(BaseModel):
-    id: int = Field(primary_key=True)
+    id: int
     event_id: int
     group_id: int
 
@@ -259,7 +259,7 @@ class EventsGroupsT(BaseModel):
 
 
 class PhotoT(BaseModel):
-    id: int = Field(primary_key=True)
+    id: int 
     lecturer_id: int
     link: AnyURL
     approve_status: str
@@ -277,13 +277,13 @@ class PhotoT(BaseModel):
 
 
 class CommentLecturerT(BaseModel):
-    id: int = Field(primary_key=True)
+    id: int 
     lecturer_id: int
     author_name: str
     text: str
     approve_status: str
-    create_ts: datetime.datetime
-    update_ts: datetime.datetime
+    create_ts: datetime
+    update_ts: datetime
     is_deleted: bool
 
 
@@ -298,13 +298,13 @@ class CommentLecturerT(BaseModel):
         return self
 
 class CommentEventT(Base):
-    id: int = Field(primary_key=True)
+    id: int 
     event_id: int
     author_name: str
     text: str
     approve_status: str
-    create_ts: datetime.datetime
-    update_ts: datetime.datetime
+    create_ts: datetime
+    update_ts: datetime
     is_deleted: bool
 
     @model_validator(mode='before')
