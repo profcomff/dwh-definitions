@@ -102,6 +102,26 @@ def upgrade():
 
 
 def downgrade():
+    op.revoke_on_schema(
+        "test_dwh_dm_infra_logs_all" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_dm_infra_logs_all",
+        "DM_INFRA_LOGS",
+    )
+    op.revoke_on_schema(
+        (
+            "test_dwh_dm_infra_logs_write"
+            if os.getenv("ENVIRONMENT") != "production"
+            else "prod_dwh_dm_infra_logs_write"
+        ),
+        "DM_INFRA_LOGS",
+    )
+    op.revoke_on_schema(
+        (
+            "test_dwh_dm_infra_logs_read"
+            if os.getenv("ENVIRONMENT") != "production"
+            else "prod_dwh_dm_infra_logs_read"
+        ),
+        "DM_INFRA_LOGS",
+    )
     op.drop_table('container_log_cube', schema='DM_INFRA_LOGS')
     op.delete_group(
         "test_dwh_dm_infra_logs_all" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_dm_infra_logs_all"

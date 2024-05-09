@@ -537,6 +537,26 @@ def upgrade():
 
 
 def downgrade():
+    op.revoke_on_schema(
+        "test_dwh_stg_github_all" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_stg_github_all",
+        "STG_GITHUB",
+    )
+    op.revoke_on_schema(
+        (
+            "test_dwh_stg_github_write"
+            if os.getenv("ENVIRONMENT") != "production"
+            else "prod_dwh_stg_github_write"
+        ),
+        "STG_GITHUB",
+    )
+    op.revoke_on_schema(
+        (
+            "test_dwh_stg_github_read"
+            if os.getenv("ENVIRONMENT") != "production"
+            else "prod_dwh_stg_github_read"
+        ),
+        "STG_GITHUB",
+    )
     op.drop_table('profcomff_team_repo', schema='STG_GITHUB')
     op.drop_table('profcomff_team_member', schema='STG_GITHUB')
     op.drop_table('profcomff_team', schema='STG_GITHUB')
