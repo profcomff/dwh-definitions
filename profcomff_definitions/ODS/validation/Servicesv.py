@@ -5,7 +5,7 @@ from datetime import datetime
 
 
 class CategorySv(BaseModel):
-    id: int = Field(primary_key=True)
+    id: int
     order: int
     name: str
     type: str
@@ -43,7 +43,7 @@ class CategorySv(BaseModel):
         return self
 
 class ButtonSv(BaseModel):
-    id: int = Field(primary_key=True)
+    id: int
     name: str
     order: int
     category_id: int
@@ -84,7 +84,7 @@ class ButtonSv(BaseModel):
         return self
 
 class ScopeSv(BaseModel):
-    id: int = Field(primary_key=True)
+    id: int
     name: str
     category_id: int
     @model_validator(mode='before')
