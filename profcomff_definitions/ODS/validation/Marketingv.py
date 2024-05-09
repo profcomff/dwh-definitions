@@ -1,7 +1,6 @@
 from pydantic import BaseModel, model_validator
-from pydantic import int, str, Field, EmailStr
+from pydantic import int, str, Field, EmailStr, Optional
 from datetime import datetime
-
 
 #Marketing
 class UserM(BaseModel):
@@ -12,7 +11,7 @@ class UserM(BaseModel):
     modify_ts: datetime.datetime
     create_ts: datetime.datetime
 class ActionsInfoM(BaseModel):
-    id: int = Field(primary_key=True)
+    id: int
     user_id: int
     action: str
     path_from: str
