@@ -5,9 +5,8 @@ from datetime import datetime
 class UserAuth(BaseModel):
     id: int 
     is_deleted: bool
-    create_ts: datetime.datetime
-    update_ts: datetime.datetime
-
+    create_ts: datetime
+    update_ts: datetime
     @model_validator(mode='before')
     def validate_card(self):
         parent_id = self["parent_id"]
@@ -21,8 +20,8 @@ class GroupAuth(BaseModel):
         id: int 
         name: str
         parent_id: int 
-        create_ts: datetime.datetime 
-        update_ts: datetime.datetime
+        create_ts: datetime
+        update_ts: datetime
         is_deleted: bool 
 
         @model_validator(mode='before'))
@@ -83,8 +82,8 @@ class AuthMethodAuth(BaseModel):
     auth_method: str
     param: str
     value: str
-    create_ts: datetime.datetime
-    update_ts: datetime.datetime
+    create_ts: datetime
+    update_ts: datetime
     is_deleted: bool
 
     @model_validator(mode='before')
@@ -100,10 +99,10 @@ class UserSessionAuth(BaseModel):
     id: int 
     session_name: str
     user_id: int
-    expires: datetime.datetime
+    expires: datetime
     token: str
-    last_activity: datetime.datetime
-    create_ts: datetime.datetime
+    last_activity: datetime
+    create_ts: datetime
 
     @model_validator(mode='before')
     def validate_card(self):
@@ -192,6 +191,6 @@ class UserSessionScopeAuth(BaseModel):
 
 class UserMessageDelayAuth(BaseModel):
     id: int 
-    delay_time: datetime.datetime
-    user_email = EmailStr
+    delay_time: datetime
+    user_email: EmailStr
     user_ip: str
