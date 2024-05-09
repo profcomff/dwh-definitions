@@ -1,34 +1,34 @@
 from pydantic import BaseModel, model_validator
-from pydantic import int, str, Field, EmailStr, AnyURL, Json
+from pydantic import int, str, Field, EmailStr, AnyURL, Json, Optional
 from datetime import datetime
 
 
 
 class UnionMemberUnimember(BaseModel):
-    id: int = Field(primary_key=True)
-    type_of_learning: str = Field(nullable=False)
+    id: int 
+    type_of_learning: Optional[str] = Field(nullable=False)
     rzd_status: str
-    academic_level: str = Field(nullable=False)
-    status: str =Field(nullable=False) 
-    faculty: str = Field(nullable=False)
-    first_name: str = Field(nullable=False)
-    last_name: str = Field(nullable=False)
+    academic_level: Optional[str] = Field(nullable=False)
+    status: Optional[str] =Field(nullable=False) 
+    faculty: Optional[str] = Field(nullable=False)
+    first_name: Optional[str] = Field(nullable=False)
+    last_name: Optional[str] = Field(nullable=False)
     email: EmailStr
-    date_of_birth: str = Field(nullable=False)
-    phone_number: int = Field(nullable=False)
-    image: str = Field(nullable=False)
-    rzd_datetime: datetime.datetime = Field(nullable = False)
-    rzd_number: int = Field(nullable=False)
+    date_of_birth: Optional[str] = Field(nullable=False)
+    phone_number: Optional[int] = Field(nullable=False)
+    image: Optional[str] = Field(nullable=False)
+    rzd_datetime: Optional[datetime] = Field(nullable = False)
+    rzd_number: Optional[int] = Field(nullable=False)
     grade_level: int
     has_student_id: bool
-    entry_date: datetime.datetime = Field(nullable=False)
-    status_gain_date: datetime.datetime = Field(nullable=False)
-    card_id: int = Field(nullable=False)
-    card_status: str = Field(nullable=False)
-    card_date: datetime.datetime = Field(nullable=False)
-    card_number: int = Field(nullable=False)
-    card_user: str = Field(nullable=False)
-    card:int = Field(nullable=False)
+    entry_date: Optional[datetime] = Field(nullable=False)
+    status_gain_date: Optional[datetime] = Field(nullable=False)
+    card_id: Optional[int] = Field(nullable=False)
+    card_status: Optional[str] = Field(nullable=False)
+    card_date: Optional[datetime] = Field(nullable=False)
+    card_number: Optional[int] = Field(nullable=False)
+    card_user: Optional[str] = Field(nullable=False)
+    card: Optional[int] = Field(nullable=False)
 
     @model_validator(mode='before')
     def validate_card(self):
