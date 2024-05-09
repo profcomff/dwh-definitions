@@ -542,19 +542,11 @@ def downgrade():
         "STG_GITHUB",
     )
     op.revoke_on_schema(
-        (
-            "test_dwh_stg_github_write"
-            if os.getenv("ENVIRONMENT") != "production"
-            else "prod_dwh_stg_github_write"
-        ),
+        ("test_dwh_stg_github_write" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_stg_github_write"),
         "STG_GITHUB",
     )
     op.revoke_on_schema(
-        (
-            "test_dwh_stg_github_read"
-            if os.getenv("ENVIRONMENT") != "production"
-            else "prod_dwh_stg_github_read"
-        ),
+        ("test_dwh_stg_github_read" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_stg_github_read"),
         "STG_GITHUB",
     )
     op.drop_table('profcomff_team_repo', schema='STG_GITHUB')

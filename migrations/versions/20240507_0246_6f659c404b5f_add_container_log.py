@@ -74,19 +74,11 @@ def downgrade():
         "STG_INFRA",
     )
     op.revoke_on_schema(
-        (
-            "test_dwh_stg_infra_write"
-            if os.getenv("ENVIRONMENT") != "production"
-            else "prod_dwh_stg_infra_write"
-        ),
+        ("test_dwh_stg_infra_write" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_stg_infra_write"),
         "STG_INFRA",
     )
     op.revoke_on_schema(
-        (
-            "test_dwh_stg_infra_read"
-            if os.getenv("ENVIRONMENT") != "production"
-            else "prod_dwh_stg_infra_read"
-        ),
+        ("test_dwh_stg_infra_read" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_stg_infra_read"),
         "STG_INFRA",
     )
     op.drop_table('container_log', schema='STG_INFRA')
