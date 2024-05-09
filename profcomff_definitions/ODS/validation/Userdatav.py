@@ -3,12 +3,12 @@ from pydantic import int, str, Field, EmailStr, AnyURL, Json
 from datetime import datetime
 
 class CategoryUd(BaseModel):
-    id: int = Field(primary_key=True)
+    id: int
     name: str
     read_scope: str
     update_scope: str
-    create_ts: datetime.datetime
-    modify_ts: datetime.datetime
+    create_ts: datetime
+    modify_ts: datetime
     is_deleted: bool
 
     @model_validator(mode='before')
@@ -45,14 +45,14 @@ class CategoryUd(BaseModel):
 
 
 class ParamUd(BaseModel):
-    id: int = Field(primary_key=True)
+    id: int
     name: str
     category_id: int
     is_required: bool
     changeable: bool
     type: str
-    create_ts: datetime.datetime
-    modify_ts: datetime.datetime
+    create_ts: datetime
+    modify_ts: datetime
     is_deleted: bool
 
     @model_validator(mode='before')
@@ -89,11 +89,11 @@ class ParamUd(BaseModel):
 
 
 class SourceUd(BaseModel):
-    id: int = Field(primary_key=True)
+    id: int 
     name: str
     trust_level: int
-    create_ts: datetime.datetime
-    modify_ts: datetime.datetime
+    create_ts: datetime
+    modify_ts: datetime
     is_deleted: bool
 
     @model_validator(mode='before')
@@ -130,13 +130,13 @@ class SourceUd(BaseModel):
 
 
 class InfoUd(BaseModel):
-    id: int =  Field(primary_key=True)
+    id: int 
     param_id: int
     source_id: int
     owner_id: int
     value: str
-    create_ts: datetime.datetime
-    modify_ts: datetime.datetime
+    create_ts: datetime
+    modify_ts: datetime
     is_deleted: bool
 
     @model_validator(mode='before')
