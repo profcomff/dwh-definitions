@@ -4,7 +4,7 @@ from datetime import datetime
 
 
 class UnionMemberPr(BaseModel):
-    id: int = Field(primary_key=True)
+    id: int 
     surname: str
     union_number: int
     student_number: int
@@ -36,14 +36,14 @@ class UnionMemberPr(BaseModel):
 
 
 class FilePr(BaseModel):
-    id: int = Field(primary_key=True)
+    id: int
     pin: str
     file: str
     owner_id: int
     option_pages: str
     option_copies: int
     option_two_sided: bool
-    created_at: datetime.datetime
-    updated_at: datetime.datetime
+    created_at: datetime
+    updated_at: datetime
     number_of_pages: int
     source: str
