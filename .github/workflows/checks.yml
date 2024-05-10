@@ -9,16 +9,6 @@ jobs:
     name: Unit tests
     runs-on: ubuntu-latest
     services:
-      postgres_lib:
-        image: postgres:15
-        env:
-          POSTGRES_HOST_AUTH_METHOD: trust
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-          -p 6432:6432
       postgres:
         image: postgres:15
         env:
