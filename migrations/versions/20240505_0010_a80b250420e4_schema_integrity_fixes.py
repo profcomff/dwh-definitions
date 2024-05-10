@@ -718,20 +718,12 @@ def downgrade():
         '"STG_SOCIAL".vk_groups',
     )
     op.grant_on_table(
-        (
-            "test_dwh_stg_social_write"
-            if os.getenv("ENVIRONMENT") != "production"
-            else "prod_dwh_stg_social_write"
-        ),
+        ("test_dwh_stg_social_write" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_stg_social_write"),
         ['SELECT', 'UPDATE', 'DELETE', 'TRUNCATE', 'INSERT'],
         '"STG_SOCIAL".vk_groups',
     )
     op.grant_on_table(
-        (
-            "test_dwh_stg_social_read"
-            if os.getenv("ENVIRONMENT") != "production"
-            else "prod_dwh_stg_social_read"
-        ),
+        ("test_dwh_stg_social_read" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_stg_social_read"),
         ['SELECT'],
         '"STG_SOCIAL".vk_groups',
     )
