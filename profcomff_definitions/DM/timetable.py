@@ -5,7 +5,7 @@ from profcomff_definitions.base import Base
 
 class DimRoomAct(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
-    api_id: Mapped[int] = mapped_column(nullable=False)
+    api_id: Mapped[int]
     name: Mapped[str | None]
     room_direction_text_type: Mapped[str | None]
     is_deleted: Mapped[bool]
