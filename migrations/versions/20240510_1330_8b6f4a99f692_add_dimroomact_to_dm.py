@@ -25,7 +25,7 @@ def upgrade():
         sa.Column('id', sa.Integer(), nullable=False),
         sa.Column('api_id', sa.Integer(), nullable=False),
         sa.Column('name', sa.String(), nullable=True),
-        sa.Column('cabinet_direction_text_type', sa.String(), nullable=True),
+        sa.Column('room_direction_text_type', sa.String(), nullable=True),
         sa.Column('is_deleted', sa.Boolean(), nullable=False),
         sa.Column('department', sa.String(), nullable=True),
         sa.PrimaryKeyConstraint('id'),
