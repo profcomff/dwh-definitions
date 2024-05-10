@@ -716,7 +716,9 @@ def downgrade():
         "test_test_dwh_stg_social_all" if os.getenv("ENVIRONMENT") != "production" else "prod_test_dwh_stg_social_all"
     )
     op.create_group(
-        "test_test_dwh_stg_social_write" if os.getenv("ENVIRONMENT") != "production" else "prod_test_dwh_stg_social_write"
+        "test_test_dwh_stg_social_write"
+        if os.getenv("ENVIRONMENT") != "production"
+        else "prod_test_dwh_stg_social_write"
     )
     op.create_group(
         "test_test_dwh_stg_social_read" if os.getenv("ENVIRONMENT") != "production" else "prod_test_dwh_stg_social_read"
