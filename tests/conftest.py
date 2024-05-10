@@ -3,10 +3,10 @@ from pathlib import Path
 from typing import Generator
 
 import pytest
-from alembic import command
 from alembic.config import Config
 from sqlalchemy import create_engine
 from alembic.command import downgrade, upgrade
+from alembic.config import Config
 from alembic.script import Script, ScriptDirectory
 from sqlalchemy.engine import Engine
 
@@ -18,7 +18,7 @@ REPO_ROOT = Path(os.path.abspath(os.path.dirname(__file__))).parent.resolve()
 def alembic_config():
     alembic_cfg = Config()
     alembic_cfg.set_main_option('script_location', str(REPO_ROOT / "migrations"))
-    alembic_cfg.set_main_option('sqlalchemy.url', "postgresql://postgres:postgres@localhost:5432/postgres")
+    alembic_cfg.set_main_option('sqlalchemy.url', os.getenv("DB_DSN") or "postgresql://postgres:postgres@localhost:5432/postgres")  # db for migration tests
     return alembic_cfg
 
 
@@ -30,7 +30,6 @@ def revisions(alembic_config: Config) -> list[Script]:
     return revisions
 
 
-
 def test_migrations_stairway(alembic_config: Config, revisions: list[Script]) -> None:
     for revision in revisions:
         upgrade(alembic_config, revision.revision)
@@ -40,5 +39,5 @@ def test_migrations_stairway(alembic_config: Config, revisions: list[Script]) ->
 
 @pytest.fixture()
 def engine() -> Generator[Engine, None, None]:
-    engine = create_engine(os.getenv("DB_DSN") or "postgresql://postgres:postgres@localhost:5432/postgres")
+    engine = create_engine("postgresql://postgres:postgres@localhost:5432/postgres")
     yield engine

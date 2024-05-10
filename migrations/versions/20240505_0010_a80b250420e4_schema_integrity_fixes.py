@@ -712,36 +712,25 @@ def downgrade():
         sa.PrimaryKeyConstraint('id', name='vk_groups_pkey'),
         schema='STG_SOCIAL',
     )
-    op.create_group(
-        "test_test_dwh_stg_social_all" if os.getenv("ENVIRONMENT") != "production" else "prod_test_dwh_stg_social_all"
-    )
-    op.create_group(
-        "test_test_dwh_stg_social_write"
-        if os.getenv("ENVIRONMENT") != "production"
-        else "prod_test_dwh_stg_social_write"
-    )
-    op.create_group(
-        "test_test_dwh_stg_social_read" if os.getenv("ENVIRONMENT") != "production" else "prod_test_dwh_stg_social_read"
-    )
     op.grant_on_table(
-        "test_test_dwh_stg_social_all" if os.getenv("ENVIRONMENT") != "production" else "prod_test_dwh_stg_social_all",
+        "test_dwh_stg_social_all" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_stg_social_all",
         ['ALL'],
         '"STG_SOCIAL".vk_groups',
     )
     op.grant_on_table(
         (
-            "test_test_dwh_stg_social_write"
+            "test_dwh_stg_social_write"
             if os.getenv("ENVIRONMENT") != "production"
-            else "prod_test_dwh_stg_social_write"
+            else "prod_dwh_stg_social_write"
         ),
         ['SELECT', 'UPDATE', 'DELETE', 'TRUNCATE', 'INSERT'],
         '"STG_SOCIAL".vk_groups',
     )
     op.grant_on_table(
         (
-            "test_test_dwh_stg_social_read"
+            "test_dwh_stg_social_read"
             if os.getenv("ENVIRONMENT") != "production"
-            else "prod_test_dwh_stg_social_read"
+            else "prod_dwh_stg_social_read"
         ),
         ['SELECT'],
         '"STG_SOCIAL".vk_groups',
