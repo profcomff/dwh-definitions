@@ -40,14 +40,5 @@ def test_migrations_stairway(alembic_config: Config, revisions: list[Script]) ->
 
 @pytest.fixture()
 def engine() -> Generator[Engine, None, None]:
-    engine = create_engine("postgresql://postgres:postgres@localhost:5432/postgres")
+    engine = create_engine(os.getenv("DB_DSN") or "postgresql://postgres:postgres@localhost:5432/postgres")
     yield engine
-
-
-@pytest.fixture()
-def migration(alembic_config: Config) -> Generator[None, None, None]:
-    command.upgrade(alembic_config, 'head')
-    command.revision(alembic_config, autogenerate=True, message="tests")
-    command.upgrade(alembic_config, 'head')
-    yield
-    command.downgrade(alembic_config, 'head-1')
