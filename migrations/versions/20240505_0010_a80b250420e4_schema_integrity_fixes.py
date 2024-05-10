@@ -21,8 +21,6 @@ depends_on = None
 
 
 def upgrade():
-    op.drop_table('raw_html_old', schema='STG_TIMETABLE')
-    op.drop_table('raw_html', schema='STG_TIMETABLE')
     op.drop_table('vk_groups', schema='STG_SOCIAL')
     op.create_table_schema("STG_RASPHYSMSU")
     op.create_table_schema("STG_ACHIEVEMENT")
@@ -714,17 +712,14 @@ def downgrade():
         sa.PrimaryKeyConstraint('id', name='vk_groups_pkey'),
         schema='STG_SOCIAL',
     )
-    op.create_table(
-        'raw_html',
-        sa.Column('url', sa.VARCHAR(length=256), autoincrement=False, nullable=True),
-        sa.Column('raw_html', sa.TEXT(), autoincrement=False, nullable=True),
-        schema='STG_TIMETABLE',
+    op.create_group(
+        "test_test_dwh_stg_social_all" if os.getenv("ENVIRONMENT") != "production" else "prod_test_dwh_stg_social_all"
     )
-    op.create_table(
-        'raw_html_old',
-        sa.Column('url', sa.VARCHAR(length=256), autoincrement=False, nullable=True),
-        sa.Column('raw_html', sa.TEXT(), autoincrement=False, nullable=True),
-        schema='STG_TIMETABLE',
+    op.create_group(
+        "test_test_dwh_stg_social_write" if os.getenv("ENVIRONMENT") != "production" else "prod_test_dwh_stg_social_write"
+    )
+    op.create_group(
+        "test_test_dwh_stg_social_read" if os.getenv("ENVIRONMENT") != "production" else "prod_test_dwh_stg_social_read"
     )
     op.grant_on_table(
         "test_test_dwh_stg_social_all" if os.getenv("ENVIRONMENT") != "production" else "prod_test_dwh_stg_social_all",
@@ -863,6 +858,7 @@ def downgrade():
         'credentials',
         'token',
         existing_type=sa.String(),
+        postgresql_using="token::json",
         type_=postgresql.JSON(astext_type=sa.Text()),
         nullable=False,
         schema='STG_TIMETABLE',
@@ -871,6 +867,7 @@ def downgrade():
         'credentials',
         'scope',
         existing_type=sa.String(),
+        postgresql_using="scope::json",
         type_=postgresql.JSON(astext_type=sa.Text()),
         nullable=False,
         schema='STG_TIMETABLE',
@@ -913,6 +910,7 @@ def downgrade():
         'webhook_storage',
         'message',
         existing_type=sa.String(),
+        postgresql_using="message::json",
         type_=postgresql.JSON(astext_type=sa.Text()),
         nullable=False,
         schema='STG_SOCIAL',
@@ -944,6 +942,7 @@ def downgrade():
         'receiver',
         'receiver_body',
         existing_type=sa.String(),
+        postgresql_using="receiver_body::json",
         type_=postgresql.JSON(astext_type=sa.Text()),
         nullable=False,
         schema='STG_PINGER',
@@ -965,6 +964,7 @@ def downgrade():
         'alert',
         'data',
         existing_type=sa.String(),
+        postgresql_using="data::json",
         type_=postgresql.JSON(astext_type=sa.Text()),
         existing_nullable=True,
         schema='STG_PINGER',

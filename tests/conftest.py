@@ -11,27 +11,24 @@ from alembic.script import Script, ScriptDirectory
 from sqlalchemy.engine import Engine
 
 
+REPO_ROOT = Path(os.path.abspath(os.path.dirname(__file__))).parent.resolve()
+
+
 @pytest.fixture
-def revisions(pg_url: str, alembic_config: Config) -> list[Script]:
-    alembic_config.set_main_option("sqlalchemy.url", pg_url)
+def alembic_config():
+    alembic_cfg = Config()
+    alembic_cfg.set_main_option('script_location', str(REPO_ROOT / "migrations"))
+    alembic_cfg.set_main_option('sqlalchemy.url', "postgresql://postgres:postgres@localhost:5432/postgres")
+    return alembic_cfg
+
+
+@pytest.fixture
+def revisions(alembic_config: Config) -> list[Script]:
     revisions_dir = ScriptDirectory.from_config(alembic_config)
     revisions = list(revisions_dir.walk_revisions("base", "heads"))
     revisions.reverse()
     return revisions
 
-REPO_ROOT = Path(os.path.abspath(os.path.dirname(__file__))).parent.resolve()
-
-
-@pytest.fixture(scope='session')
-def migration() -> Generator[None, None, None]:
-    alembic_cfg = Config()
-    alembic_cfg.set_main_option('script_location', str(REPO_ROOT / "migrations"))
-    alembic_cfg.set_main_option('sqlalchemy.url', "postgresql://postgres:postgres@localhost:5432/postgres")
-    command.upgrade(alembic_cfg, 'head')
-    command.revision(alembic_cfg, autogenerate=True, message="tests")
-    command.upgrade(alembic_cfg, 'head')
-    yield
-    command.downgrade(alembic_cfg, 'head-1')
 
 
 def test_migrations_stairway(alembic_config: Config, revisions: list[Script]) -> None:
