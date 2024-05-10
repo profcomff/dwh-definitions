@@ -1,3 +1,3 @@
-from profcomff_definitions.DM.dim_cabnet_act import DimCabnetAct
+from profcomff_definitions.DM.timetable import DimRoomAct
 
-__all__ = ['DimCabnetAct']
+__all__ = ['DimRoomAct']
