@@ -1,8 +1,8 @@
 """Github STG new repo cols
 
 Revision ID: 7a18bd9ff633
-Revises: d80ebb009b4e
-Create Date: 2024-05-11 19:02:03.331968
+Revises: 7353088d02ce
+Create Date: 2024-05-13 19:02:03.331968
 
 """
 
@@ -12,7 +12,7 @@ from alembic import op
 
 # revision identifiers, used by Alembic.
 revision = '7a18bd9ff633'
-down_revision = 'd80ebb009b4e'
+down_revision = '7353088d02ce'
 branch_labels = None
 depends_on = None
 
