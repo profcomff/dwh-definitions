@@ -228,6 +228,10 @@ class ProfcomffRepo(Base):
     license_spdx_id: Mapped[str | None]
     license_url: Mapped[str | None]
     license_node_id: Mapped[str | None]
+    security_and_analysis_secret_scanning_status: Mapped[str | None]
+    security_and_analysis_secret_scanning_push_protection_status: Mapped[str | None]
+    security_and_analysis_dependabot_security_updates_status: Mapped[str | None]
+    security_and_analysis_secret_scanning_validity_checks_status: Mapped[str | None]
 
 
 class ProfcomffTeam(Base):
