@@ -38,9 +38,15 @@ def upgrade():
         sa.Column('security_and_analysis_secret_scanning_validity_checks_status', sa.String(), nullable=True),
         schema='STG_GITHUB',
     )
+    op.alter_column(
+        'profcomff_issue', 'id', existing_type=sa.INTEGER(), type_=sa.BIGINT(), schema='STG_GITHUB'
+    )
 
 
 def downgrade():
+    op.alter_column(
+        'profcomff_issue', 'id', existing_type=sa.BIGINT(), type_=sa.INTEGER(), schema='STG_GITHUB'
+    )
     op.drop_column(
         'profcomff_repo', 'security_and_analysis_secret_scanning_validity_checks_status', schema='STG_GITHUB'
     )
