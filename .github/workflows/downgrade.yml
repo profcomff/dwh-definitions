@@ -1,0 +1,44 @@
+name: Downgrade
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to downgrade to'
+        required: true
+        default: 'head'
+      environment:
+        description: 'Environment to run tests against'
+        type: environment
+        required: true
+
+
+jobs:
+  migrate:
+    name: Migrate DB ${{ inputs.environment }} to ${{ inputs.version }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    environment:
+      name: ${{ inputs.environment }}
+    env:
+      ENVIRONMENT: ${{ inputs.environment }}
+      DB_DSN: ${{ secrets.DB_DSN }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m ensurepip
+          pip install -r requirements.txt -r requirements.dev.txt
+
+      - name: Migrate DB
+        run: |
+          alembic downgrade ${{ inputs.version }}

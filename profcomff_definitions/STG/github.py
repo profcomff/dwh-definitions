@@ -1,10 +1,11 @@
+import sqlalchemy as sa
 from sqlalchemy.orm import Mapped, mapped_column
 
 from profcomff_definitions.base import Base
 
 
 class OrgInfo(Base):
-    id: Mapped[str | None] = mapped_column(primary_key=True)
+    id: Mapped[str] = mapped_column(primary_key=True)
     login: Mapped[str | None]
     node_id: Mapped[str | None]
     url: Mapped[str | None]
@@ -69,7 +70,7 @@ class OrgInfo(Base):
 
 
 class ProfcomffInvation(Base):
-    id: Mapped[int | None] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
     node_id: Mapped[str | None]
     login: Mapped[str | None]
     email: Mapped[str | None]
@@ -101,7 +102,7 @@ class ProfcomffInvation(Base):
 
 
 class ProfcomffMember(Base):
-    id: Mapped[int | None] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
     login: Mapped[str | None]
     node_id: Mapped[str | None]
     avatar_url: Mapped[str | None]
@@ -122,7 +123,7 @@ class ProfcomffMember(Base):
 
 
 class ProfcomffRepo(Base):
-    id: Mapped[int | None] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
     node_id: Mapped[str | None]
     name: Mapped[str | None]
     full_name: Mapped[str | None]
@@ -235,7 +236,7 @@ class ProfcomffRepo(Base):
 
 
 class ProfcomffTeam(Base):
-    id: Mapped[int | None] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str | None]
     node_id: Mapped[str | None]
     slug: Mapped[str | None]
@@ -251,8 +252,8 @@ class ProfcomffTeam(Base):
 
 
 class ProfcomffTeamMember(Base):
-    id: Mapped[int | None] = mapped_column(primary_key=True)
-    team_id: Mapped[int | None] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    team_id: Mapped[int] = mapped_column(primary_key=True)
     login: Mapped[str | None]
     node_id: Mapped[str | None]
     avatar_url: Mapped[str | None]
@@ -273,8 +274,8 @@ class ProfcomffTeamMember(Base):
 
 
 class ProfcomffTeamRepo(Base):
-    id: Mapped[int | None] = mapped_column(primary_key=True)
-    team_id: Mapped[int | None] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    team_id: Mapped[int] = mapped_column(primary_key=True)
     node_id: Mapped[str | None]
     name: Mapped[str | None]
     full_name: Mapped[str | None]
@@ -381,8 +382,8 @@ class ProfcomffTeamRepo(Base):
 
 
 class ProfcomffCommit(Base):
-    sha: Mapped[str | None] = mapped_column(primary_key=True)
-    repo_id: Mapped[int | None] = mapped_column(primary_key=True)
+    sha: Mapped[str] = mapped_column(primary_key=True)
+    repo_id: Mapped[int] = mapped_column(primary_key=True)
     node_id: Mapped[str | None]
     commit_author_name: Mapped[str | None]
     commit_author_email: Mapped[str | None]
@@ -444,8 +445,8 @@ class ProfcomffCommit(Base):
 
 
 class ProfcomffIssue(Base):
-    id: Mapped[int | None] = mapped_column(primary_key=True)
-    repo_id: Mapped[int | None] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(sa.BIGINT, primary_key=True)
+    repo_id: Mapped[int] = mapped_column(primary_key=True)
     url: Mapped[str | None]
     repository_url: Mapped[str | None]
     labels_url: Mapped[str | None]
