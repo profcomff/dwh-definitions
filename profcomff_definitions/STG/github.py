@@ -1,10 +1,11 @@
+import sqlalchemy as sa
 from sqlalchemy.orm import Mapped, mapped_column
 
 from profcomff_definitions.base import Base
 
 
 class OrgInfo(Base):
-    id: Mapped[str | None] = mapped_column(primary_key=True)
+    id: Mapped[str] = mapped_column(primary_key=True)
     login: Mapped[str | None]
     node_id: Mapped[str | None]
     url: Mapped[str | None]
@@ -69,7 +70,7 @@ class OrgInfo(Base):
 
 
 class ProfcomffInvation(Base):
-    id: Mapped[int | None] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
     node_id: Mapped[str | None]
     login: Mapped[str | None]
     email: Mapped[str | None]
@@ -101,7 +102,7 @@ class ProfcomffInvation(Base):
 
 
 class ProfcomffMember(Base):
-    id: Mapped[int | None] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
     login: Mapped[str | None]
     node_id: Mapped[str | None]
     avatar_url: Mapped[str | None]
@@ -122,7 +123,7 @@ class ProfcomffMember(Base):
 
 
 class ProfcomffRepo(Base):
-    id: Mapped[int | None] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
     node_id: Mapped[str | None]
     name: Mapped[str | None]
     full_name: Mapped[str | None]
@@ -228,10 +229,14 @@ class ProfcomffRepo(Base):
     license_spdx_id: Mapped[str | None]
     license_url: Mapped[str | None]
     license_node_id: Mapped[str | None]
+    security_and_analysis_secret_scanning_status: Mapped[str | None]
+    security_and_analysis_secret_scanning_push_protection_status: Mapped[str | None]
+    security_and_analysis_dependabot_security_updates_status: Mapped[str | None]
+    security_and_analysis_secret_scanning_validity_checks_status: Mapped[str | None]
 
 
 class ProfcomffTeam(Base):
-    id: Mapped[int | None] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str | None]
     node_id: Mapped[str | None]
     slug: Mapped[str | None]
@@ -247,8 +252,8 @@ class ProfcomffTeam(Base):
 
 
 class ProfcomffTeamMember(Base):
-    id: Mapped[int | None] = mapped_column(primary_key=True)
-    team_id: Mapped[int | None] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    team_id: Mapped[int] = mapped_column(primary_key=True)
     login: Mapped[str | None]
     node_id: Mapped[str | None]
     avatar_url: Mapped[str | None]
@@ -269,8 +274,8 @@ class ProfcomffTeamMember(Base):
 
 
 class ProfcomffTeamRepo(Base):
-    id: Mapped[int | None] = mapped_column(primary_key=True)
-    team_id: Mapped[int | None] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    team_id: Mapped[int] = mapped_column(primary_key=True)
     node_id: Mapped[str | None]
     name: Mapped[str | None]
     full_name: Mapped[str | None]
@@ -374,3 +379,181 @@ class ProfcomffTeamRepo(Base):
     permissions_pull: Mapped[str | None]
     role_name: Mapped[str | None]
     license: Mapped[str | None]
+
+
+class ProfcomffCommit(Base):
+    sha: Mapped[str] = mapped_column(primary_key=True)
+    repo_id: Mapped[int] = mapped_column(primary_key=True)
+    node_id: Mapped[str | None]
+    commit_author_name: Mapped[str | None]
+    commit_author_email: Mapped[str | None]
+    commit_author_date: Mapped[str | None]
+    commit_committer_name: Mapped[str | None]
+    commit_committer_email: Mapped[str | None]
+    commit_committer_date: Mapped[str | None]
+    commit_message: Mapped[str | None]
+    commit_tree_sha: Mapped[str | None]
+    commit_tree_url: Mapped[str | None]
+    commit_url: Mapped[str | None]
+    commit_comment_count: Mapped[int | None]
+    commit_verification_verified: Mapped[bool | None]
+    commit_verification_reason: Mapped[str | None]
+    commit_verification_signature: Mapped[str | None]
+    commit_verification_payload: Mapped[str | None]
+    url: Mapped[str | None]
+    html_url: Mapped[str | None]
+    comments_url: Mapped[str | None]
+    author_login: Mapped[str | None]
+    author_id: Mapped[int | None]
+    author_node_id: Mapped[str | None]
+    author_avatar_url: Mapped[str | None]
+    author_gravatar_id: Mapped[str | None]
+    author_url: Mapped[str | None]
+    author_html_url: Mapped[str | None]
+    author_followers_url: Mapped[str | None]
+    author_following_url: Mapped[str | None]
+    author_gists_url: Mapped[str | None]
+    author_starred_url: Mapped[str | None]
+    author_subscriptions_url: Mapped[str | None]
+    author_organizations_url: Mapped[str | None]
+    author_repos_url: Mapped[str | None]
+    author_events_url: Mapped[str | None]
+    author_received_events_url: Mapped[str | None]
+    author_type: Mapped[str | None]
+    author_site_admin: Mapped[str | None]
+    committer_login: Mapped[str | None]
+    committer_id: Mapped[int | None]
+    committer_node_id: Mapped[str | None]
+    committer_avatar_url: Mapped[str | None]
+    committer_gravatar_id: Mapped[str | None]
+    committer_url: Mapped[str | None]
+    committer_html_url: Mapped[str | None]
+    committer_followers_url: Mapped[str | None]
+    committer_following_url: Mapped[str | None]
+    committer_gists_url: Mapped[str | None]
+    committer_starred_url: Mapped[str | None]
+    committer_subscriptions_url: Mapped[str | None]
+    committer_organizations_url: Mapped[str | None]
+    committer_repos_url: Mapped[str | None]
+    committer_events_url: Mapped[str | None]
+    committer_received_events_url: Mapped[str | None]
+    committer_type: Mapped[str | None]
+    committer_site_admin: Mapped[str | None]
+    parents: Mapped[str | None]
+    author: Mapped[str | None]
+    committer: Mapped[str | None]
+
+
+class ProfcomffIssue(Base):
+    id: Mapped[int] = mapped_column(sa.BIGINT, primary_key=True)
+    repo_id: Mapped[int] = mapped_column(primary_key=True)
+    url: Mapped[str | None]
+    repository_url: Mapped[str | None]
+    labels_url: Mapped[str | None]
+    comments_url: Mapped[str | None]
+    events_url: Mapped[str | None]
+    html_url: Mapped[str | None]
+    node_id: Mapped[str | None]
+    number: Mapped[int | None]
+    title: Mapped[str | None]
+    user_login: Mapped[str | None]
+    user_id: Mapped[int | None]
+    user_node_id: Mapped[str | None]
+    user_avatar_url: Mapped[str | None]
+    user_gravatar_id: Mapped[str | None]
+    user_url: Mapped[str | None]
+    user_html_url: Mapped[str | None]
+    user_followers_url: Mapped[str | None]
+    user_following_url: Mapped[str | None]
+    user_gists_url: Mapped[str | None]
+    user_starred_url: Mapped[str | None]
+    user_subscriptions_url: Mapped[str | None]
+    user_organizations_url: Mapped[str | None]
+    user_repos_url: Mapped[str | None]
+    user_events_url: Mapped[str | None]
+    user_received_events_url: Mapped[str | None]
+    user_type: Mapped[str | None]
+    user_site_admin: Mapped[str | None]
+    labels: Mapped[str | None]
+    state: Mapped[str | None]
+    locked: Mapped[str | None]
+    assignee: Mapped[str | None]
+    assignees: Mapped[str | None]
+    milestone: Mapped[str | None]
+    comments: Mapped[int | None]
+    created_at: Mapped[str | None]
+    updated_at: Mapped[str | None]
+    closed_at: Mapped[str | None]
+    author_association: Mapped[str | None]
+    active_lock_reason: Mapped[str | None]
+    body: Mapped[str | None]
+    reactions_url: Mapped[str | None]
+    reactions_total_count: Mapped[int | None]
+    reactions_like: Mapped[int | None]
+    reactions_dislike: Mapped[int | None]
+    reactions_laugh: Mapped[int | None]
+    reactions_hooray: Mapped[int | None]
+    reactions_confused: Mapped[int | None]
+    reactions_heart: Mapped[int | None]
+    reactions_rocket: Mapped[int | None]
+    reactions_eyes: Mapped[int | None]
+    timeline_url: Mapped[str | None]
+    performed_via_github_app: Mapped[str | None]
+    state_reason: Mapped[str | None]
+    assignee_login: Mapped[str | None]
+    assignee_id: Mapped[int | None]
+    assignee_node_id: Mapped[str | None]
+    assignee_avatar_url: Mapped[str | None]
+    assignee_gravatar_id: Mapped[str | None]
+    assignee_url: Mapped[str | None]
+    assignee_html_url: Mapped[str | None]
+    assignee_followers_url: Mapped[str | None]
+    assignee_following_url: Mapped[str | None]
+    assignee_gists_url: Mapped[str | None]
+    assignee_starred_url: Mapped[str | None]
+    assignee_subscriptions_url: Mapped[str | None]
+    assignee_organizations_url: Mapped[str | None]
+    assignee_repos_url: Mapped[str | None]
+    assignee_events_url: Mapped[str | None]
+    assignee_received_events_url: Mapped[str | None]
+    assignee_type: Mapped[str | None]
+    assignee_site_admin: Mapped[str | None]
+    draft: Mapped[str | None]
+    pull_request_url: Mapped[str | None]
+    pull_request_html_url: Mapped[str | None]
+    pull_request_diff_url: Mapped[str | None]
+    pull_request_patch_url: Mapped[str | None]
+    pull_request_merged_at: Mapped[str | None]
+    milestone_url: Mapped[str | None]
+    milestone_html_url: Mapped[str | None]
+    milestone_labels_url: Mapped[str | None]
+    milestone_id: Mapped[int | None]
+    milestone_node_id: Mapped[str | None]
+    milestone_number: Mapped[int | None]
+    milestone_title: Mapped[str | None]
+    milestone_description: Mapped[str | None]
+    milestone_creator_login: Mapped[str | None]
+    milestone_creator_id: Mapped[int | None]
+    milestone_creator_node_id: Mapped[str | None]
+    milestone_creator_avatar_url: Mapped[str | None]
+    milestone_creator_gravatar_id: Mapped[str | None]
+    milestone_creator_url: Mapped[str | None]
+    milestone_creator_html_url: Mapped[str | None]
+    milestone_creator_followers_url: Mapped[str | None]
+    milestone_creator_following_url: Mapped[str | None]
+    milestone_creator_gists_url: Mapped[str | None]
+    milestone_creator_starred_url: Mapped[str | None]
+    milestone_creator_subscriptions_url: Mapped[str | None]
+    milestone_creator_organizations_url: Mapped[str | None]
+    milestone_creator_repos_url: Mapped[str | None]
+    milestone_creator_events_url: Mapped[str | None]
+    milestone_creator_received_events_url: Mapped[str | None]
+    milestone_creator_type: Mapped[str | None]
+    milestone_creator_site_admin: Mapped[str | None]
+    milestone_open_issues: Mapped[int | None]
+    milestone_closed_issues: Mapped[int | None]
+    milestone_state: Mapped[str | None]
+    milestone_created_at: Mapped[str | None]
+    milestone_updated_at: Mapped[str | None]
+    milestone_due_on: Mapped[int | None]
+    milestone_closed_at: Mapped[int | None]
