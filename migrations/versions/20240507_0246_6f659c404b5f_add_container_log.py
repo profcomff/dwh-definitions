@@ -69,6 +69,18 @@ def upgrade():
 
 
 def downgrade():
+    op.revoke_on_schema(
+        "test_dwh_stg_infra_all" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_stg_infra_all",
+        "STG_INFRA",
+    )
+    op.revoke_on_schema(
+        ("test_dwh_stg_infra_write" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_stg_infra_write"),
+        "STG_INFRA",
+    )
+    op.revoke_on_schema(
+        ("test_dwh_stg_infra_read" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_stg_infra_read"),
+        "STG_INFRA",
+    )
     op.drop_table('container_log', schema='STG_INFRA')
     op.delete_group("test_dwh_stg_infra_all" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_stg_infra_all")
     op.delete_group(
