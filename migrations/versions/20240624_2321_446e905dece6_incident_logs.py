@@ -75,5 +75,4 @@ def downgrade():
         '"DM_INFRA_LOGS".incident_hint',
     )
     op.drop_table('incident_hint', schema='DM_INFRA_LOGS')
-    op.drop_table_schema("STG_RASPHYSMSU")
     op.drop_column('container_log_cube', 'msk_record_loaded_dttm', schema='DM_INFRA_LOGS')
