@@ -3,11 +3,10 @@ from pathlib import Path
 from typing import Generator
 
 import pytest
-from alembic.config import Config
-from sqlalchemy import create_engine
-from alembic.command import downgrade, upgrade, revision
+from alembic.command import downgrade, revision, upgrade
 from alembic.config import Config
 from alembic.script import Script, ScriptDirectory
+from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 
 
