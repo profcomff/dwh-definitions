@@ -1,4 +1,4 @@
-from datetime import datetime
+f rom datetime import datetime
 
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -11,6 +11,7 @@ class ContainerLogCube(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     container_name: Mapped[str] = mapped_column(comment="Название контейнера")
     create_date: Mapped[str] = mapped_column(comment="Дата лога")
+    msk_record_loaded_dttm: Mapped[str] = mapped_column(comment = "Поле нарезки лога")
     debug_cnt: Mapped[int] = mapped_column(comment="Количество записей с типом DEBUG")
     warn_cnt: Mapped[int] = mapped_column(comment="Количество записей с типом WARN")
     info_cnt: Mapped[int] = mapped_column(comment="Количество записей с типом INFO")
