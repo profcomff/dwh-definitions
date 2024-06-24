@@ -21,6 +21,7 @@ class ContainerLogCube(Base):
 
 class Incident(Base):
     """Информация об ошибках по контейнерам"""
+
     id: Mapped[int] = mapped_column(primary_key=True)
     container_name: Mapped[str] = mapped_column(comment="Имя контейнера, в котором произошла ошибочка")
     message: Mapped[str] = mapped_column(comment="Сообщение об ошибке")

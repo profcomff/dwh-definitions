@@ -17,7 +17,9 @@ REPO_ROOT = Path(os.path.abspath(os.path.dirname(__file__))).parent.resolve()
 def alembic_config():
     alembic_cfg = Config()
     alembic_cfg.set_main_option('script_location', str(REPO_ROOT / "migrations"))
-    alembic_cfg.set_main_option('sqlalchemy.url', os.getenv("DB_DSN") or "postgresql://postgres:postgres@localhost:5432/postgres")  # db for migration tests
+    alembic_cfg.set_main_option(
+        'sqlalchemy.url', os.getenv("DB_DSN") or "postgresql://postgres:postgres@localhost:5432/postgres"
+    )  # db for migration tests
     return alembic_cfg
 
 
