@@ -19,7 +19,7 @@ class ContainerLogCube(Base):
     other_cnt: Mapped[int] = mapped_column(comment="Количество записей с другими типами")
 
 
-class Incident_hint(Base):
+class IncidentHint(Base):
     """Информация об ошибках по контейнерам"""
 
     id: Mapped[int] = mapped_column(primary_key=True)
