@@ -1,8 +1,8 @@
 """incident_logs
 
-Revision ID: 446e905dece6
+Revision ID: 5714921e11a0
 Revises: 7a18bd9ff633
-Create Date: 2024-06-24 23:21:24.217861
+Create Date: 2024-06-25 12:06:54.755277
 
 """
 
@@ -13,7 +13,7 @@ from alembic import op
 
 
 # revision identifiers, used by Alembic.
-revision = '446e905dece6'
+revision = '5714921e11a0'
 down_revision = '7a18bd9ff633'
 branch_labels = None
 depends_on = None
@@ -24,6 +24,7 @@ def upgrade():
     op.create_table(
         'incident_hint',
         sa.Column('id', sa.Integer(), nullable=False),
+        sa.Column('msk_record_loaded_dttm', sa.String(), nullable=False, comment='Поле нарезки лога'),
         sa.Column(
             'container_name', sa.String(), nullable=False, comment='Имя контейнера, в котором произошла ошибочка'
         ),
@@ -33,7 +34,6 @@ def upgrade():
         schema='DM_INFRA_LOGS',
         comment='Информация об ошибках по контейнерам',
     )
-
     op.grant_on_table(
         "test_dwh_dm_infra_logs_read" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_dm_infra_logs_read",
         ['SELECT'],
@@ -41,18 +41,13 @@ def upgrade():
     )
     op.grant_on_table(
         "test_dwh_dm_infra_logs_write" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_dm_infra_logs_write",
-        ['SELECT', 'UPDATE', 'DELETE', 'TRUNCATE', 'INSERT'],
+        ['SELECT', 'INSERT', 'DELETE', 'UPDATE', 'TRUNCATE'],
         '"DM_INFRA_LOGS".incident_hint',
     )
     op.grant_on_table(
         "test_dwh_dm_infra_logs_all" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_dm_infra_logs_all",
         ['ALL'],
         '"DM_INFRA_LOGS".incident_hint',
-    )
-    op.add_column(
-        'container_log_cube',
-        sa.Column('msk_record_loaded_dttm', sa.String(), nullable=False, comment='Поле нарезки лога'),
-        schema='DM_INFRA_LOGS',
     )
     # ### end Alembic commands ###
 
@@ -66,7 +61,7 @@ def downgrade():
     )
     op.revoke_on_table(
         "test_dwh_dm_infra_logs_write" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_dm_infra_logs_write",
-        ['SELECT', 'UPDATE', 'DELETE', 'TRUNCATE', 'INSERT'],
+        ['SELECT', 'INSERT', 'DELETE', 'UPDATE', 'TRUNCATE'],
         '"DM_INFRA_LOGS".incident_hint',
     )
     op.revoke_on_table(
@@ -74,5 +69,3 @@ def downgrade():
         ['SELECT'],
         '"DM_INFRA_LOGS".incident_hint',
     )
-    op.drop_table('incident_hint', schema='DM_INFRA_LOGS')
-    op.drop_column('container_log_cube', 'msk_record_loaded_dttm', schema='DM_INFRA_LOGS')

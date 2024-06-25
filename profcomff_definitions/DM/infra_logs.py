@@ -11,7 +11,6 @@ class ContainerLogCube(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     container_name: Mapped[str] = mapped_column(comment="Название контейнера")
     create_date: Mapped[str] = mapped_column(comment="Дата лога")
-    msk_record_loaded_dttm: Mapped[str] = mapped_column(comment="Поле нарезки лога")
     debug_cnt: Mapped[int] = mapped_column(comment="Количество записей с типом DEBUG")
     warn_cnt: Mapped[int] = mapped_column(comment="Количество записей с типом WARN")
     info_cnt: Mapped[int] = mapped_column(comment="Количество записей с типом INFO")
@@ -24,6 +23,7 @@ class Incident_hint(Base):
     """Информация об ошибках по контейнерам"""
 
     id: Mapped[int] = mapped_column(primary_key=True)
+    msk_record_loaded_dttm: Mapped[str] = mapped_column(comment="Поле нарезки лога")
     container_name: Mapped[str] = mapped_column(comment="Имя контейнера, в котором произошла ошибочка")
     message: Mapped[str] = mapped_column(comment="Сообщение об ошибке")
     create_ts: Mapped[datetime] = mapped_column(comment="Время, когда произошла ошибка")
