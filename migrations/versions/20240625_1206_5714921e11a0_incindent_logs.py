@@ -57,16 +57,16 @@ def downgrade():
     op.revoke_on_table(
         "test_dwh_dm_infra_logs_all" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_dm_infra_logs_all",
         ['ALL'],
-        '"DM_INFRA_LOGS".incident_hint',
+        '"DM_INFRA_LOGS".incindent_hint',
     )
     op.revoke_on_table(
         "test_dwh_dm_infra_logs_write" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_dm_infra_logs_write",
         ['SELECT', 'INSERT', 'DELETE', 'UPDATE', 'TRUNCATE'],
-        '"DM_INFRA_LOGS".incident_hint',
+        '"DM_INFRA_LOGS".incindent_hint',
     )
     op.revoke_on_table(
         "test_dwh_dm_infra_logs_read" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_dm_infra_logs_read",
         ['SELECT'],
-        '"DM_INFRA_LOGS".incident_hint',
+        '"DM_INFRA_LOGS".incindent_hint',
     )
     op.drop_table('incident_hint', schema='DM_INFRA_LOGS')
