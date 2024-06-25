@@ -23,7 +23,7 @@ class IncidentHint(Base):
     """Информация об ошибках по контейнерам"""
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    msk_record_loaded_dttm: Mapped[str] = mapped_column(comment="Поле нарезки лога")
+    msk_record_loaded_dttm: Mapped[datetime] = mapped_column(comment="Поле нарезки лога")
     container_name: Mapped[str] = mapped_column(comment="Имя контейнера, в котором произошла ошибочка")
     message: Mapped[str] = mapped_column(comment="Сообщение об ошибке")
     create_ts: Mapped[datetime] = mapped_column(comment="Время, когда произошла ошибка")

@@ -24,7 +24,7 @@ def upgrade():
     op.create_table(
         'incident_hint',
         sa.Column('id', sa.Integer(), nullable=False),
-        sa.Column('msk_record_loaded_dttm', sa.String(), nullable=False, comment='Поле нарезки лога'),
+        sa.Column('msk_record_loaded_dttm', sa.DateTime(), nullable=False, comment='Поле нарезки лога'),
         sa.Column(
             'container_name', sa.String(), nullable=False, comment='Имя контейнера, в котором произошла ошибочка'
         ),
