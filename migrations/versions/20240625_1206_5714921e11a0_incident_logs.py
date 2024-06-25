@@ -69,3 +69,4 @@ def downgrade():
         ['SELECT'],
         '"DM_INFRA_LOGS".incident_hint',
     )
+    op.drop_table('incident_hint', schema='DM_INFRA_LOGS')
