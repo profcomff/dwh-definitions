@@ -4,8 +4,7 @@ from logging.config import fileConfig
 from alembic import context
 from sqlalchemy import engine_from_config, pool
 
-import migrations.rights  # noqa
-import migrations.schema  # noqa
+import migrations.custom_scripts  # noqa
 import profcomff_definitions  # noqa
 from profcomff_definitions.base import Base
 
@@ -38,17 +37,18 @@ def process_revision_directives(context, revision, directives):
     script = directives[0].upgrade_ops_list[0].ops
     names = [obj.__class__.__name__ for obj in script]
     pattern_list = [
-        'RevokeRightsOp',
-        'RevokeOnSchemaOp',
-        'DropTableOp',
-        'DeleteGroupOp',
-        'DropTableSchemaOp',
         'CreateTableSchemaOp',
         'CreateTableOp',
         'CreateGroupOp',
         'GrantOnSchemaOp',
         'GrantRightsOp',
         'ModifyTableOps',
+        'RevokeRightsOp',
+        'RevokeOnSchemaOp',
+        'ModifyTableOps',
+        'DropTableOp',
+        'DeleteGroupOp',
+        'DropTableSchemaOp',
     ]
     indexes = []
     for pattern in pattern_list:
@@ -90,7 +90,7 @@ def run_migrations_offline():
     script output.
 
     """
-    url = os.getenv('DB_DSN', 'postgresql://postgres:postgres@localhost:5432/postgres')
+    url = os.getenv('DB_DSN', 'postgresql://postgres:12345@localhost:5432/postgres')
     context.configure(
         url=url,
         target_metadata=target_metadata,
@@ -114,7 +114,7 @@ def run_migrations_online():
 
     """
     configuration = config.get_section(config.config_ini_section)
-    configuration["sqlalchemy.url"] = os.getenv('DB_DSN', 'postgresql://postgres:postgres@localhost:5432/postgres')
+    configuration["sqlalchemy.url"] = os.getenv('DB_DSN', 'postgresql://postgres:12345@localhost:5432/postgres')
     connectable = engine_from_config(
         configuration,
         prefix="sqlalchemy.",
