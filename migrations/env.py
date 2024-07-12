@@ -45,7 +45,6 @@ def process_revision_directives(context, revision, directives):
         'ModifyTableOps',
         'RevokeRightsOp',
         'RevokeOnSchemaOp',
-        'ModifyTableOps',
         'DropTableOp',
         'DeleteGroupOp',
         'DropTableSchemaOp',

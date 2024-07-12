@@ -4,6 +4,7 @@ from .rights import compare_groups
 
 from .operations_schemas import create_table_schema, drop_table_schema
 from .schemas import add_table_schema_to_model, compare_schemas
+from .tables import compare_table
 
 __all__ = [
     'create_table_schema',
