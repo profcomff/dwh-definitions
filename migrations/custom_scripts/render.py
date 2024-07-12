@@ -1,8 +1,8 @@
 from alembic.autogenerate import renderers
 
 from .operations_groups import CreateGroupOp, DeleteGroupOp, GrantOnSchemaOp, RevokeOnSchemaOp
-from .operations_tables import GrantRightsOp, RevokeRightsOp
 from .operations_schemas import CreateTableSchemaOp, DropTableSchemaOp
+from .operations_tables import GrantRightsOp, RevokeRightsOp
 
 
 @renderers.dispatch_for(CreateTableSchemaOp)
@@ -18,13 +18,17 @@ def render_drop_sequence(autogen_context, op):
 @renderers.dispatch_for(CreateGroupOp)
 def render_create_group(autogen_context, op):
     render_group = '_'.join(op.group_name.split('_')[1:])
-    return f'op.create_group("test_{render_group}" if os.getenv("ENVIRONMENT") != "production" else "prod_{render_group}")'
+    return (
+        f'op.create_group("test_{render_group}" if os.getenv("ENVIRONMENT") != "production" else "prod_{render_group}")'
+    )
 
 
 @renderers.dispatch_for(DeleteGroupOp)
 def render_drop_group(autogen_context, op):
     render_group = '_'.join(op.group_name.split('_')[1:])
-    return f'op.delete_group("test_{render_group}" if os.getenv("ENVIRONMENT") != "production" else "prod_{render_group}")'
+    return (
+        f'op.delete_group("test_{render_group}" if os.getenv("ENVIRONMENT") != "production" else "prod_{render_group}")'
+    )
 
 
 @renderers.dispatch_for(GrantOnSchemaOp)

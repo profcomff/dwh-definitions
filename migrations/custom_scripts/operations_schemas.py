@@ -13,7 +13,6 @@ class CreateTableSchemaOp(MigrateOperation):
 
     def reverse(self):
         return DropTableSchemaOp(self.table_schema_name)
-        
 
 
 @Operations.register_operation("drop_table_schema")

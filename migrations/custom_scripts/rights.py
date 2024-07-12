@@ -14,12 +14,14 @@ def compare_groups(autogen_context, upgrade_ops, schemas):
 
     for sch in schemas:
         query = text("select schema_name from information_schema.schemata")
-        all_conn_schemas.update([sch[0] for sch in autogen_context.connection.execute(query) if sch[0] not in default_pg_schemas])
+        all_conn_schemas.update(
+            [sch[0] for sch in autogen_context.connection.execute(query) if sch[0] not in default_pg_schemas]
+        )
 
     metadata_schemas = autogen_context.metadata.info.setdefault("table_schemas", set())
 
     # Grant rights on new schemas
-    for sch in (metadata_schemas - all_conn_schemas):
+    for sch in metadata_schemas - all_conn_schemas:
         tables = autogen_context.metadata.tables
         for render_scope in ['read', 'write', 'all']:
             # group_name = f'dwh_{sch}_{render_scope}'.lower()
