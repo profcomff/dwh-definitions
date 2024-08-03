@@ -1,7 +1,9 @@
-from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy import TIMESTAMP
-from profcomff_definitions.base import Base
 from datetime import datetime
+
+from sqlalchemy import TIMESTAMP
+from sqlalchemy.orm import Mapped, mapped_column
+
+from profcomff_definitions.base import Base
 
 
 class OdsTimetableApiFlattened(Base):
