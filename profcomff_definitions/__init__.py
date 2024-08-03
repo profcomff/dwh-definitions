@@ -2,7 +2,7 @@ import os
 import sys
 
 
-__version__ = '2024.05.10'
+__version__ = '1.0.0'  # Не менять, работает автоматика
 
 
 dir_path = os.path.dirname(os.path.abspath(__file__))

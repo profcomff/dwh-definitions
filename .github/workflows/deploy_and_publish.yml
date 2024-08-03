@@ -82,6 +82,12 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Change version
+        run: |
+          VERSION=${{ github.ref_name }}
+          sed -i -e "s/__version__ = '1.0.0'/__version__ = '${VERSION:1}'/g" ${{ github.workspace }}/profcomff_definitions/__init__.py
+
+
       - name: Install dependencies
         run: |
           python -m ensurepip
@@ -92,3 +98,4 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           password: ${{ secrets.PYPI_API_TOKEN }}
+          skip-existing: true
