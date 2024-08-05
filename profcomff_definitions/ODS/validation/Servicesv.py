@@ -1,0 +1,120 @@
+from pydantic import BaseModel, model_validator
+from pydantic import int, str, Field, EmailStr, AnyURL, Json
+from datetime import datetime
+
+
+
+class CategorySv(BaseModel):
+    id: int
+    order: int
+    name: str
+    type: str
+
+    @model_validator(mode='before')
+    def validate_card(self):
+
+        id = self["id"]
+        if (not id):
+            raise ValueError("нет id")
+        name = self["name"]
+        k = 0
+        new_trans_name = ""
+        a = len(name)
+        new_name = ""
+        _eng_chars = u"~!@#$%^&qwertyuiop[]asdfghjkl;'zxcvbnm,./QWERTYUIOP{}ASDFGHJKL:\"|ZXCVBNM<>?"
+        _rus_chars = u"ё!\"№;%:?йцукенгшщзхъфывапролджэячсмитьбю.ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭ/ЯЧСМИТЬБЮ,"
+        _trans_table = dict(zip(_eng_chars, _rus_chars))
+        for i in range(a):
+            new_trans_name += u''.join([_trans_table.get(c, c) for c in name])
+        name = new_trans_name
+        for i in range(a):
+            if (name[i].isalpha() != True):
+                if (name[i] == ' ') and (i != 0) and (i != a):
+                    k = k + 1
+                    if k == 1:
+                        new_name += ' '
+            if (name[i] == 'ё'):
+                new_name[i] = 'е'
+            if (name[i].isalpha() == True):
+                new_name += name[i]
+        new_name = new_name.title()
+        name = new_name
+
+        return self
+
+class ButtonSv(BaseModel):
+    id: int
+    name: str
+    order: int
+    category_id: int
+    icon: str
+    link: AnyURL
+    type: str
+
+    @model_validator(mode='before')
+    def validate_card(self):
+
+        id = self["id"]
+        if (not id):
+            raise ValueError("нет id")
+        name = self["name"]
+        k = 0
+        new_trans_name = ""
+        a = len(name)
+        new_name = ""
+        _eng_chars = u"~!@#$%^&qwertyuiop[]asdfghjkl;'zxcvbnm,./QWERTYUIOP{}ASDFGHJKL:\"|ZXCVBNM<>?"
+        _rus_chars = u"ё!\"№;%:?йцукенгшщзхъфывапролджэячсмитьбю.ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭ/ЯЧСМИТЬБЮ,"
+        _trans_table = dict(zip(_eng_chars, _rus_chars))
+        for i in range(a):
+            new_trans_name += u''.join([_trans_table.get(c, c) for c in name])
+        name = new_trans_name
+        for i in range(a):
+            if (name[i].isalpha() != True):
+                if (name[i] == ' ') and (i != 0) and (i != a):
+                    k = k + 1
+                    if k == 1:
+                        new_name += ' '
+            if (name[i] == 'ё'):
+                new_name[i] = 'е'
+            if (name[i].isalpha() == True):
+                new_name += name[i]
+        new_name = new_name.title()
+        name = new_name
+        
+        return self
+
+class ScopeSv(BaseModel):
+    id: int
+    name: str
+    category_id: int
+    @model_validator(mode='before')
+    def validate_card(self):
+
+        id = self["id"]
+        if (not id):
+            raise ValueError("нет id")
+        name = self["name"]
+        k = 0
+        new_trans_name = ""
+        a = len(name)
+        new_name = ""
+        _eng_chars = u"~!@#$%^&qwertyuiop[]asdfghjkl;'zxcvbnm,./QWERTYUIOP{}ASDFGHJKL:\"|ZXCVBNM<>?"
+        _rus_chars = u"ё!\"№;%:?йцукенгшщзхъфывапролджэячсмитьбю.ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭ/ЯЧСМИТЬБЮ,"
+        _trans_table = dict(zip(_eng_chars, _rus_chars))
+        for i in range(a):
+            new_trans_name += u''.join([_trans_table.get(c, c) for c in name])
+        name = new_trans_name
+        for i in range(a):
+            if (name[i].isalpha() != True):
+                if (name[i] == ' ') and (i != 0) and (i != a):
+                    k = k + 1
+                    if k == 1:
+                        new_name += ' '
+            if (name[i] == 'ё'):
+                new_name[i] = 'е'
+            if (name[i].isalpha() == True):
+                new_name += name[i]
+        new_name = new_name.title()
+        name = new_name
+        
+        return self
