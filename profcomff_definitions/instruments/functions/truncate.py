@@ -1,6 +1,5 @@
 def truncate(table_class: str, *args):
     """
-    Clears your local database from records.
+    Clears your local database from records. (in progress)
     """
-    print("Truncating")
-    print(table_class)
+    pass
