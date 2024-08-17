@@ -1,5 +1,7 @@
 import argparse
+
 import functions
+
 
 parser = argparse.ArgumentParser(
     description="A simple python script to load data from prod/test database to your local database",

@@ -1,10 +1,12 @@
-from profcomff_definitions.instruments.settings import get_settings
-import profcomff_definitions
 import inspect
+
 from sqlalchemy import create_engine, text
-from sqlalchemy.exc import OperationalError, ArgumentError
+from sqlalchemy.exc import ArgumentError, OperationalError
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import func
+
+import profcomff_definitions
+from profcomff_definitions.instruments.settings import get_settings
 
 
 def upload_sample(table_class: str, limit: int, *args):
