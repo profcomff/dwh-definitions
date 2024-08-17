@@ -2,7 +2,6 @@ alembic
 autoflake
 black
 setuptools
-python-dotenv
 flake8
 httpx
 isort
