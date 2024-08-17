@@ -144,15 +144,6 @@ def upgrade():
         ['ALL'],
         '"ODS_TIMETABLE".ods_link_timetable_teacher',
     )
-    op.alter_column(
-        'info',
-        'user_id',
-        existing_type=sa.VARCHAR(),
-        type_=sa.Integer(),
-        existing_nullable=False,
-        autoincrement=True,
-        schema='ODS_INFO',
-    )
     # ### end Alembic commands ###
 
 
