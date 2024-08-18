@@ -32,5 +32,7 @@ def truncate(table_class: str, *args):
         )
 
     # Собственно сама загрузка
-    local_session.execute(text(f'''TRUNCATE TABLE "{table_class.__table_args__["schema"].upper()}".{table_class.__tablename__}'''))
+    local_session.execute(
+        text(f'''TRUNCATE TABLE "{table_class.__table_args__["schema"].upper()}".{table_class.__tablename__}''')
+    )
     local_session.commit()
