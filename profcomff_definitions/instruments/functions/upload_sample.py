@@ -1,42 +1,28 @@
-import inspect
+import os
 
+from dotenv import load_dotenv
 from sqlalchemy import create_engine, text
 from sqlalchemy.exc import ArgumentError, OperationalError
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import func
 
-import profcomff_definitions
-from profcomff_definitions.instruments.settings import get_settings
+from .check_existing_table import check_existing_table
 
 
 def upload_sample(table_class: str, limit: int, *args):
     """
     Uploads a sample of the given string of length from specified table.
     """
-    # Получаем все классы таблиц/проверяем на дубли
-    classes = inspect.getmembers(profcomff_definitions, inspect.isclass)
-    matches = []
-    for existing_class in classes:
-        if existing_class[0] == table_class:
-            matches.append(existing_class[1])
-    if len(matches) == 0:
-        raise ModuleNotFoundError("No matching class found for table " + table_class)
-    if len(matches) > 1:
-        print("Multiple matching classes found for table " + table_class)
-        print("Please choose wich class should be imported")
-        for i in range(len(matches)):
-            print(f"{i})", matches[i])
-        choice = int(input())
-        if choice not in range(len(matches)):
-            raise ValueError("Invalid choice")
-        table_class = matches[choice]
-    else:
-        table_class = matches[0]
+    table_class = check_existing_table(table_class)
 
     try:
-        settings = get_settings()
-        local_engine = create_engine(settings.DB_DSN)
-        remote_engine = create_engine(settings.DB_REMOTE)
+        load_dotenv(".env")
+
+        DB_DSN: str = os.getenv("DB_DSN", "postgresql://postgres:12345@localhost:5432/dwh")
+        DB_REMOTE: str = os.getenv("DB_REMOTE", "")
+
+        local_engine = create_engine(DB_DSN)
+        remote_engine = create_engine(DB_REMOTE)
 
         local_session = sessionmaker(bind=local_engine)()
         remote_session = sessionmaker(bind=remote_engine)()
