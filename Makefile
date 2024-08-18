@@ -2,7 +2,7 @@ configure: venv
 	source ./venv/bin/activate && pip install -U -r requirements.dev.txt -r requirements.txt
 
 venv:
-	python3.11 -m venv venv
+	python -m venv venv
 
 format: venv
 	source ./venv/bin/activate && autoflake -r --in-place --remove-all-unused-imports ./profcomff_definitions
@@ -18,3 +18,6 @@ test: venv migrate
 
 migrate: venv
 	source ./venv/bin/activate && alembic upgrade head
+
+sampler: venv
+	python profcomff_definitions/instruments/sampler.py $(func) $(class_name)                                             
