@@ -8,7 +8,6 @@ class DimRoomAct(Base):
     room_api_id: Mapped[int]
     room_name: Mapped[str | None]
     room_direction_text_type: Mapped[str | None]
-    room_is_deleted: Mapped[bool]
     room_department: Mapped[str | None]
     source_name: Mapped[str]
 
@@ -28,11 +27,12 @@ class DimGroupAct(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     group_api_id: Mapped[int]
     group_name_text: Mapped[str | None]
-    group_number: Mapped[int | None]
+    group_number: Mapped[str | None]
     source_name: Mapped[str]
 
 
 class DimEventAct(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
+    event_api_id: Mapped[int]
     event_name_text: Mapped[str | None]
     source_name: Mapped[str]
