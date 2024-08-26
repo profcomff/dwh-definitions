@@ -31,7 +31,13 @@ def truncate(table_class: str, *args):
             "Could not connect to database. Perhaps your login/password/database for your postgres is incorrect. Please, check if you have .env file in instruments folder with correct database link"
         )
 
-    # Собственно сама загрузка
+    # Собственно само удаление
+    try:
+        local_session.query(table_class).limit(1).one_or_none()
+    except:
+        raise ConnectionError(
+            "Table does not exist in database. Please check your migrations"
+        )
     local_session.execute(
         text(f'''TRUNCATE TABLE "{table_class.__table_args__["schema"].upper()}".{table_class.__tablename__}''')
     )

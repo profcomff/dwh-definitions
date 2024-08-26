@@ -37,8 +37,18 @@ def upload_sample(table_class: str, limit: int, *args):
         )
 
     # Собственно сама загрузка
-    samples = remote_session.query(table_class).order_by(func.random()).limit(limit).all()
-    for sample in samples:
-        local_sampe = local_session.merge(sample)
-        local_session.add(local_sampe)
-        local_session.commit()
+    try:
+        samples = remote_session.query(table_class).order_by(func.random()).limit(limit).all()
+    except:
+        raise ConnectionError(
+            "Table does not exist in remote database. Please check migrations in remote database"
+        )
+    try:
+        for sample in samples:
+            local_sampe = local_session.merge(sample)
+            local_session.add(local_sampe)
+            local_session.commit()
+    except:
+        raise ConnectionError(
+            "Table does not exist in database. Please check your migrations"
+        )
