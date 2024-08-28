@@ -1,5 +1,5 @@
-from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import ARRAY, Integer
+from sqlalchemy.orm import Mapped, mapped_column
 from profcomff_definitions.base import Base
 import typing as tp
 
