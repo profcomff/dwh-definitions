@@ -29,3 +29,4 @@ class Diff(Base):
     group: Mapped[tp.List[int]] = mapped_column(ARRAY(Integer))
     teacher: Mapped[tp.List[int]] = mapped_column(ARRAY(Integer))
     events_id: Mapped[tp.List[int]] = mapped_column(ARRAY(Integer))
+    action: Mapped[str | None]
