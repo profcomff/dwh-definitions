@@ -61,6 +61,12 @@ class New(Base):
     teacher: Mapped[tp.List[int]] = mapped_column(ARRAY(Integer))
     events_id: Mapped[tp.List[int] | None] = mapped_column(ARRAY(Integer))
 
+class LinkNewWithDates(Base):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    subject: Mapped[str | None]
+    start: Mapped[str]
+    end: Mapped[str]
+
 
 class NewWithDates(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
