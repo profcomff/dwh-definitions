@@ -28,7 +28,7 @@ class Diff(Base):
     place: Mapped[tp.List[int]] = mapped_column(ARRAY(Integer))
     group: Mapped[tp.List[int]] = mapped_column(ARRAY(Integer))
     teacher: Mapped[tp.List[int]] = mapped_column(ARRAY(Integer))
-    events_id: Mapped[tp.List[int]] = mapped_column(ARRAY(Integer))
+    events_id: Mapped[tp.List[int] | None] = mapped_column(ARRAY(Integer))
     action: Mapped[str | None]
 
 
@@ -44,7 +44,7 @@ class Old(Base):
     place: Mapped[tp.List[int]] = mapped_column(ARRAY(Integer))
     group: Mapped[tp.List[int]] = mapped_column(ARRAY(Integer))
     teacher: Mapped[tp.List[int]] = mapped_column(ARRAY(Integer))
-    events_id: Mapped[tp.List[int]] = mapped_column(ARRAY(Integer))
+    events_id: Mapped[tp.List[int] | None] = mapped_column(ARRAY(Integer))
 
 
 class New(Base):
@@ -59,4 +59,4 @@ class New(Base):
     place: Mapped[tp.List[int]] = mapped_column(ARRAY(Integer))
     group: Mapped[tp.List[int]] = mapped_column(ARRAY(Integer))
     teacher: Mapped[tp.List[int]] = mapped_column(ARRAY(Integer))
-    events_id: Mapped[tp.List[int]] = mapped_column(ARRAY(Integer))
+    events_id: Mapped[tp.List[int] | None] = mapped_column(ARRAY(Integer))
