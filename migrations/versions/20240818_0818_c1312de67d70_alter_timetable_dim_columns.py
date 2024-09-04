@@ -19,7 +19,7 @@ depends_on = None
 
 
 def upgrade():
-    op.add_column('dim_event_act', sa.Column('event_api_id', sa.Integer(), nullable=False), schema='DM_TIMETABLE')
+    op.add_column('dim_event_act', sa.Column('event_api_id', sa.Integer(), nullable=True), schema='DM_TIMETABLE')
     op.alter_column(
         'dim_group_act',
         'group_number',

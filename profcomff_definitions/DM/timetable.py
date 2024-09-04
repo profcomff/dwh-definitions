@@ -33,6 +33,6 @@ class DimGroupAct(Base):
 
 class DimEventAct(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
-    event_api_id: Mapped[int]
+    event_api_id: Mapped[int | None]
     event_name_text: Mapped[str | None]
     source_name: Mapped[str]
