@@ -18,7 +18,7 @@ class Button(Base):
     icon: Mapped[str | None]
     link: Mapped[str | None]
     type: Mapped[str | None]
-    is_hidden: Mapped[bool]
+    is_hidden: Mapped[bool] = mapped_column(default=False)
 
 
 class Scope(Base):

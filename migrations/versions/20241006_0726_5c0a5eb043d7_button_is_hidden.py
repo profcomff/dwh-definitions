@@ -20,10 +20,11 @@ depends_on = None
 
 
 def upgrade():
-    op.add_column('button', sa.Column('is_hidden', sa.Boolean(), nullable=False), schema='STG_SERVICES')
-    conn = op.get_bind()
-    conn.execute(sa.text(f"""UPDATE "STG_SERVICES".button SET "is_hidden"='false'"""))
-    op.alter_column('button', 'is_hidden', nullable=False, schema='STG_SERVICES')
+    op.add_column(
+        'button',
+        sa.Column('is_hidden', sa.Boolean(), nullable=False, server_default=sa.false()),
+        schema='STG_SERVICES',
+    )
 
 
 def downgrade():
