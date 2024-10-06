@@ -61,6 +61,7 @@ class New(Base):
     teacher: Mapped[tp.List[int]] = mapped_column(ARRAY(Integer))
     events_id: Mapped[tp.List[int] | None] = mapped_column(ARRAY(Integer))
 
+
 class LinkNewWithDates(Base):
     id: Mapped[int]
     subject: Mapped[str | None]
@@ -74,9 +75,7 @@ class LinkNewWithDates(Base):
     group: Mapped[tp.List[int]] = mapped_column(ARRAY(Integer))
     teacher: Mapped[tp.List[int]] = mapped_column(ARRAY(Integer))
     events_id: Mapped[tp.List[int] | None] = mapped_column(ARRAY(Integer))
-    __mapper_args__ = {
-        "primary_key": ["id", "start", "end"]
-    }  # Used only to correctly map ORM object to sql table
+    __mapper_args__ = {"primary_key": ["id", "start", "end"]}  # Used only to correctly map ORM object to sql table
 
 
 class NewWithDates(Base):
@@ -92,6 +91,4 @@ class NewWithDates(Base):
     group: Mapped[tp.List[int]] = mapped_column(ARRAY(Integer))
     teacher: Mapped[tp.List[int]] = mapped_column(ARRAY(Integer))
     events_id: Mapped[tp.List[int] | None] = mapped_column(ARRAY(Integer))
-    __mapper_args__ = {
-        "primary_key": ["id", "start", "end"]
-    }  # Used only to correctly map ORM object to sql table
+    __mapper_args__ = {"primary_key": ["id", "start", "end"]}  # Used only to correctly map ORM object to sql table
