@@ -25,6 +25,7 @@ class Param(Base):
     create_ts: Mapped[datetime | None]
     modify_ts: Mapped[datetime | None]
     is_deleted: Mapped[bool | None]
+    validation: Mapped[str | None]
 
 
 class Source(Base):
