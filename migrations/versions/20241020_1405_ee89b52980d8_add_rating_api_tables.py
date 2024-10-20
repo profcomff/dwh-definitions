@@ -33,7 +33,6 @@ def upgrade():
         sa.Column('dobr', sa.String(), nullable=True),
         sa.Column('hal', sa.String(), nullable=True),
         sa.Column('pon', sa.String(), nullable=True),
-        sa.PrimaryKeyConstraint('id'),
         schema='STG_DUBINUSHKA_MANUAL',
         comment='Comments from dubinushka\n    Because this data is downloaded from .sql query, the order of columns is significant',
     )
