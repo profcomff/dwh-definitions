@@ -11,8 +11,8 @@ class Lecturer(Base):
     first_name: Mapped[str]
     last_name: Mapped[str]
     middle_name: Mapped[str]
-    subject: Mapped[str| None]
-    avatar_link: Mapped[str| None]
+    subject: Mapped[str | None]
+    avatar_link: Mapped[str | None]
     timetable_id: Mapped[int]
 
 
