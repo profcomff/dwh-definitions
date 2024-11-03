@@ -19,5 +19,6 @@ test: venv migrate
 migrate: venv
 	source ./venv/bin/activate && alembic upgrade head
 
+# ex. make sampler func=upload_sample class_name=Info
 sampler: venv
-	python profcomff_definitions/instruments/sampler.py $(func) $(class_name)
+	python3 sampler.py $(func) $(class_name)

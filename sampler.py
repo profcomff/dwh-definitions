@@ -1,6 +1,6 @@
 import argparse
 
-import functions
+import instruments.functions as functions
 
 
 parser = argparse.ArgumentParser(
