@@ -22,7 +22,7 @@ class ParamHist(Base):
     valid_from_dt: Mapped[date | None]
     valid_to_dt: Mapped[date | None]
     __mapper_args__ = {
-        "primary_key": [id, valid_from_dt]
+        "primary_key": ["id", "valid_from_dt"]
     }  # Used only to correctly map ORM object to sql table
 
 
@@ -41,5 +41,5 @@ class InfoHist(Base):
     valid_from_dt: Mapped[date | None]
     valid_to_dt: Mapped[date | None]
     __mapper_args__ = {
-        "primary_key": [id, valid_from_dt]
+        "primary_key": ["id", "valid_from_dt"]
     }  # Used only to correctly map ORM object to sql table
