@@ -108,4 +108,4 @@ def downgrade():
     op.delete_group(
         "test_dwh_stg_physics_read" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_stg_physics_read"
     )
-    op.drop_table_schema("STG_PHYSICS")
+    op.drop_table_schema("STG_PHYSICS", )
