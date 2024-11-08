@@ -1,4 +1,5 @@
-from datetime import datetime, date
+from datetime import date, datetime
+
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -9,6 +10,7 @@ class ParamHist(Base):
     """
     SCD2 historical table based on STG_USERDATA.param
     """
+
     id: Mapped[int]
     name: Mapped[str | None]
     category_id: Mapped[int | None]
@@ -21,15 +23,14 @@ class ParamHist(Base):
     validation: Mapped[str | None]
     valid_from_dt: Mapped[date | None]
     valid_to_dt: Mapped[date | None]
-    __mapper_args__ = {
-        "primary_key": ["id", "valid_from_dt"]
-    }  # Used only to correctly map ORM object to sql table
+    __mapper_args__ = {"primary_key": ["id", "valid_from_dt"]}  # Used only to correctly map ORM object to sql table
 
 
 class InfoHist(Base):
     """
     SCD2 historical table based on STG_USERDATA.info
     """
+
     id: Mapped[int]
     param_id: Mapped[int | None]
     source_id: Mapped[int | None]
@@ -40,6 +41,4 @@ class InfoHist(Base):
     is_deleted: Mapped[bool | None]
     valid_from_dt: Mapped[date | None]
     valid_to_dt: Mapped[date | None]
-    __mapper_args__ = {
-        "primary_key": ["id", "valid_from_dt"]
-    }  # Used only to correctly map ORM object to sql table
+    __mapper_args__ = {"primary_key": ["id", "valid_from_dt"]}  # Used only to correctly map ORM object to sql table
