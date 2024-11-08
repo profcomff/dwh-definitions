@@ -35,9 +35,7 @@ def truncate(table_class: str, *args):
     try:
         local_session.query(table_class).limit(1).one_or_none()
     except:
-        raise ConnectionError(
-            "Table does not exist in database. Please check your migrations"
-        )
+        raise ConnectionError("Table does not exist in database. Please check your migrations")
     local_session.execute(
         text(f'''TRUNCATE TABLE "{table_class.__table_args__["schema"].upper()}".{table_class.__tablename__}''')
     )

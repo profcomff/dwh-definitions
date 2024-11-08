@@ -8,7 +8,9 @@ parser = argparse.ArgumentParser(
     formatter_class=argparse.ArgumentDefaultsHelpFormatter,
 )
 
-parser.add_argument("func", help=f"Function, witch you want to run. Available fuctions: {[f for f in functions.__all__]}")
+parser.add_argument(
+    "func", help=f"Function, witch you want to run. Available fuctions: {[f for f in functions.__all__]}"
+)
 parser.add_argument("class_name", help="Database table class name, from witch you want to load data")
 parser.add_argument("-l", "--limit", help="Amout of records you want to load", type=int, default=20)
 
