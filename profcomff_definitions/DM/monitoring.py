@@ -17,3 +17,4 @@ class DbMonitoringSnp(Base):
     indexes_size_mb: Mapped[int] = mapped_column(comment="Table indexes size in MB(int), ex.5")
     total_size_mb: Mapped[int] = mapped_column(comment="Table total size in MB(int), ex. 13")
     state_dt: Mapped[date] = mapped_column(comment="Date of snapshot, ex. 2024-11-12")
+    __mapper_args__ = {"primary_key": ["id", "state_dt"]}  # Used only to correctly map ORM object to sql table
