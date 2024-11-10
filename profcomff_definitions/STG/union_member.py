@@ -12,6 +12,7 @@ class UnionMember(Base):
     faculty: Mapped[str | None]
     first_name: Mapped[str | None]
     last_name: Mapped[str | None]
+    middle_name: Mapped[str | None]
     email: Mapped[str | None]
     date_of_birth: Mapped[str | None]
     phone_number: Mapped[str | None]
