@@ -9,7 +9,6 @@ class DbMonitoringSnp(Base):
     """
     Snapshot table that shows sizes for all tables in DWH
     """
-
     id: Mapped[int]
     table_name: Mapped[str] = mapped_column(comment="Table name with schema name, ex. \"STG_TIMETABLE\".\"events_groups\"")
     table_schema: Mapped[str] = mapped_column(comment="Table schema, need for detalization, ex.\"STG_TIMETABLE\"")
