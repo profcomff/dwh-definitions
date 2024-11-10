@@ -1,8 +1,8 @@
 """fix2
 
-Revision ID: 63d039777c44
+Revision ID: 8ae074933b0d
 Revises: d56e230e4da9
-Create Date: 2024-11-10 12:18:34.185807
+Create Date: 2024-11-10 12:33:32.317036
 
 """
 
@@ -12,7 +12,7 @@ import os
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision = '63d039777c44'
+revision = '8ae074933b0d'
 down_revision = 'd56e230e4da9'
 branch_labels = None
 depends_on = None
@@ -149,3 +149,4 @@ def downgrade():
         "test_dwh_dm_monitoring_read" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_dm_monitoring_read"
     )
     op.drop_table_schema("DM_MONITORING")
+    # ### end Alembic commands ###
