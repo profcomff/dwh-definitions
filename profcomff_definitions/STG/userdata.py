@@ -17,6 +17,7 @@ class Category(Base):
 
 class Param(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
+    visible_in_user_response: Mapped[bool | None]
     name: Mapped[str | None]
     category_id: Mapped[int | None]
     is_required: Mapped[bool | None]
