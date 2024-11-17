@@ -12,6 +12,7 @@ class ParamHist(Base):
     """
 
     id: Mapped[int]
+    visible_in_user_response: Mapped[bool | None]
     name: Mapped[str | None]
     category_id: Mapped[int | None]
     is_required: Mapped[bool | None]
