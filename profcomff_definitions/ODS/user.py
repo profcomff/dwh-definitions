@@ -31,3 +31,12 @@ class Info(Base):
     job: Mapped[str | None] = mapped_column(String, nullable=True)
     work_location: Mapped[str | None] = mapped_column(String, nullable=True)
     is_deleted: Mapped[str | None] = mapped_column(String, nullable=True)
+class UnionMember(Base):
+    id: Mapped[int] = mapped_column(Integer, index=True, primary_key=True)
+    fio: Mapped[str] = mapped_column(String, nullable = False)
+    card_status: Mapped[str] = mapped_column(String, nullable = False)
+    card_date: Mapped[str] = mapped_column(String, nullable = False)
+    card_number: Mapped[str] = mapped_column(String, nullable = False) fio: Mapped[str]
+    card_date: Mapped[datetime | None]
+    card_status: Mapped[datetime | None]
+    __mapper_args__ = {"primary_key": ["id", "fio"]}  
