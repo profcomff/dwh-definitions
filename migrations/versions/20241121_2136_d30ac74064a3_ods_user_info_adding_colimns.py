@@ -10,7 +10,6 @@ import os
 
 import sqlalchemy as sa
 from alembic import op
-migrations/versions/20241121_2136_d30ac74064a3_ods_user_info_adding_colimns.py
 
 # revision identifiers, used by Alembic.
 revision = 'd30ac74064a3'
