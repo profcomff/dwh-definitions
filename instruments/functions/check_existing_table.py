@@ -1,5 +1,3 @@
-import inspect
-
 import profcomff_definitions
 
 
@@ -7,9 +5,9 @@ def check_existing_table(table_name: str):
     """
     Checks if a table class exists in database by its name.
     """
-
-    classes = inspect.getmembers(profcomff_definitions, inspect.isclass)
+    classes = profcomff_definitions.tables
     matches = []
+
     for existing_class in classes:
         if existing_class[0] == table_name:
             matches.append(existing_class[1])

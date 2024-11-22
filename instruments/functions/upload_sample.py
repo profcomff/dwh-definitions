@@ -18,11 +18,11 @@ def upload_sample(table_class: str, limit: int, *args):
     try:
         load_dotenv(".env")
 
-        DB_DSN: str = os.getenv("DB_DSN", "postgresql://postgres:12345@localhost:5432/dwh")
-        DB_REMOTE: str = os.getenv("DB_REMOTE", "")
+        DB_LOCAL: str = os.getenv("DB_LOCAL", "postgresql://postgres:12345@localhost:5432/dwh")
+        DB_ONLINE: str = os.getenv("DB_ONLINE", "")
 
-        local_engine = create_engine(DB_DSN)
-        remote_engine = create_engine(DB_REMOTE)
+        local_engine = create_engine(DB_LOCAL)
+        remote_engine = create_engine(DB_ONLINE)
 
         local_session = sessionmaker(bind=local_engine)()
         remote_session = sessionmaker(bind=remote_engine)()
@@ -33,18 +33,20 @@ def upload_sample(table_class: str, limit: int, *args):
 
     except (OperationalError, ArgumentError, UnicodeDecodeError):
         raise ConnectionError(
-            "Could not connect to database. Perhaps your login/password/database for your postgres is incorrect. Please, check if you have .env file in instruments folder with correct database link"
+            "Could not connect to database. Perhaps your login/password/database for your postgres is incorrect. Please, check if you have .env file in root folder with correct database link"
         )
 
     # Собственно сама загрузка
     try:
         samples = remote_session.query(table_class).order_by(func.random()).limit(limit).all()
-    except:
+    except Exception as e:
+        print(e)
         raise ConnectionError("Table does not exist in remote database. Please check migrations in remote database")
     try:
         for sample in samples:
             local_sampe = local_session.merge(sample)
             local_session.add(local_sampe)
             local_session.commit()
-    except:
-        raise ConnectionError("Table does not exist in database. Please check your migrations")
+    except Exception as e:
+        print(e)
+        raise ConnectionError("Table does not exist in local database. Please check your migrations")
