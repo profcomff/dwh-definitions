@@ -19,10 +19,10 @@ def upload_sample(table_class: str, limit: int, *args):
     try:
         load_dotenv(".env")
 
-        DB_LOCAL: str = os.getenv("DB_LOCAL", "postgresql://postgres:12345@localhost:5432/dwh")
+        DB_DSN: str = os.getenv("DB_DSN", "postgresql://postgres:12345@localhost:5432/dwh")
         DB_ONLINE: str = os.getenv("DB_ONLINE", "")
 
-        local_engine = create_engine(DB_LOCAL)
+        local_engine = create_engine(DB_DSN)
         remote_engine = create_engine(DB_ONLINE)
 
         local_session = sessionmaker(bind=local_engine)()
