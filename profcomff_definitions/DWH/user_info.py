@@ -31,3 +31,12 @@ class Info(Base):
     sex: Mapped[str | None] = mapped_column(String, nullable=True)
     job: Mapped[str | None] = mapped_column(String, nullable=True)
     work_location: Mapped[str | None] = mapped_column(String, nullable=True)
+
+
+class UnionMember(Base):
+    # DWH_USER.union_member
+    id: Mapped[int] = mapped_column(Integer, index=True, primary_key=True)
+    fio: Mapped[str | None] = mapped_column(String, nullable=True)
+    card_status: Mapped[str | None] = mapped_column(String, nullable=True)
+    card_date: Mapped[str | None] = mapped_column(String, nullable=True)
+    card_number: Mapped[str | None] = mapped_column(String, nullable=True)
