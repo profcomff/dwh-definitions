@@ -61,6 +61,6 @@ class UnionMember(Base):
     # ODS_USER.union_member
     id: Mapped[int] = mapped_column(Integer, index=True, primary_key=True, comment="primary key")
     fio: Mapped[str] = mapped_column(String, nullable=True, comment="user's full name")
-    card_status: Mapped[str] = mapped_column(String, nullable=True, comment="user's status of card ()")
+    card_status: Mapped[str] = mapped_column(String, nullable=True, comment="user's status of card (current or not)")
     card_date: Mapped[str] = mapped_column(String, nullable=True, comment="user's card acrivation data")
     card_number: Mapped[str] = mapped_column(String, nullable=True, comment="user's card number")
