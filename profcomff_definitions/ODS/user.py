@@ -55,3 +55,12 @@ class Info(Base):
     is_deleted: Mapped[bool | None] = mapped_column(
         Boolean, nullable=True, comment="If True, user was deleted in backend. Default=False"
     )
+
+
+class UnionMember(Base):
+    # ODS_USER.union_member
+    id: Mapped[int] = mapped_column(Integer, index=True, primary_key=True, comment="primary key")
+    fio: Mapped[str] = mapped_column(String, nullable=True, comment="user's full name")
+    card_status: Mapped[str] = mapped_column(String, nullable=True, comment="user's status of card ()")
+    card_date: Mapped[str] = mapped_column(String, nullable=True, comment="user's card acrivation data")
+    card_number: Mapped[str] = mapped_column(String, nullable=True, comment="user's card number")
