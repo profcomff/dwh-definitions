@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, String
+from sqlalchemy import Integer, String, Boolean
 from sqlalchemy.orm import Mapped, mapped_column
 
 from profcomff_definitions.base import Base
@@ -11,10 +11,10 @@ class OdsTimetableAct(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     name: Mapped[str] = mapped_column(String, comment="html часть с названием предмета, аудиторией и преподавателем")
-    odd: Mapped[bool] = mapped_column(String, comment="пара по четным неделям")
-    even: Mapped[bool] = mapped_column(String, comment="пара по нечетным неделям")
+    odd: Mapped[bool] = mapped_column(Boolean, comment="пара по четным неделям")
+    even: Mapped[bool] = mapped_column(Boolean, comment="пара по нечетным неделям")
     weekday: Mapped[int]
-    num: Mapped[int] = mapped_column(String, comment="номер пары")
+    num: Mapped[int] = mapped_column(Integer, comment="номер пары")
     start: Mapped[str] = mapped_column(String, comment="hh:mm")
     end: Mapped[str] = mapped_column(String, comment="hh:mm")
     group: Mapped[str] = mapped_column(String, comment="название группы")
