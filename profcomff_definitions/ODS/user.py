@@ -39,4 +39,3 @@ class UnionMember(Base):
     card_status: Mapped[str] = mapped_column(String, nullable=False)
     card_date: Mapped[str] = mapped_column(String, nullable=False)
     card_number: Mapped[str] = mapped_column(String, nullable=False)
-    __mapper_args__ = {"primary_key": ["id", "fio"]}
