@@ -36,7 +36,7 @@ class UnionMember(Base):
     fio: Mapped[str] = mapped_column(String, nullable = False)
     card_status: Mapped[str] = mapped_column(String, nullable = False)
     card_date: Mapped[str] = mapped_column(String, nullable = False)
-    card_number: Mapped[str] = mapped_column(String, nullable = False) fio: Mapped[str]
-    card_date: Mapped[datetime | None]
-    card_status: Mapped[datetime | None]
+    card_number: Mapped[str] = mapped_column(String, nullable = False)
+    card_date: Mapped[str | None] = mapped_column(String, nullable=True)
+    card_status: Mapped[str | None] = mapped_column(String, nullable=True)
     __mapper_args__ = {"primary_key": ["id", "fio"]}  
