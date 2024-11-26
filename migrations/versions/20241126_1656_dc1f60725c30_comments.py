@@ -46,6 +46,14 @@ def upgrade():
         schema='ODS_TIMETABLE',
     )
     op.alter_column(
+        "ods_timetable_act",
+        'weekday',
+        existing_type=sa.INTEGER(),
+        comment='номер дня недели',
+        existing_nullable=False,
+        schema='ODS_TIMETABLE',
+    )
+    op.alter_column(
         'ods_timetable_act',
         'num',
         existing_type=sa.INTEGER(),
@@ -115,6 +123,15 @@ def downgrade():
         existing_type=sa.INTEGER(),
         comment=None,
         existing_comment='номер пары',
+        existing_nullable=False,
+        schema='ODS_TIMETABLE',
+    )
+    op.alter_column(
+        "ods_timetable_act",
+        'weekday',
+        existing_type=sa.INTEGER(),
+        comment=None,
+        existing_comment='номер дня недели',
         existing_nullable=False,
         schema='ODS_TIMETABLE',
     )

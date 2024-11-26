@@ -13,7 +13,7 @@ class OdsTimetableAct(Base):
     name: Mapped[str] = mapped_column(String, comment="html часть с названием предмета, аудиторией и преподавателем")
     odd: Mapped[bool] = mapped_column(Boolean, comment="пара по четным неделям")
     even: Mapped[bool] = mapped_column(Boolean, comment="пара по нечетным неделям")
-    weekday: Mapped[int]
+    weekday: Mapped[int] = mapped_column(Integer, comment="номер дня недели")
     num: Mapped[int] = mapped_column(Integer, comment="номер пары")
     start: Mapped[str] = mapped_column(String, comment="hh:mm")
     end: Mapped[str] = mapped_column(String, comment="hh:mm")
