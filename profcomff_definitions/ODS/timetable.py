@@ -10,14 +10,14 @@ class OdsTimetableAct(Base):
     """
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    name: Mapped[str]
-    odd: Mapped[bool]
-    even: Mapped[bool]
+    name: Mapped[str] = mapped_column(String, comment="html часть с названием предмета, аудиторией и преподавателем")
+    odd: Mapped[bool] = mapped_column(String, comment="пара по четным неделям")
+    even: Mapped[bool] = mapped_column(String, comment="пара по нечетным неделям")
     weekday: Mapped[int]
-    num: Mapped[int]
-    start: Mapped[str]
-    end: Mapped[str]
-    group: Mapped[str]
+    num: Mapped[int] = mapped_column(String, comment="номер пары")
+    start: Mapped[str] = mapped_column(String, comment="hh:mm")
+    end: Mapped[str] = mapped_column(String, comment="hh:mm")
+    group: Mapped[str] = mapped_column(String, comment="название группы")
 
 
 class OdsLinkTimetableTeacher(Base):
