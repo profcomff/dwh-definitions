@@ -5,12 +5,19 @@ from profcomff_definitions.base import Base
 
 
 class OdsTimetableAct(Base):
-    event_text: Mapped[str | None] = mapped_column(String, nullable=True, index=True)
-    time_interval_text: Mapped[str | None] = mapped_column(String, nullable=True)
-    group_text: Mapped[str | None] = mapped_column(String, nullable=True)
-    __mapper_args__ = {
-        "primary_key": [event_text, time_interval_text, group_text]
-    }  # Used only to correctly map ORM object to sql table
+    """
+    Таблица содержит десериализованные события с сайта ras.phys.msu
+    Выделяется блок текста из общей таблицы, нужна для обновления расписания в приложении ТвойФФ
+    """
+    id: Mapped[int] = mapped_column(Integer, index=True, primary_key=True)
+    name: Mapped[str] = mapped_column(comment="Название события")
+    odd: Mapped[bool] = mapped_column(comment="Флаг: событие относится к нечетной неделе")
+    even: Mapped[bool] = mapped_column(comment="Флаг: событие относится к четной неделе") 
+    weekday: Mapped[int] = mapped_column(comment="Номер недели")
+    num: Mapped[int] = mapped_column(comment="Номер события")
+    start: Mapped[str] = mapped_column(comment="Время начала события (в строке)")
+    end: Mapped[str] = mapped_column(comment="Время конца события (в строке)")
+    group: Mapped[str] = mapped_column(comment="Академическая группа, к которой относится событие")
 
 
 class OdsLinkTimetableTeacher(Base):
