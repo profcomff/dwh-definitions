@@ -19,9 +19,6 @@ depends_on = None
 
 
 def upgrade():
-    op.drop_index(
-        'ix_ODS_TIMETABLE_ods_timetable_act_event_text', table_name='ods_timetable_act', schema='ODS_TIMETABLE'
-    )
     op.revoke_on_table(
         "test_dwh_ods_timetable_read" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_timetable_read",
         ['SELECT'],
