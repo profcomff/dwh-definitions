@@ -6,9 +6,10 @@ Create Date: 2024-11-30 19:06:03.629971
 
 """
 
-from alembic import op
-import sqlalchemy as sa
 import os
+
+import sqlalchemy as sa
+from alembic import op
 
 
 revision = 'd47cdc452c99'
