@@ -9,10 +9,11 @@ class OdsTimetableAct(Base):
     Таблица содержит десериализованные события с сайта ras.phys.msu
     Выделяется блок текста из общей таблицы, нужна для обновления расписания в приложении ТвойФФ
     """
+
     id: Mapped[int] = mapped_column(Integer, index=True, primary_key=True)
     name: Mapped[str] = mapped_column(comment="Название события")
     odd: Mapped[bool] = mapped_column(comment="Флаг: событие относится к нечетной неделе")
-    even: Mapped[bool] = mapped_column(comment="Флаг: событие относится к четной неделе") 
+    even: Mapped[bool] = mapped_column(comment="Флаг: событие относится к четной неделе")
     weekday: Mapped[int] = mapped_column(comment="Номер недели")
     num: Mapped[int] = mapped_column(comment="Номер события")
     start: Mapped[str] = mapped_column(comment="Время начала события (в строке)")
