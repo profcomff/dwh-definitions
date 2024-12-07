@@ -1,5 +1,4 @@
 from sqlalchemy import Integer, String
-
 from sqlalchemy.orm import Mapped, mapped_column
 
 from profcomff_definitions.base import Base
@@ -7,6 +6,7 @@ from profcomff_definitions.base import Base
 
 class UnionMemberJoin(Base):
     """Таблица соответствия пользователей приложения и членов профсоюза"""
+
     user_id: Mapped[int] = mapped_column(Integer, index=True, primary_key=True)
     email: Mapped[str | None] = mapped_column(String, nullable=True, comment="user's email from ods user info")
     phone_number: Mapped[str | None] = mapped_column(
