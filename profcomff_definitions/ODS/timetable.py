@@ -1,5 +1,6 @@
 import uuid
-from sqlalchemy import Integer, String, UUID
+
+from sqlalchemy import String, UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
 from profcomff_definitions.base import Base
