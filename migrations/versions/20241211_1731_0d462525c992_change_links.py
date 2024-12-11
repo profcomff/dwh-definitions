@@ -1,25 +1,43 @@
-"""change links logic
+"""change_links
 
-Revision ID: 0b045e0833fb
+Revision ID: 0d462525c992
 Revises: f31bd2cf406f
-Create Date: 2024-12-11 17:04:32.921010
+Create Date: 2024-12-11 17:31:28.920934
 
 """
 
-import os
-
-import sqlalchemy as sa
 from alembic import op
+import sqlalchemy as sa
+import os
 
 
 # revision identifiers, used by Alembic.
-revision = '0b045e0833fb'
+revision = '0d462525c992'
 down_revision = 'f31bd2cf406f'
 branch_labels = None
 depends_on = None
 
 
 def upgrade():
+    # alembic cannot do it properly, so you need to manually handle columns
+    # ods_link_timetable_lesson
+    op.execute('ALTER TABLE "ODS_TIMETABLE".ods_link_timetable_group drop COLUMN IF EXISTS id')
+    op.execute('ALTER TABLE "ODS_TIMETABLE".ods_link_timetable_group add COLUMN IF not EXISTS id UUID')
+    op.execute('ALTER TABLE "ODS_TIMETABLE".ods_link_timetable_group drop COLUMN IF EXISTS group_id')
+    op.execute('ALTER TABLE "ODS_TIMETABLE".ods_link_timetable_group add COLUMN IF not EXISTS group_id UUID')
+    # ods_link_timetable_group
+    op.execute('ALTER TABLE "ODS_TIMETABLE".ods_link_timetable_lesson drop COLUMN IF EXISTS id')
+    op.execute('ALTER TABLE "ODS_TIMETABLE".ods_link_timetable_lesson add COLUMN IF not EXISTS id UUID')
+    op.execute('ALTER TABLE "ODS_TIMETABLE".ods_link_timetable_lesson drop COLUMN IF EXISTS lesson_id')
+    op.execute('ALTER TABLE "ODS_TIMETABLE".ods_link_timetable_lesson add COLUMN IF not EXISTS lesson_id UUID')
+    # ods_link_timetable_teacher
+    op.execute('ALTER TABLE "ODS_TIMETABLE".ods_link_timetable_teacher drop COLUMN IF EXISTS id')
+    op.execute('ALTER TABLE "ODS_TIMETABLE".ods_link_timetable_teacher add COLUMN IF not EXISTS id UUID')
+    op.execute('ALTER TABLE "ODS_TIMETABLE".ods_link_timetable_teacher drop COLUMN IF EXISTS teacher_id')
+    op.execute('ALTER TABLE "ODS_TIMETABLE".ods_link_timetable_teacher add COLUMN IF not EXISTS teacher_id UUID')
+    # ods_timetable_act
+    op.execute('ALTER TABLE "ODS_TIMETABLE".ods_timetable_act drop COLUMN IF EXISTS id')
+    op.execute('ALTER TABLE "ODS_TIMETABLE".ods_timetable_act add COLUMN IF not EXISTS id UUID')
     op.create_table(
         'ods_link_timetable_room',
         sa.Column('id', sa.UUID(), nullable=False),
@@ -128,7 +146,7 @@ def upgrade():
         'id',
         existing_type=sa.INTEGER(),
         type_=sa.UUID(),
-        existing_nullable=False,
+        nullable=False,
         schema='ODS_TIMETABLE',
     )
     op.alter_column(
@@ -139,11 +157,7 @@ def upgrade():
         existing_nullable=True,
         schema='ODS_TIMETABLE',
     )
-    op.drop_index(
-        'ix_ODS_TIMETABLE_ods_link_timetable_group_id', table_name='ods_link_timetable_group', schema='ODS_TIMETABLE'
-    )
-    op.drop_column('ods_link_timetable_group', 'group', schema='ODS_TIMETABLE')
-    op.drop_column('ods_link_timetable_group', 'event_tr', schema='ODS_TIMETABLE')
+    op.drop_column('ods_link_timetable_group', 'lesson_id', schema='ODS_TIMETABLE')
     op.add_column(
         'ods_link_timetable_lesson',
         sa.Column(
@@ -169,7 +183,7 @@ def upgrade():
         'id',
         existing_type=sa.INTEGER(),
         type_=sa.UUID(),
-        existing_nullable=False,
+        nullable=False,
         schema='ODS_TIMETABLE',
     )
     op.alter_column(
@@ -179,9 +193,6 @@ def upgrade():
         type_=sa.UUID(),
         existing_nullable=True,
         schema='ODS_TIMETABLE',
-    )
-    op.drop_index(
-        'ix_ODS_TIMETABLE_ods_link_timetable_lesson_id', table_name='ods_link_timetable_lesson', schema='ODS_TIMETABLE'
     )
     op.drop_column('ods_link_timetable_lesson', 'group', schema='ODS_TIMETABLE')
     op.drop_column('ods_link_timetable_lesson', 'event_tr', schema='ODS_TIMETABLE')
@@ -210,7 +221,7 @@ def upgrade():
         'id',
         existing_type=sa.INTEGER(),
         type_=sa.UUID(),
-        existing_nullable=False,
+        nullable=False,
         schema='ODS_TIMETABLE',
     )
     op.alter_column(
@@ -221,26 +232,32 @@ def upgrade():
         existing_nullable=True,
         schema='ODS_TIMETABLE',
     )
-    op.drop_index(
-        'ix_ODS_TIMETABLE_ods_link_timetable_teacher_id',
-        table_name='ods_link_timetable_teacher',
-        schema='ODS_TIMETABLE',
-    )
-    op.drop_column('ods_link_timetable_teacher', 'group', schema='ODS_TIMETABLE')
-    op.drop_column('ods_link_timetable_teacher', 'event_tr', schema='ODS_TIMETABLE')
     op.alter_column(
-        'ods_timetable_act',
-        'id',
-        existing_type=sa.INTEGER(),
-        type_=sa.UUID(),
-        existing_nullable=False,
-        schema='ODS_TIMETABLE',
+        'ods_timetable_act', 'id', existing_type=sa.INTEGER(), type_=sa.UUID(), nullable=False, schema='ODS_TIMETABLE'
     )
-    op.drop_index('ix_ODS_TIMETABLE_ods_timetable_act_id', table_name='ods_timetable_act', schema='ODS_TIMETABLE')
     op.drop_table('ods_link_timetable_cabinet', schema='ODS_TIMETABLE')
 
 
 def downgrade():
+    # alembic cannot do it properly, so you need to manually handle columns
+    # ods_link_timetable_lesson
+    op.execute('ALTER TABLE "ODS_TIMETABLE".ods_link_timetable_group drop COLUMN IF EXISTS id')
+    op.execute('ALTER TABLE "ODS_TIMETABLE".ods_link_timetable_group add COLUMN IF not EXISTS id INTEGER')
+    op.execute('ALTER TABLE "ODS_TIMETABLE".ods_link_timetable_group drop COLUMN IF EXISTS group_id')
+    op.execute('ALTER TABLE "ODS_TIMETABLE".ods_link_timetable_group add COLUMN IF not EXISTS group_id INTEGER')
+    # ods_link_timetable_group
+    op.execute('ALTER TABLE "ODS_TIMETABLE".ods_link_timetable_lesson drop COLUMN IF EXISTS id')
+    op.execute('ALTER TABLE "ODS_TIMETABLE".ods_link_timetable_lesson add COLUMN IF not EXISTS id INTEGER')
+    op.execute('ALTER TABLE "ODS_TIMETABLE".ods_link_timetable_lesson drop COLUMN IF EXISTS lesson_id')
+    op.execute('ALTER TABLE "ODS_TIMETABLE".ods_link_timetable_lesson add COLUMN IF not EXISTS lesson_id INTEGER')
+    # ods_link_timetable_teacher
+    op.execute('ALTER TABLE "ODS_TIMETABLE".ods_link_timetable_teacher drop COLUMN IF EXISTS id')
+    op.execute('ALTER TABLE "ODS_TIMETABLE".ods_link_timetable_teacher add COLUMN IF not EXISTS id INTEGER')
+    op.execute('ALTER TABLE "ODS_TIMETABLE".ods_link_timetable_teacher drop COLUMN IF EXISTS teacher_id')
+    op.execute('ALTER TABLE "ODS_TIMETABLE".ods_link_timetable_teacher add COLUMN IF not EXISTS teacher_id INTEGER')
+    # ods_timetable_act
+    op.execute('ALTER TABLE "ODS_TIMETABLE".ods_timetable_act drop COLUMN IF EXISTS id')
+    op.execute('ALTER TABLE "ODS_TIMETABLE".ods_timetable_act add COLUMN IF not EXISTS id INTEGER')
     op.create_table(
         'ods_link_timetable_cabinet',
         sa.Column('id', sa.INTEGER(), autoincrement=True, nullable=False),
@@ -254,22 +271,7 @@ def downgrade():
         'ix_ODS_TIMETABLE_ods_timetable_act_id', 'ods_timetable_act', ['id'], unique=False, schema='ODS_TIMETABLE'
     )
     op.alter_column(
-        'ods_timetable_act',
-        'id',
-        existing_type=sa.UUID(),
-        type_=sa.INTEGER(),
-        existing_nullable=False,
-        schema='ODS_TIMETABLE',
-    )
-    op.add_column(
-        'ods_link_timetable_teacher',
-        sa.Column('event_tr', sa.VARCHAR(), autoincrement=False, nullable=True),
-        schema='ODS_TIMETABLE',
-    )
-    op.add_column(
-        'ods_link_timetable_teacher',
-        sa.Column('group', sa.VARCHAR(), autoincrement=False, nullable=True),
-        schema='ODS_TIMETABLE',
+        'ods_timetable_act', 'id', existing_type=sa.UUID(), type_=sa.INTEGER(), nullable=True, schema='ODS_TIMETABLE'
     )
     op.create_index(
         'ix_ODS_TIMETABLE_ods_link_timetable_teacher_id',
@@ -291,7 +293,7 @@ def downgrade():
         'id',
         existing_type=sa.UUID(),
         type_=sa.INTEGER(),
-        existing_nullable=False,
+        nullable=True,
         schema='ODS_TIMETABLE',
     )
     op.drop_column('ods_link_timetable_teacher', 'event_id', schema='ODS_TIMETABLE')
@@ -326,19 +328,14 @@ def downgrade():
         'id',
         existing_type=sa.UUID(),
         type_=sa.INTEGER(),
-        existing_nullable=False,
+        nullable=True,
         schema='ODS_TIMETABLE',
     )
     op.drop_column('ods_link_timetable_lesson', 'event_id', schema='ODS_TIMETABLE')
     op.drop_column('ods_link_timetable_lesson', 'timetable_alias', schema='ODS_TIMETABLE')
     op.add_column(
         'ods_link_timetable_group',
-        sa.Column('event_tr', sa.VARCHAR(), autoincrement=False, nullable=True),
-        schema='ODS_TIMETABLE',
-    )
-    op.add_column(
-        'ods_link_timetable_group',
-        sa.Column('group', sa.VARCHAR(), autoincrement=False, nullable=True),
+        sa.Column('lesson_id', sa.INTEGER(), autoincrement=False, nullable=True),
         schema='ODS_TIMETABLE',
     )
     op.create_index(
@@ -361,7 +358,7 @@ def downgrade():
         'id',
         existing_type=sa.UUID(),
         type_=sa.INTEGER(),
-        existing_nullable=False,
+        nullable=True,
         schema='ODS_TIMETABLE',
     )
     op.drop_column('ods_link_timetable_group', 'event_id', schema='ODS_TIMETABLE')
