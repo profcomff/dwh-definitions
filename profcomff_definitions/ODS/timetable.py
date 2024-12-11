@@ -26,8 +26,7 @@ class OdsTimetableAct(Base):
 class OdsLinkTimetableTeacher(Base):
     id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
     timetable_alias: Mapped[str] = mapped_column(
-        String,
-        comment="Техническое поле для построения пайплайна сборки расписания"
+        String, comment="Техническое поле для построения пайплайна сборки расписания"
     )
     event_id: Mapped[uuid.UUID] = mapped_column(
         UUID,
@@ -38,10 +37,9 @@ class OdsLinkTimetableTeacher(Base):
 
 
 class OdsLinkTimetableLesson(Base):
-    id:Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
+    id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
     timetable_alias: Mapped[str] = mapped_column(
-        String,
-        comment="Техническое поле для построения пайплайна сборки расписания"
+        String, comment="Техническое поле для построения пайплайна сборки расписания"
     )
     event_id: Mapped[uuid.UUID] = mapped_column(
         UUID,
