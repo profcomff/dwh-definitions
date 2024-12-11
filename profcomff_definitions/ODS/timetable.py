@@ -1,4 +1,6 @@
-from sqlalchemy import Integer, String
+import uuid
+
+from sqlalchemy import UUID, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from profcomff_definitions.base import Base
@@ -10,7 +12,7 @@ class OdsTimetableAct(Base):
     Выделяется блок текста из общей таблицы, нужна для обновления расписания в приложении ТвойФФ
     """
 
-    id: Mapped[int] = mapped_column(Integer, index=True, primary_key=True)
+    id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
     name: Mapped[str] = mapped_column(comment="Название события")
     odd: Mapped[bool] = mapped_column(comment="Флаг: событие относится к нечетной неделе")
     even: Mapped[bool] = mapped_column(comment="Флаг: событие относится к четной неделе")
@@ -22,28 +24,84 @@ class OdsTimetableAct(Base):
 
 
 class OdsLinkTimetableTeacher(Base):
-    id: Mapped[int] = mapped_column(Integer, index=True, primary_key=True)
-    group: Mapped[str | None] = mapped_column(String, nullable=True)
-    event_tr: Mapped[str | None] = mapped_column(String, nullable=True)
-    teacher_id: Mapped[str | None] = mapped_column(Integer, nullable=True)
+    id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
+    timetable_alias: Mapped[str] = mapped_column(
+        String, comment="Техническое поле для построения пайплайна сборки расписания"
+    )
+    event_id: Mapped[uuid.UUID] = mapped_column(
+        UUID,
+        comment="Идентификатор события, полученного в результате парсинга ras.phys.msu",
+        nullable=True,
+    )
+    teacher_id: Mapped[uuid.UUID | None] = mapped_column(UUID, nullable=True)
 
 
 class OdsLinkTimetableLesson(Base):
-    id: Mapped[int] = mapped_column(Integer, index=True, primary_key=True)
-    group: Mapped[str | None] = mapped_column(String, nullable=True)
-    event_tr: Mapped[str | None] = mapped_column(String, nullable=True)
-    lesson_id: Mapped[str | None] = mapped_column(Integer, nullable=True)
+    id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
+    timetable_alias: Mapped[str] = mapped_column(
+        String, comment="Техническое поле для построения пайплайна сборки расписания"
+    )
+    event_id: Mapped[uuid.UUID] = mapped_column(
+        UUID,
+        comment="Идентификатор события, полученного в результате парсинга ras.phys.msu",
+        nullable=True,
+    )
+    lesson_id: Mapped[uuid.UUID | None] = mapped_column(UUID, nullable=True)
 
 
 class OdsLinkTimetableGroup(Base):
-    id: Mapped[int] = mapped_column(Integer, index=True, primary_key=True)
-    group: Mapped[str | None] = mapped_column(String, nullable=True)
-    event_tr: Mapped[str | None] = mapped_column(String, nullable=True)
-    group_id: Mapped[str | None] = mapped_column(Integer, nullable=True)
+    id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
+    timetable_alias: Mapped[str] = mapped_column(
+        String,
+        comment="Техническое поле для построения пайплайна сборки расписания",
+        nullable=True,
+    )
+    event_id: Mapped[uuid.UUID] = mapped_column(
+        UUID,
+        comment="Идентификатор события, полученного в результате парсинга ras.phys.msu",
+        nullable=True,
+    )
+    group_id: Mapped[uuid.UUID | None] = mapped_column(UUID, nullable=True)
 
 
-class OdsLinkTimetableCabinet(Base):
-    id: Mapped[int] = mapped_column(Integer, index=True, primary_key=True)
-    group: Mapped[str | None] = mapped_column(String, nullable=True)
-    event_tr: Mapped[str | None] = mapped_column(String, nullable=True)
-    cabinet_id: Mapped[str | None] = mapped_column(Integer, nullable=True)
+class OdsLinkTimetableRoom(Base):
+    id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
+    timetable_alias: Mapped[str] = mapped_column(
+        String,
+        comment="Техническое поле для построения пайплайна сборки расписания",
+        nullable=True,
+    )
+    event_id: Mapped[uuid.UUID] = mapped_column(
+        UUID,
+        comment="Идентификатор события, полученного в результате парсинга ras.phys.msu",
+        nullable=True,
+    )
+    room_id: Mapped[uuid.UUID | None] = mapped_column(UUID, nullable=True)
+
+
+class OdsManualTimetableConstraints(Base):
+    event_id: Mapped[uuid.UUID] = mapped_column(
+        UUID,
+        comment="Идентификатор события, полученного в результате парсинга ras.phys.msu",
+        primary_key=True,
+    )
+    empty_room_flg: Mapped[uuid.UUID] = mapped_column(
+        UUID,
+        comment="Флаг: в событии не указан кабинет",
+        nullable=True,
+    )
+    empty_lecturer_flg: Mapped[uuid.UUID] = mapped_column(
+        UUID,
+        comment="Флаг: в событии не указан преподаватель",
+        nullable=True,
+    )
+    empty_group_flg: Mapped[uuid.UUID] = mapped_column(
+        UUID,
+        comment="Флаг: в событии не указана группа",
+        nullable=True,
+    )
+    empty_group_flg: Mapped[uuid.UUID] = mapped_column(
+        UUID,
+        comment="Флаг: в событии не указан премет",
+        nullable=True,
+    )
