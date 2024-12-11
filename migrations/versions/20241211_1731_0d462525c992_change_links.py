@@ -6,9 +6,10 @@ Create Date: 2024-12-11 17:31:28.920934
 
 """
 
-from alembic import op
-import sqlalchemy as sa
 import os
+
+import sqlalchemy as sa
+from alembic import op
 
 
 # revision identifiers, used by Alembic.
@@ -157,7 +158,6 @@ def upgrade():
         existing_nullable=True,
         schema='ODS_TIMETABLE',
     )
-    op.drop_column('ods_link_timetable_group', 'lesson_id', schema='ODS_TIMETABLE')
     op.add_column(
         'ods_link_timetable_lesson',
         sa.Column(
@@ -333,11 +333,6 @@ def downgrade():
     )
     op.drop_column('ods_link_timetable_lesson', 'event_id', schema='ODS_TIMETABLE')
     op.drop_column('ods_link_timetable_lesson', 'timetable_alias', schema='ODS_TIMETABLE')
-    op.add_column(
-        'ods_link_timetable_group',
-        sa.Column('lesson_id', sa.INTEGER(), autoincrement=False, nullable=True),
-        schema='ODS_TIMETABLE',
-    )
     op.create_index(
         'ix_ODS_TIMETABLE_ods_link_timetable_group_id',
         'ods_link_timetable_group',
