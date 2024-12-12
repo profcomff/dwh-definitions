@@ -32,15 +32,9 @@ def upgrade():
     # dim_room_act
     op.execute('ALTER TABLE "DM_TIMETABLE".dim_room_act drop COLUMN IF EXISTS id')
     op.execute('ALTER TABLE "DM_TIMETABLE".dim_room_act add COLUMN IF not EXISTS id UUID')
-    op.drop_column('ods_link_timetable_group', 'lesson_id', schema='ODS_TIMETABLE')
 
 
 def downgrade():
-    op.add_column(
-        'ods_link_timetable_group',
-        sa.Column('lesson_id', sa.INTEGER(), autoincrement=False, nullable=True),
-        schema='ODS_TIMETABLE',
-    )
     # alembic cannot do it properly, so you need to manually handle columns
     # dim_event_act
     op.execute('ALTER TABLE "DM_TIMETABLE".dim_event_act drop COLUMN IF EXISTS id')
