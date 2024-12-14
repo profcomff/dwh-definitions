@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import UUID, String
+from sqlalchemy import UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
 from profcomff_definitions.base import Base
@@ -25,9 +25,6 @@ class OdsTimetableAct(Base):
 
 class OdsLinkTimetableTeacher(Base):
     id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
-    timetable_alias: Mapped[str] = mapped_column(
-        String, comment="Техническое поле для построения пайплайна сборки расписания"
-    )
     event_id: Mapped[uuid.UUID] = mapped_column(
         UUID,
         comment="Идентификатор события, полученного в результате парсинга ras.phys.msu",
@@ -38,9 +35,6 @@ class OdsLinkTimetableTeacher(Base):
 
 class OdsLinkTimetableLesson(Base):
     id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
-    timetable_alias: Mapped[str] = mapped_column(
-        String, comment="Техническое поле для построения пайплайна сборки расписания"
-    )
     event_id: Mapped[uuid.UUID] = mapped_column(
         UUID,
         comment="Идентификатор события, полученного в результате парсинга ras.phys.msu",
@@ -51,11 +45,6 @@ class OdsLinkTimetableLesson(Base):
 
 class OdsLinkTimetableGroup(Base):
     id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
-    timetable_alias: Mapped[str] = mapped_column(
-        String,
-        comment="Техническое поле для построения пайплайна сборки расписания",
-        nullable=True,
-    )
     event_id: Mapped[uuid.UUID] = mapped_column(
         UUID,
         comment="Идентификатор события, полученного в результате парсинга ras.phys.msu",
@@ -66,11 +55,6 @@ class OdsLinkTimetableGroup(Base):
 
 class OdsLinkTimetableRoom(Base):
     id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
-    timetable_alias: Mapped[str] = mapped_column(
-        String,
-        comment="Техническое поле для построения пайплайна сборки расписания",
-        nullable=True,
-    )
     event_id: Mapped[uuid.UUID] = mapped_column(
         UUID,
         comment="Идентификатор события, полученного в результате парсинга ras.phys.msu",
