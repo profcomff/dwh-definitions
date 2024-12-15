@@ -105,3 +105,13 @@ class DmTimetableAct(Base):
     room_name: Mapped[str | None] = mapped_column(
         comment="Название аудитори из справочника. Заполняется если в событии есть информация об аудитории"
     )
+    event_api_id: Mapped[int | None] = mapped_column(comment="Идентификатор события из справочника. Заполняется всегда")
+    group_api_id: Mapped[int | None] = mapped_column(
+        comment="Идентификатор группы из справочника. Заполняется если в событии есть информация о группе"
+    )
+    lecturer_api_id: Mapped[int | None] = mapped_column(
+        comment="Идентификатор преподавателя из справочника. Заполняется если в событии есть информация о преподавателе"
+    )
+    room_api_id: Mapped[int | None] = mapped_column(
+        comment="Идентификатор аудитори из справочника. Заполняется если в событии есть информация об аудитории"
+    )
