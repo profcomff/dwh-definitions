@@ -52,16 +52,18 @@ def render_schema_revoke(autogen_context, op):
 @renderers.dispatch_for(GrantRightsOp)
 def render_table_grant(autogen_context, op):
     table = f"""'"{op.table_name.split(".")[0]}".{op.table_name.split(".")[1]}'"""
-    render_group = op.group_name
+    render_group = '_'.join(op.group_name.split('_')[1:])
     return (
-        f'op.grant_on_table("{render_group}", 'f'{op.scopes}, {table})'
+        f'op.grant_on_table("test_{render_group}" if os.getenv("ENVIRONMENT") != "production" else "prod_{render_group}", '
+        f'{op.scopes}, {table})'
     )
 
 
 @renderers.dispatch_for(RevokeRightsOp)
 def render_table_revoke(autogen_context, op):
     table = f"""'"{op.table_name.split(".")[0]}".{op.table_name.split(".")[1]}'"""
-    render_group = op.group_name
+    render_group = '_'.join(op.group_name.split('_')[1:])
     return (
-        f'op.revoke_on_table("{render_group}", 'f'{op.scopes}, {table})'
+        f'op.revoke_on_table("test_{render_group}" if os.getenv("ENVIRONMENT") != "production" else "prod_{render_group}", '
+        f'{op.scopes}, {table})'
     )

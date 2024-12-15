@@ -2,6 +2,7 @@ import re
 
 from sqlalchemy.ext.declarative import declared_attr
 from sqlalchemy.orm import as_declarative
+from typing import Any
 
 from migrations.custom_scripts.schemas import add_table_schema_to_model
 
@@ -20,7 +21,7 @@ class Base:
 
     @classmethod
     @declared_attr
-    def __table_args__(cls) -> dict[str, str, str]:
+    def __table_args__(cls) -> dict[str, Any]:
         schema = f'{cls.__module__.split(".")[-2].upper()}_{cls.__module__.split(".")[-1].upper()}'
         add_table_schema_to_model(schema, Base.metadata)
 
@@ -34,11 +35,11 @@ class Base:
 
 
 class SensitiveBase(Base):
-    """Base class for all database entities"""
+    """Base class for all sensitive entities"""
 
     @classmethod
     @declared_attr
-    def __table_args__(cls) -> dict[str, str, str]:
+    def __table_args__(cls) -> dict[str, Any]:
         schema = f'{cls.__module__.split(".")[-2].upper()}_{cls.__module__.split(".")[-1].upper()}'
         add_table_schema_to_model(schema, Base.metadata)
 
