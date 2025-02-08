@@ -47,6 +47,7 @@ class UserSession(Base):
     token: Mapped[str | None]
     last_activity: Mapped[datetime | None]
     create_ts: Mapped[datetime | None]
+    is_unbounded: Mapped[bool | None]
 
 
 class Scope(Base):
