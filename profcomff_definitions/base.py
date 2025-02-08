@@ -1,8 +1,8 @@
 import re
+from typing import Any
 
 from sqlalchemy.ext.declarative import declared_attr
 from sqlalchemy.orm import as_declarative
-from typing import Any
 
 from migrations.custom_scripts.schemas import add_table_schema_to_model
 

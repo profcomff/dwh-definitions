@@ -15,7 +15,7 @@ def compare_table(autogen_context, modify_table_ops, s, tname, metadata_table_db
                 if os.getenv("ENVIRONMENT") != "production"
                 else f'prod_{"sensitive_" if sensitive else ""}dwh_{s}_{render_scope}'.lower()
             )
-            
+
             scopes = []
             match render_scope:
                 case 'read':
@@ -24,12 +24,10 @@ def compare_table(autogen_context, modify_table_ops, s, tname, metadata_table_db
                     scopes = ['SELECT', 'UPDATE', 'DELETE', 'TRUNCATE', 'INSERT']
                 case 'all':
                     scopes = ['ALL']
-                    
+
             if sensitive:
-                modify_table_ops.ops.append(
-                    CreateGroupOp(group_name=group_name)
-                )
-            
+                modify_table_ops.ops.append(CreateGroupOp(group_name=group_name))
+
             modify_table_ops.ops.append(
                 GrantRightsOp(table_name=str(metadata_table_code), scopes=scopes, group_name=group_name)
             )
@@ -54,8 +52,6 @@ def compare_table(autogen_context, modify_table_ops, s, tname, metadata_table_db
             modify_table_ops.ops.append(
                 RevokeRightsOp(table_name=str(metadata_table_db), scopes=scopes, group_name=group_name)
             )
-            
+
             if sensitive:
-                modify_table_ops.ops.append(
-                    DeleteGroupOp(group_name=group_name)
-                )
+                modify_table_ops.ops.append(DeleteGroupOp(group_name=group_name))

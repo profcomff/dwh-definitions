@@ -1,7 +1,7 @@
 """Init
 
 Revision ID: 0a24041f09d1
-Revises: 
+Revises:
 Create Date: 2023-08-28 13:34:04.141947
 
 """
