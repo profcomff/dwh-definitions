@@ -20,7 +20,7 @@ class Comment(Base):
     uuid: Mapped[UUID] = mapped_column(primary_key=True)
     create_ts: Mapped[datetime]
     update_ts: Mapped[datetime]
-    subject: Mapped[str]
+    subject: Mapped[str | None]
     text: Mapped[str | None]
     mark_kindness: Mapped[int]
     mark_freebie: Mapped[int]
