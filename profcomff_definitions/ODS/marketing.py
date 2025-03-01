@@ -7,7 +7,7 @@ from profcomff_definitions.base import Base
 
 class FrontendActions(Base):
     """
-    Фронтендовые события user_id > 0
+    Фронтендовые события
     """
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -21,7 +21,7 @@ class FrontendActions(Base):
 
 class PrinterActions(Base):
     """
-    Действия принтера user_id = -1
+    Действия принтера
     """
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -30,13 +30,12 @@ class PrinterActions(Base):
     path_to: Mapped[str | None] = mapped_column(comment="Назначение перехода")
     status: Mapped[str] = mapped_column(comment="Статус действия")
     app_version: Mapped[str] = mapped_column(comment="Версия приложения")
-    terminal_user_id: Mapped[int]
-    create_ts: Mapped[datetime] = mapped_column(comment="Таймстемп создания")
+    create_ts: Mapped[datetime] = mapped_column(comment="Таймстемп создания (московское время)")
 
 
 class PrinterBotsActions(Base):
     """
-    Действия ботов принтера в вк и тг user_id = -2
+    Действия ботов принтера в вк и тг
     """
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -50,7 +49,7 @@ class PrinterBotsActions(Base):
     pin: Mapped[int | None]
     status_code: Mapped[int | None] = mapped_column(comment="Код ошибки")
     description: Mapped[str | None] = mapped_column(comment="Описание ошибки")
-    create_ts: Mapped[datetime] = mapped_column(comment="Таймстемп создания")
+    create_ts: Mapped[datetime] = mapped_column(comment="Таймстемп создания (московское время)")
 
 
 class RatingActions(Base):
@@ -63,5 +62,5 @@ class RatingActions(Base):
     path_to: Mapped[str | None] = mapped_column(comment="Назначение перехода")
     response_status_code: Mapped[int]
     user_id: Mapped[int]
-    query: Mapped[str]
-    create_ts: Mapped[datetime] = mapped_column(comment="Таймстемп создания")
+    query: Mapped[str] = mapped_column(comment="Переданные параметры запроса")
+    create_ts: Mapped[datetime] = mapped_column(comment="Таймстемп создания (московское время)")
