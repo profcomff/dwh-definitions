@@ -6,10 +6,12 @@ Create Date: 2025-03-01 18:23:12.992376
 
 """
 
-from alembic import op
-import sqlalchemy as sa
 import os
+
+import sqlalchemy as sa
+from alembic import op
 from sqlalchemy.dialects import postgresql
+
 
 # revision identifiers, used by Alembic.
 revision = 'c335441a4bf8'
@@ -33,7 +35,7 @@ def upgrade():
         sa.Column('create_ts', sa.DateTime(), nullable=False, comment='Таймстемп создания'),
         sa.PrimaryKeyConstraint('uuid'),
         schema='ODS_MARKETING',
-        comment='\n    Фронтендовые события\n    ',
+        comment='Фронтендовые события',
         info={'sensitive': False},
     )
     op.create_table(
@@ -47,7 +49,7 @@ def upgrade():
         sa.Column('create_ts', sa.DateTime(), nullable=False, comment='Таймстемп создания (московское время)'),
         sa.PrimaryKeyConstraint('uuid'),
         schema='ODS_MARKETING',
-        comment='\n    Действия принтера\n    ',
+        comment='Действия принтера',
         info={'sensitive': False},
     )
     op.create_table(
@@ -66,7 +68,7 @@ def upgrade():
         sa.Column('create_ts', sa.DateTime(), nullable=False, comment='Таймстемп создания (московское время)'),
         sa.PrimaryKeyConstraint('uuid'),
         schema='ODS_MARKETING',
-        comment='\n    Действия ботов принтера в вк и тг\n    ',
+        comment='Действия ботов принтера в вк и тг',
         info={'sensitive': False},
     )
     op.create_table(
@@ -80,7 +82,7 @@ def upgrade():
         sa.Column('create_ts', sa.DateTime(), nullable=False, comment='Таймстемп создания (московское время)'),
         sa.PrimaryKeyConstraint('uuid'),
         schema='ODS_MARKETING',
-        comment='\n    События в рейтинге\n    ',
+        comment='События в рейтинге',
         info={'sensitive': False},
     )
     op.create_group(
