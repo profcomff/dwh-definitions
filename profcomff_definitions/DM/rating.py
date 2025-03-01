@@ -1,7 +1,9 @@
 from datetime import date, datetime
 from uuid import UUID
-from sqlalchemy.orm import Mapped, mapped_column
+
 from sqlalchemy import schema
+from sqlalchemy.orm import Mapped, mapped_column
+
 from profcomff_definitions.base import Base
 
 
@@ -9,6 +11,7 @@ class DmLecturerCommentAct(Base):
     """
     Snapshot table that shows sizes for all tables in DWH
     """
+
     comment_api_uuid: Mapped[UUID] = mapped_column(comment="Идентифиактор в rating-api")
     lecturer_api_id: Mapped[int] = mapped_column(comment="Идентифиактор в rating-api")
     lecturer_full_name: Mapped[str | None] = mapped_column(comment="ФИО преподавателя")
@@ -21,7 +24,9 @@ class DmLecturerCommentAct(Base):
     comment_subject: Mapped[str | None] = mapped_column(comment="Оцениваемый предмет")
     comment_shortened_text: Mapped[str | None] = mapped_column(comment="Первые 80 символов текста комментария")
     comment_full_text: Mapped[str | None] = mapped_column(comment="Полный текст комментария")
-    comment_create_ts: Mapped[datetime | None] = mapped_column(comment="Timestamp создания комментария, мск", index=True)
+    comment_create_ts: Mapped[datetime | None] = mapped_column(
+        comment="Timestamp создания комментария, мск", index=True
+    )
     comment_update_ts: Mapped[datetime | None] = mapped_column(comment="Timestamp обновления комментария, мск")
     comment_mark_kindness: Mapped[int] = mapped_column(comment="Оценка доброты")
     comment_mark_freebie: Mapped[int] = mapped_column(comment="Оценка халявности")
@@ -34,5 +39,7 @@ class DmLecturerCommentAct(Base):
     __table_args__ = (
         schema.Index("ix__dm_lecturer_comment_act__user_full_name", "user_full_name", postgresql_using="gin"),
         schema.Index("ix__dm_lecturer_comment_act__lecturer_full_name", "lecturer_full_name", postgresql_using="gin"),
-        schema.Index("ix__dm_lecturer_comment_act__comment_shortened_text", "comment_shortened_text", postgresql_using="gin"),
+        schema.Index(
+            "ix__dm_lecturer_comment_act__comment_shortened_text", "comment_shortened_text", postgresql_using="gin"
+        ),
     )
