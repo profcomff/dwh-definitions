@@ -1,20 +1,19 @@
 """add ods_marketing tables
 
-Revision ID: 158b1235e27a
-Revises: adb819726799
-Create Date: 2025-03-01 17:43:30.443610
+Revision ID: c335441a4bf8
+Revises: 2d7609e6f490
+Create Date: 2025-03-01 18:23:12.992376
 
 """
 
-import os
-
-import sqlalchemy as sa
 from alembic import op
-
+import sqlalchemy as sa
+import os
+from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision = '158b1235e27a'
-down_revision = 'adb819726799'
+revision = 'c335441a4bf8'
+down_revision = '2d7609e6f490'
 branch_labels = None
 depends_on = None
 
@@ -24,35 +23,36 @@ def upgrade():
     op.create_table_schema("ODS_MARKETING")
     op.create_table(
         'frontend_actions',
-        sa.Column('id', sa.Integer(), nullable=False),
+        sa.Column('uuid', sa.Uuid(), nullable=False),
         sa.Column('user_id', sa.Integer(), nullable=False),
         sa.Column('action', sa.String(), nullable=False, comment='Совершенное действие'),
         sa.Column('path_from', sa.String(), nullable=True, comment='Откуда совершен переход'),
         sa.Column('path_to', sa.String(), nullable=True, comment='Назначение перехода'),
         sa.Column('user_agent', sa.String(), nullable=True, comment='Информация об операционной системе и браузере'),
+        sa.Column('is_bot', sa.Boolean(), nullable=False, comment='Флаг бот или нет'),
         sa.Column('create_ts', sa.DateTime(), nullable=False, comment='Таймстемп создания'),
-        sa.PrimaryKeyConstraint('id'),
+        sa.PrimaryKeyConstraint('uuid'),
         schema='ODS_MARKETING',
-        comment='Фронтендовые события',
+        comment='\n    Фронтендовые события\n    ',
         info={'sensitive': False},
     )
     op.create_table(
         'printer_actions',
-        sa.Column('id', sa.Integer(), nullable=False),
+        sa.Column('uuid', sa.Uuid(), nullable=False),
         sa.Column('action', sa.String(), nullable=False, comment='Совершенное действие'),
         sa.Column('path_from', sa.String(), nullable=True, comment='Откуда совершен переход'),
         sa.Column('path_to', sa.String(), nullable=True, comment='Назначение перехода'),
         sa.Column('status', sa.String(), nullable=False, comment='Статус действия'),
         sa.Column('app_version', sa.String(), nullable=False, comment='Версия приложения'),
         sa.Column('create_ts', sa.DateTime(), nullable=False, comment='Таймстемп создания (московское время)'),
-        sa.PrimaryKeyConstraint('id'),
+        sa.PrimaryKeyConstraint('uuid'),
         schema='ODS_MARKETING',
-        comment='Действия принтера',
+        comment='\n    Действия принтера\n    ',
         info={'sensitive': False},
     )
     op.create_table(
         'printer_bots_actions',
-        sa.Column('id', sa.Integer(), nullable=False),
+        sa.Column('uuid', sa.Uuid(), nullable=False),
         sa.Column('action', sa.String(), nullable=False, comment='Совершенное действие'),
         sa.Column('path_from', sa.String(), nullable=True, comment='Откуда совершен переход'),
         sa.Column('path_to', sa.String(), nullable=True, comment='Назначение перехода'),
@@ -64,23 +64,23 @@ def upgrade():
         sa.Column('status_code', sa.Integer(), nullable=True, comment='Код ошибки'),
         sa.Column('description', sa.String(), nullable=True, comment='Описание ошибки'),
         sa.Column('create_ts', sa.DateTime(), nullable=False, comment='Таймстемп создания (московское время)'),
-        sa.PrimaryKeyConstraint('id'),
+        sa.PrimaryKeyConstraint('uuid'),
         schema='ODS_MARKETING',
-        comment='Действия ботов принтера в вк и тг',
+        comment='\n    Действия ботов принтера в вк и тг\n    ',
         info={'sensitive': False},
     )
     op.create_table(
         'rating_actions',
-        sa.Column('id', sa.Integer(), nullable=False),
+        sa.Column('uuid', sa.Uuid(), nullable=False),
         sa.Column('action', sa.String(), nullable=False, comment='Совершенное действие'),
         sa.Column('path_to', sa.String(), nullable=True, comment='Назначение перехода'),
         sa.Column('response_status_code', sa.Integer(), nullable=False),
         sa.Column('user_id', sa.Integer(), nullable=False),
         sa.Column('query', sa.String(), nullable=False, comment='Переданные параметры запроса'),
         sa.Column('create_ts', sa.DateTime(), nullable=False, comment='Таймстемп создания (московское время)'),
-        sa.PrimaryKeyConstraint('id'),
+        sa.PrimaryKeyConstraint('uuid'),
         schema='ODS_MARKETING',
-        comment='События в рейтинге',
+        comment='\n    События в рейтинге\n    ',
         info={'sensitive': False},
     )
     op.create_group(
@@ -107,6 +107,36 @@ def upgrade():
     op.grant_on_table(
         "test_dwh_ods_marketing_read" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_marketing_read",
         ['SELECT'],
+        '"ODS_MARKETING".frontend_actions',
+    )
+    op.grant_on_table(
+        "test_dwh_ods_marketing_write" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_marketing_write",
+        ['SELECT', 'UPDATE', 'DELETE', 'TRUNCATE', 'INSERT'],
+        '"ODS_MARKETING".frontend_actions',
+    )
+    op.grant_on_table(
+        "test_dwh_ods_marketing_all" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_marketing_all",
+        ['ALL'],
+        '"ODS_MARKETING".frontend_actions',
+    )
+    op.grant_on_table(
+        "test_dwh_ods_marketing_read" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_marketing_read",
+        ['SELECT'],
+        '"ODS_MARKETING".rating_actions',
+    )
+    op.grant_on_table(
+        "test_dwh_ods_marketing_write" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_marketing_write",
+        ['SELECT', 'UPDATE', 'DELETE', 'TRUNCATE', 'INSERT'],
+        '"ODS_MARKETING".rating_actions',
+    )
+    op.grant_on_table(
+        "test_dwh_ods_marketing_all" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_marketing_all",
+        ['ALL'],
+        '"ODS_MARKETING".rating_actions',
+    )
+    op.grant_on_table(
+        "test_dwh_ods_marketing_read" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_marketing_read",
+        ['SELECT'],
         '"ODS_MARKETING".printer_actions',
     )
     op.grant_on_table(
@@ -134,37 +164,6 @@ def upgrade():
         ['ALL'],
         '"ODS_MARKETING".printer_bots_actions',
     )
-    op.grant_on_table(
-        "test_dwh_ods_marketing_read" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_marketing_read",
-        ['SELECT'],
-        '"ODS_MARKETING".rating_actions',
-    )
-    op.grant_on_table(
-        "test_dwh_ods_marketing_write" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_marketing_write",
-        ['SELECT', 'UPDATE', 'DELETE', 'TRUNCATE', 'INSERT'],
-        '"ODS_MARKETING".rating_actions',
-    )
-    op.grant_on_table(
-        "test_dwh_ods_marketing_all" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_marketing_all",
-        ['ALL'],
-        '"ODS_MARKETING".rating_actions',
-    )
-    op.grant_on_table(
-        "test_dwh_ods_marketing_read" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_marketing_read",
-        ['SELECT'],
-        '"ODS_MARKETING".frontend_actions',
-    )
-    op.grant_on_table(
-        "test_dwh_ods_marketing_write" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_marketing_write",
-        ['SELECT', 'UPDATE', 'DELETE', 'TRUNCATE', 'INSERT'],
-        '"ODS_MARKETING".frontend_actions',
-    )
-    op.grant_on_table(
-        "test_dwh_ods_marketing_all" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_marketing_all",
-        ['ALL'],
-        '"ODS_MARKETING".frontend_actions',
-    )
-    # ### end Alembic commands ###
 
 
 def downgrade():
@@ -172,36 +171,6 @@ def downgrade():
     op.revoke_on_table(
         "test_dwh_ods_marketing_all" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_marketing_all",
         ['ALL'],
-        '"ODS_MARKETING".frontend_actions',
-    )
-    op.revoke_on_table(
-        "test_dwh_ods_marketing_write" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_marketing_write",
-        ['SELECT', 'UPDATE', 'DELETE', 'TRUNCATE', 'INSERT'],
-        '"ODS_MARKETING".frontend_actions',
-    )
-    op.revoke_on_table(
-        "test_dwh_ods_marketing_read" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_marketing_read",
-        ['SELECT'],
-        '"ODS_MARKETING".frontend_actions',
-    )
-    op.revoke_on_table(
-        "test_dwh_ods_marketing_all" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_marketing_all",
-        ['ALL'],
-        '"ODS_MARKETING".rating_actions',
-    )
-    op.revoke_on_table(
-        "test_dwh_ods_marketing_write" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_marketing_write",
-        ['SELECT', 'UPDATE', 'DELETE', 'TRUNCATE', 'INSERT'],
-        '"ODS_MARKETING".rating_actions',
-    )
-    op.revoke_on_table(
-        "test_dwh_ods_marketing_read" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_marketing_read",
-        ['SELECT'],
-        '"ODS_MARKETING".rating_actions',
-    )
-    op.revoke_on_table(
-        "test_dwh_ods_marketing_all" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_marketing_all",
-        ['ALL'],
         '"ODS_MARKETING".printer_bots_actions',
     )
     op.revoke_on_table(
@@ -228,6 +197,36 @@ def downgrade():
         "test_dwh_ods_marketing_read" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_marketing_read",
         ['SELECT'],
         '"ODS_MARKETING".printer_actions',
+    )
+    op.revoke_on_table(
+        "test_dwh_ods_marketing_all" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_marketing_all",
+        ['ALL'],
+        '"ODS_MARKETING".rating_actions',
+    )
+    op.revoke_on_table(
+        "test_dwh_ods_marketing_write" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_marketing_write",
+        ['SELECT', 'UPDATE', 'DELETE', 'TRUNCATE', 'INSERT'],
+        '"ODS_MARKETING".rating_actions',
+    )
+    op.revoke_on_table(
+        "test_dwh_ods_marketing_read" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_marketing_read",
+        ['SELECT'],
+        '"ODS_MARKETING".rating_actions',
+    )
+    op.revoke_on_table(
+        "test_dwh_ods_marketing_all" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_marketing_all",
+        ['ALL'],
+        '"ODS_MARKETING".frontend_actions',
+    )
+    op.revoke_on_table(
+        "test_dwh_ods_marketing_write" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_marketing_write",
+        ['SELECT', 'UPDATE', 'DELETE', 'TRUNCATE', 'INSERT'],
+        '"ODS_MARKETING".frontend_actions',
+    )
+    op.revoke_on_table(
+        "test_dwh_ods_marketing_read" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_marketing_read",
+        ['SELECT'],
+        '"ODS_MARKETING".frontend_actions',
     )
     op.revoke_on_schema(
         "test_dwh_ods_marketing_all" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_marketing_all",
@@ -255,4 +254,3 @@ def downgrade():
         "test_dwh_ods_marketing_read" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_marketing_read"
     )
     op.drop_table_schema("ODS_MARKETING")
-    # ### end Alembic commands ###
