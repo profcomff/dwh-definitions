@@ -10,6 +10,7 @@ class Lecturer(Base):
     """
     Преподаватели в rating-api
     """
+
     uuid: Mapped[UUID] = mapped_column(primary_key=True, comment="Техническое поле в dwh")
     api_id: Mapped[int] = mapped_column(comment="Идентифиактор в rating-api")
     first_name: Mapped[str] = mapped_column(comment="Имя преподавателя")
@@ -24,6 +25,7 @@ class Comment(Base):
     """
     Комментарии в rating-api
     """
+
     uuid: Mapped[UUID] = mapped_column(primary_key=True, comment="Техническое поле в dwh")
     api_uuid: Mapped[UUID] = mapped_column(comment="Идентифиактор в rating-api")
     create_ts: Mapped[datetime] = mapped_column(comment="Timestamp создания комментария, мск")
@@ -41,6 +43,7 @@ class LecturerUserComment(Base):
     """
     Связь лекторов и комметариев в rating-api
     """
+
     uuid: Mapped[UUID] = mapped_column(primary_key=True, comment="Техническое поле в dwh")
     api_id: Mapped[int] = mapped_column(comment="Идентифиактор в rating-api")
     lecturer_id: Mapped[int] = mapped_column(comment="Идентифиактор преподавателя")
