@@ -69,6 +69,7 @@ class UnionMemberJoin(Base):
         String, nullable=True, comment="card number - number of user's card from ODS.user.info"
     )
 
+
 class UnionMemberCard(Base):
     user_id: Mapped[int] = mapped_column(Integer, index=True, primary_key=True)
     card_id: Mapped[int | None] = mapped_column(Integer, nullable=True)
