@@ -1,7 +1,6 @@
-from datetime import date, datetime
+from datetime import datetime
 from uuid import UUID
 
-from sqlalchemy import schema
 from sqlalchemy.orm import Mapped, mapped_column
 
 from profcomff_definitions.base import Base
@@ -35,11 +34,5 @@ class DmLecturerCommentAct(Base):
     user_id: Mapped[int | None] = mapped_column(comment="Идентификатор пользователя из auth-api", index=True)
     user_full_name: Mapped[str | None] = mapped_column(comment="Имя пользователя")
     user_email: Mapped[str | None] = mapped_column(comment="Список электронных почт пользователя")
+    some_field: Mapped[int]
     __mapper_args__ = {"primary_key": ["comment_api_uuid", "lecturer_api_id"]}
-    __table_args__ = (
-        schema.Index("ix__dm_lecturer_comment_act__user_full_name", "user_full_name", postgresql_using="gin"),
-        schema.Index("ix__dm_lecturer_comment_act__lecturer_full_name", "lecturer_full_name", postgresql_using="gin"),
-        schema.Index(
-            "ix__dm_lecturer_comment_act__comment_shortened_text", "comment_shortened_text", postgresql_using="gin"
-        ),
-    )
