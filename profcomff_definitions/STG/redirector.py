@@ -15,7 +15,7 @@ class Link(Base):
 
 class RedirectFact(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
-    link_id: Mapped[int]
+    link_id: Mapped[int | None]
     method: Mapped[str]
     created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
     user_agent: Mapped[str]
