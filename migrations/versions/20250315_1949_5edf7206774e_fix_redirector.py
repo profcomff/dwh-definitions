@@ -19,10 +19,8 @@ depends_on = None
 
 
 def upgrade():
-    op.add_column('lecturer', sa.Column('shitcol', sa.String(), nullable=False), schema='DWH_RATING')
     op.alter_column('redirect_fact', 'link_id', existing_type=sa.INTEGER(), nullable=True, schema='STG_REDIRECTOR')
 
 
 def downgrade():
     op.alter_column('redirect_fact', 'link_id', existing_type=sa.INTEGER(), nullable=False, schema='STG_REDIRECTOR')
-    op.drop_column('lecturer', 'shitcol', schema='DWH_RATING')
