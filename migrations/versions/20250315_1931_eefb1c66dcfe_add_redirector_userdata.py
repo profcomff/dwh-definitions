@@ -128,7 +128,6 @@ def upgrade():
     op.create_index(
         op.f('ix_DM_USER_union_member_card_user_id'), 'union_member_card', ['user_id'], unique=False, schema='DM_USER'
     )
-    op.add_column('lecturer', sa.Column('shitcol', sa.String(), nullable=False), schema='DWH_RATING')
     op.create_table_comment(
         'frontend_actions',
         '\n    Фронтендовые события\n    ',
@@ -174,7 +173,6 @@ def downgrade():
         existing_comment='\n    Фронтендовые события\n    ',
         schema='ODS_MARKETING',
     )
-    op.drop_column('lecturer', 'shitcol', schema='DWH_RATING')
     op.drop_index(op.f('ix_DM_USER_union_member_card_user_id'), table_name='union_member_card', schema='DM_USER')
     op.revoke_on_table(
         "test_dwh_stg_redirector_all" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_stg_redirector_all",
