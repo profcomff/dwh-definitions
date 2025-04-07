@@ -21,7 +21,6 @@ class Lecturer(Base):
     timetable_id: Mapped[int] = mapped_column(comment="Идертификатор в timetable-api")
     valid_from_dt: Mapped[date | None] = mapped_column(comment="Дата начала действия записи")
     valid_to_dt: Mapped[date | None] = mapped_column(comment="Дата конца действия записи")
-    shitcol: Mapped[str]
 
 
 class Comment(Base):
