@@ -5,7 +5,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 from profcomff_definitions.base import Base
 
 
-class DmRentals(Base):
+class DmRentalsEvents(Base):
     """
     Данные арендных сессий
     """
@@ -13,8 +13,8 @@ class DmRentals(Base):
     uuid: Mapped[UUID] = mapped_column(primary_key=True, comment="Техническое поле dwh")
     user_id: Mapped[int] = mapped_column(comment="Идентификатор пользователя")
     item_id: Mapped[int] = mapped_column(comment="Идентификатор предмета")
-    admin_open_id: Mapped[int] = mapped_column(comment="Идентификатор админа начавшего сессию")
-    admin_close_id: Mapped[int | None] = mapped_column(comment="Идентификатор админа закончевшего сессию")
+    admin_open_session_id: Mapped[int] = mapped_column(comment="Идентификатор админа начавшего сессию")
+    admin_close_session_id: Mapped[int | None] = mapped_column(comment="Идентификатор админа закончевшего сессию")
     reservation_ts: Mapped[datetime] = mapped_column(comment="Время начала брони")
     start_ts: Mapped[datetime] = mapped_column(comment="Timestamp начала аренды предмета, мск")
     end_ts: Mapped[datetime] = mapped_column(comment="Timestamp рассчетное время возврата предмета, мск")
@@ -24,14 +24,6 @@ class DmRentals(Base):
     delay: Mapped[timedelta] = mapped_column(comment="Время задержки возврата")
     overdue_flag: Mapped[bool] = mapped_column(comment="Флаг просрочки")
     conversion_flag: Mapped[bool] = mapped_column(comment="Флаг конверсии из брони в аренду")
-
-
-class DmAvailability(Base):
-    """
-    Доступность вещей и их популярность
-    """
-    
-    api_id: Mapped[int] = mapped_column(primary_key=True, comment="Идентификатор в rental-api")
     type_id: Mapped[int] = mapped_column(comment="Идентификатор типа вещи")
     type: Mapped[str] = mapped_column(comment="Тип вещи")
     name: Mapped[str] = mapped_column(comment="Название вещи")
@@ -42,18 +34,8 @@ class DmAvailability(Base):
     rental_count: Mapped[int] = mapped_column(comment="Общее количество аренд данного типа")
     avg_downtime_hours: Mapped[timedelta] = mapped_column(comment="Среднее время простоя")
     avg_rent_hours: Mapped[timedelta] = mapped_column(comment="Среднее время аренды")
-    
-
-class DmStrike(Base):
-    """
-    Страйки пользователям
-    """
-    
-    api_id: Mapped[int] = mapped_column(primary_key=True, comment="Идентификатор в rental-api")
-    user_id: Mapped[int] = mapped_column(comment="Идентификатор пользователя")
     session_id: Mapped[int] = mapped_column(comment="Идентификатор сессии")
-    admin_id: Mapped[int] = mapped_column(comment="Идентификаор админа")
-    reason: Mapped[str] = mapped_column(comment="Причина страйка")
-    strike_date: Mapped[datetime] = mapped_column(comment="Timestamp начисления страйка, мск")
-    overdue_flag: Mapped[bool] = mapped_column(comment="Флаг просрочки")
-    strike_count: Mapped[int] = mapped_column(comment="Количество страйков у пользователя")
+    admin_strike_id: Mapped[int|None] = mapped_column(comment="Идентификаор админа")
+    strike_reason: Mapped[str|None] = mapped_column(comment="Причина страйка")
+    strike_date: Mapped[datetime|None] = mapped_column(comment="Timestamp начисления страйка, мск")
+    strike_count: Mapped[int|None] = mapped_column(comment="Количество страйков у пользователя")
