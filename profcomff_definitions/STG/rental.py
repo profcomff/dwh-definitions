@@ -1,5 +1,6 @@
 from datetime import datetime
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from sqlalchemy.orm import Mapped, mapped_column
 
 from profcomff_definitions.base import Base
 
@@ -12,7 +13,7 @@ class Item(Base):
 
 
 class ItemType(Base):
-    api_id: Mapped[int]
+    api_id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str]
     image_url: Mapped[str | None]
     description: Mapped[str | None]
@@ -24,10 +25,10 @@ class RentalSession(Base):
     item_id: Mapped[int]
     admin_open_id: Mapped[int]
     admin_close_id: Mapped[int | None]
-    reservation_ts: Mapped[datetime.datetime]
-    start_ts: Mapped[datetime.datetime]
-    end_ts: Mapped[datetime.datetime]
-    actual_return_ts: Mapped[datetime.datetime]
+    reservation_ts: Mapped[datetime]
+    start_ts: Mapped[datetime]
+    end_ts: Mapped[datetime]
+    actual_return_ts: Mapped[datetime]
     status: Mapped[str]
 
 
@@ -37,8 +38,8 @@ class Event(Base):
     admin_id: Mapped[int]
     session_id: Mapped[int]
     action_type: Mapped[str]
-    details: Mapped[dict]
-    create_ts: Mapped[datetime.datetime]
+    details: Mapped[str]
+    create_ts: Mapped[datetime]
 
 
 class Strike(Base):
@@ -47,4 +48,4 @@ class Strike(Base):
     session_id: Mapped[int]
     admin_id: Mapped[int]
     reason: Mapped[str]
-    create_ts: Mapped[datetime.datetime]
+    create_ts: Mapped[datetime]
