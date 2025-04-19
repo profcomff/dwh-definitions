@@ -23,6 +23,7 @@ class ActionsInfo(Base):
     additional_data: Mapped[str | None]
     create_ts: Mapped[datetime | None]
 
+
 class UserIncremental(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     union_number: Mapped[str | None]
