@@ -1,5 +1,6 @@
 from datetime import datetime
 from uuid import UUID
+
 from sqlalchemy.orm import Mapped, mapped_column
 
 from profcomff_definitions.base import Base
@@ -33,6 +34,7 @@ class RentalSession(Base):
     """
     Сессия и статус для вещей rental-api
     """
+
     uuid: Mapped[UUID] = mapped_column(primary_key=True, comment="Техническое поле dwh")
     api_id: Mapped[int] = mapped_column(comment="Идентификатор в rental-api")
     user_id: Mapped[int] = mapped_column(comment="Идентификатор пользователя")

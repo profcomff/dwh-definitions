@@ -1,5 +1,6 @@
-from datetime import datetime, date, timedelta
+from datetime import date, datetime, timedelta
 from uuid import UUID
+
 from sqlalchemy.orm import Mapped, mapped_column
 
 from profcomff_definitions.base import Base
@@ -35,13 +36,13 @@ class DmRentalsEvents(Base):
     avg_downtime_hours: Mapped[timedelta] = mapped_column(comment="Среднее время простоя")
     avg_rent_hours: Mapped[timedelta] = mapped_column(comment="Среднее время аренды")
     session_id: Mapped[int] = mapped_column(comment="Идентификатор сессии")
-    admin_strike_id: Mapped[int|None] = mapped_column(comment="Идентификаор админа")
-    strike_reason: Mapped[str|None] = mapped_column(comment="Причина страйка")
-    strike_date: Mapped[datetime|None] = mapped_column(comment="Timestamp начисления страйка, мск")
-    strike_count: Mapped[int|None] = mapped_column(comment="Количество страйков у пользователя")
+    admin_strike_id: Mapped[int | None] = mapped_column(comment="Идентификаор админа")
+    strike_reason: Mapped[str | None] = mapped_column(comment="Причина страйка")
+    strike_date: Mapped[datetime | None] = mapped_column(comment="Timestamp начисления страйка, мск")
+    strike_count: Mapped[int | None] = mapped_column(comment="Количество страйков у пользователя")
     activity_max_time: Mapped[int] = mapped_column(comment="Час пиковой активности")
     activity_max: Mapped[int] = mapped_column(comment="Количество активности в час пиковой нагрузки")
-    
+
 
 class RatingActions(Base):
     """

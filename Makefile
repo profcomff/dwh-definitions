@@ -21,4 +21,4 @@ migrate: venv
 
 # ex. make sampler func=upload_sample class_name=Info
 sampler: venv
-	python sampler.py $(func) $(class_name)
+	python sampler.py $(func) $(class_name) 
