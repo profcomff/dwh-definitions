@@ -2,7 +2,7 @@ from datetime import datetime
 
 from sqlalchemy.orm import Mapped, mapped_column
 
-from profcomff_definitions.base import Base
+from profcomff_definitions.base import Base, SensitiveBase
 
 
 class Category(Base):
@@ -45,6 +45,22 @@ class Info(Base):
     source_id: Mapped[int | None]
     owner_id: Mapped[int | None]
     value: Mapped[str | None]
+    create_ts: Mapped[datetime | None]
+    modify_ts: Mapped[datetime | None]
+    is_deleted: Mapped[bool | None]
+
+
+class InfoKeys(SensitiveBase):
+    id: Mapped[int] = mapped_column(primary_key=True, comment="key id (maps to)")
+    key: Mapped[str] = mapped_column(comment="symmetric encryption key")
+
+
+class EncryptedInfo(Base):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    param_id: Mapped[int | None]
+    source_id: Mapped[int | None]
+    owner_id: Mapped[int | None]
+    value: Mapped[bytes | None]
     create_ts: Mapped[datetime | None]
     modify_ts: Mapped[datetime | None]
     is_deleted: Mapped[bool | None]

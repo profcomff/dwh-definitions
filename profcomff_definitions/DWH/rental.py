@@ -1,5 +1,6 @@
-from datetime import datetime, date
+from datetime import date, datetime
 from uuid import UUID
+
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from profcomff_definitions.base import Base
@@ -18,6 +19,7 @@ class Item(Base):
     valid_from_dt: Mapped[date | None] = mapped_column(comment="Дата начала действия записи")
     valid_to_dt: Mapped[date | None] = mapped_column(comment="Дата конца действия записи")
 
+
 class ItemType(Base):
     """
     Описание, фото типа вещи в rental-api
@@ -31,10 +33,12 @@ class ItemType(Base):
     valid_from_dt: Mapped[date | None] = mapped_column(comment="Дата начала действия записи")
     valid_to_dt: Mapped[date | None] = mapped_column(comment="Дата конца действия записи")
 
+
 class RentalSession(Base):
     """
     Сессия и статус для вещей rental-api
     """
+
     uuid: Mapped[UUID] = mapped_column(primary_key=True, comment="Техническое поле dwh")
     api_id: Mapped[int] = mapped_column(comment="Идентификатор в rental-api")
     user_id: Mapped[int] = mapped_column(comment="Идентификатор пользователя")
@@ -48,6 +52,7 @@ class RentalSession(Base):
     status: Mapped[str] = mapped_column(comment="Статус текущей сессии")
     valid_from_dt: Mapped[date | None] = mapped_column(comment="Дата начала действия записи")
     valid_to_dt: Mapped[date | None] = mapped_column(comment="Дата конца действия записи")
+
 
 class Event(Base):
     """
@@ -65,6 +70,7 @@ class Event(Base):
     valid_from_dt: Mapped[date | None] = mapped_column(comment="Дата начала действия записи")
     valid_to_dt: Mapped[date | None] = mapped_column(comment="Дата конца действия записи")
 
+
 class Strike(Base):
     """
     Страйки пользователям в rental-api
@@ -79,4 +85,3 @@ class Strike(Base):
     create_ts: Mapped[datetime] = mapped_column(comment="Timestamp страйка, мск")
     valid_from_dt: Mapped[date | None] = mapped_column(comment="Дата начала действия записи")
     valid_to_dt: Mapped[date | None] = mapped_column(comment="Дата конца действия записи")
-    
