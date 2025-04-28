@@ -40,7 +40,9 @@ def upgrade():
         sa.Column('university', sa.LargeBinary(), nullable=True, comment="user's university from ods user info"),
         sa.Column('group', sa.LargeBinary(), nullable=True, comment="user's group from ods user info"),
         sa.Column('faculty', sa.LargeBinary(), nullable=True, comment="user's faculty from ods user info"),
-        sa.Column('position', sa.LargeBinary(), nullable=True, comment="user's position in university from ods user info"),
+        sa.Column(
+            'position', sa.LargeBinary(), nullable=True, comment="user's position in university from ods user info"
+        ),
         sa.Column(
             'student_id_number', sa.LargeBinary(), nullable=True, comment="user's student_id_number from ods user info"
         ),
@@ -48,7 +50,10 @@ def upgrade():
             'department', sa.LargeBinary(), nullable=True, comment="user's department in university from ods user info"
         ),
         sa.Column(
-            'mode_of_study', sa.LargeBinary(), nullable=True, comment='full-time/correspondence education from ods user info'
+            'mode_of_study',
+            sa.LargeBinary(),
+            nullable=True,
+            comment='full-time/correspondence education from ods user info',
         ),
         sa.Column('full_name', sa.LargeBinary(), nullable=True, comment="user's full_name from ods user info"),
         sa.Column('birth_date', sa.LargeBinary(), nullable=True, comment="user's birth_date from ods user info"),
