@@ -15,7 +15,6 @@ class Item(Base):
     api_id: Mapped[int] = mapped_column(comment="Идентификатор в rental-api")
     type_id: Mapped[int] = mapped_column(comment="Идентификатор типа вещи")
     is_available: Mapped[bool] = mapped_column(comment="Маркер доступности вещи")
-    type: Mapped[str] = mapped_column(comment="Тип вещи")
 
 
 class ItemType(Base):
