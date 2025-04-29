@@ -22,15 +22,6 @@ depends_on = None
 
 def upgrade():
     op.drop_column('item', 'type', schema='DWH_RENTAL')
-    op.alter_column(
-        'encrypted_info',
-        'email',
-        existing_type=postgresql.BYTEA(),
-        type_=sa.String(),
-        existing_comment="user's email from ods user info",
-        existing_nullable=True,
-        schema='DWH_USER_INFO',
-    )
     op.drop_column('item', 'type', schema='ODS_RENTAL')
     op.add_column('event', sa.Column('id', sa.Integer(), nullable=False), schema='STG_RENTAL')
     op.drop_column('event', 'api_id', schema='STG_RENTAL')
