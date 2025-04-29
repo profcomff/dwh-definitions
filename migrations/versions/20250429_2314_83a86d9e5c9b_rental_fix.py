@@ -12,6 +12,7 @@ import sqlalchemy as sa
 from alembic import op
 from sqlalchemy.dialects import postgresql
 
+
 # revision identifiers, used by Alembic.
 revision = '83a86d9e5c9b'
 down_revision = '00dc9eb31a18'
