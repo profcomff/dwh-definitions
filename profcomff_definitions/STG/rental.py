@@ -6,21 +6,20 @@ from profcomff_definitions.base import Base
 
 
 class Item(Base):
-    api_id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
     type_id: Mapped[int]
     is_available: Mapped[bool]
-    type: Mapped[str]
 
 
 class ItemType(Base):
-    api_id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str]
     image_url: Mapped[str | None]
     description: Mapped[str | None]
 
 
 class RentalSession(Base):
-    api_id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
     user_id: Mapped[int]
     item_id: Mapped[int]
     admin_open_id: Mapped[int]
@@ -33,7 +32,7 @@ class RentalSession(Base):
 
 
 class Event(Base):
-    api_id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
     user_id: Mapped[int]
     admin_id: Mapped[int]
     session_id: Mapped[int]
@@ -43,9 +42,9 @@ class Event(Base):
 
 
 class Strike(Base):
-    api_id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
     user_id: Mapped[int]
-    session_id: Mapped[int]
     admin_id: Mapped[int]
     reason: Mapped[str]
     create_ts: Mapped[datetime]
+    session_id: Mapped[int]
