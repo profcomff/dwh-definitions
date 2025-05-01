@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, String
+from sqlalchemy import Integer, LargeBinary, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from profcomff_definitions.base import Base
@@ -62,58 +62,64 @@ class Info(Base):
 # same table as Info, except all str values are replaced with bytea
 class EncryptedInfo(Base):
     user_id: Mapped[int] = mapped_column(Integer, index=True, primary_key=True)
-    email: Mapped[bytes | None] = mapped_column(String, nullable=True, comment="user's email from ods user info")
+    email: Mapped[bytes | None] = mapped_column(LargeBinary, nullable=True, comment="user's email from ods user info")
     phone_number: Mapped[bytes | None] = mapped_column(
-        String, nullable=True, comment="user's phone_number from ods user info"
+        LargeBinary, nullable=True, comment="user's phone_number from ods user info"
     )
-    vk_name: Mapped[bytes | None] = mapped_column(String, nullable=True, comment="user's vk_name from ods user info")
-    city: Mapped[bytes | None] = mapped_column(String, nullable=True, comment="user's city from ods uder info")
-    hometown: Mapped[bytes | None] = mapped_column(String, nullable=True, comment="user's hometown from ods user info")
+    vk_name: Mapped[bytes | None] = mapped_column(
+        LargeBinary, nullable=True, comment="user's vk_name from ods user info"
+    )
+    city: Mapped[bytes | None] = mapped_column(LargeBinary, nullable=True, comment="user's city from ods uder info")
+    hometown: Mapped[bytes | None] = mapped_column(
+        LargeBinary, nullable=True, comment="user's hometown from ods user info"
+    )
     location: Mapped[bytes | None] = mapped_column(
-        String, nullable=True, comment="user's current city from ods user info"
+        LargeBinary, nullable=True, comment="user's current city from ods user info"
     )
     github_name: Mapped[bytes | None] = mapped_column(
-        String, nullable=True, comment="user's github_name from ods user info"
+        LargeBinary, nullable=True, comment="user's github_name from ods user info"
     )
     telegram_name: Mapped[bytes | None] = mapped_column(
-        String, nullable=True, comment="user's telegram_name from ods user info"
+        LargeBinary, nullable=True, comment="user's telegram_name from ods user info"
     )
     home_phone_number: Mapped[bytes | None] = mapped_column(
-        String, nullable=True, comment="user's home_phone_number from ods user info"
+        LargeBinary, nullable=True, comment="user's home_phone_number from ods user info"
     )
     education_level: Mapped[bytes | None] = mapped_column(
-        String, nullable=True, comment="Bachelor/Master/Specialist from ods user info"
+        LargeBinary, nullable=True, comment="Bachelor/Master/Specialist from ods user info"
     )
     university: Mapped[bytes | None] = mapped_column(
-        String, nullable=True, comment="user's university from ods user info"
+        LargeBinary, nullable=True, comment="user's university from ods user info"
     )
-    group: Mapped[bytes | None] = mapped_column(String, nullable=True, comment="user's group from ods user info")
-    faculty: Mapped[bytes | None] = mapped_column(String, nullable=True, comment="user's faculty from ods user info")
+    group: Mapped[bytes | None] = mapped_column(LargeBinary, nullable=True, comment="user's group from ods user info")
+    faculty: Mapped[bytes | None] = mapped_column(
+        LargeBinary, nullable=True, comment="user's faculty from ods user info"
+    )
     position: Mapped[bytes | None] = mapped_column(
-        String, nullable=True, comment="user's position in university from ods user info"
+        LargeBinary, nullable=True, comment="user's position in university from ods user info"
     )
     student_id_number: Mapped[bytes | None] = mapped_column(
-        String, nullable=True, comment="user's student_id_number from ods user info"
+        LargeBinary, nullable=True, comment="user's student_id_number from ods user info"
     )
     department: Mapped[bytes | None] = mapped_column(
-        String, nullable=True, comment="user's department in university from ods user info"
+        LargeBinary, nullable=True, comment="user's department in university from ods user info"
     )
     mode_of_study: Mapped[bytes | None] = mapped_column(
-        String, nullable=True, comment="full-time/correspondence education from ods user info"
+        LargeBinary, nullable=True, comment="full-time/correspondence education from ods user info"
     )
     full_name: Mapped[bytes | None] = mapped_column(
-        String, nullable=True, comment="user's full_name from ods user info"
+        LargeBinary, nullable=True, comment="user's full_name from ods user info"
     )
     birth_date: Mapped[bytes | None] = mapped_column(
-        String, nullable=True, comment="user's birth_date from ods user info"
+        LargeBinary, nullable=True, comment="user's birth_date from ods user info"
     )
     photo: Mapped[bytes | None] = mapped_column(
-        String, nullable=True, comment="user's photo(https://) from ods user info"
+        LargeBinary, nullable=True, comment="user's photo(https://) from ods user info"
     )
-    sex: Mapped[bytes | None] = mapped_column(String, nullable=True, comment="male/female from ods user info")
-    job: Mapped[bytes | None] = mapped_column(String, nullable=True, comment="user's job from ods user info")
+    sex: Mapped[bytes | None] = mapped_column(LargeBinary, nullable=True, comment="male/female from ods user info")
+    job: Mapped[bytes | None] = mapped_column(LargeBinary, nullable=True, comment="user's job from ods user info")
     work_location: Mapped[bytes | None] = mapped_column(
-        String, nullable=True, comment="user's work_location from ods uder info"
+        LargeBinary, nullable=True, comment="user's work_location from ods uder info"
     )
 
 

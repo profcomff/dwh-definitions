@@ -21,7 +21,7 @@ depends_on = None
 
 
 def upgrade():
-    op.drop_column('item', 'type', schema='DWH_RENTAL')
+    op.execute('ALTER TABLE "DWH_RENTAL".item DROP COLUMN IF EXISTS type')
     op.drop_column('item', 'type', schema='ODS_RENTAL')
     op.add_column('event', sa.Column('id', sa.Integer(), nullable=False), schema='STG_RENTAL')
     op.drop_column('event', 'api_id', schema='STG_RENTAL')
