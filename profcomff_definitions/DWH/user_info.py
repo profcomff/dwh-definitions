@@ -101,9 +101,7 @@ class EncryptedInfo(Base):
     mode_of_study: Mapped[str | None] = mapped_column(
         String, nullable=True, comment="full-time/correspondence education from ods user info"
     )
-    full_name: Mapped[str | None] = mapped_column(
-        String, nullable=True, comment="user's full_name from ods user info"
-    )
+    full_name: Mapped[str | None] = mapped_column(String, nullable=True, comment="user's full_name from ods user info")
     birth_date: Mapped[str | None] = mapped_column(
         String, nullable=True, comment="user's birth_date from ods user info"
     )

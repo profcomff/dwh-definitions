@@ -1,10 +1,9 @@
 import re
 from typing import Any
 
+from definitions.custom_scripts.schemas import add_table_schema_to_model
 from sqlalchemy.ext.declarative import declared_attr
 from sqlalchemy.orm import as_declarative
-
-from definitions.custom_scripts.schemas import add_table_schema_to_model
 
 
 @as_declarative()
