@@ -1,4 +1,4 @@
-alembic
+definitions_lib
 autoflake
 black
 setuptools
