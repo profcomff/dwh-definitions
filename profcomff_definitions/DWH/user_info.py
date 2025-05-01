@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, String, LargeBinary
+from sqlalchemy import Integer, LargeBinary, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from profcomff_definitions.base import Base
@@ -66,9 +66,13 @@ class EncryptedInfo(Base):
     phone_number: Mapped[bytes | None] = mapped_column(
         LargeBinary, nullable=True, comment="user's phone_number from ods user info"
     )
-    vk_name: Mapped[bytes | None] = mapped_column(LargeBinary, nullable=True, comment="user's vk_name from ods user info")
+    vk_name: Mapped[bytes | None] = mapped_column(
+        LargeBinary, nullable=True, comment="user's vk_name from ods user info"
+    )
     city: Mapped[bytes | None] = mapped_column(LargeBinary, nullable=True, comment="user's city from ods uder info")
-    hometown: Mapped[bytes | None] = mapped_column(LargeBinary, nullable=True, comment="user's hometown from ods user info")
+    hometown: Mapped[bytes | None] = mapped_column(
+        LargeBinary, nullable=True, comment="user's hometown from ods user info"
+    )
     location: Mapped[bytes | None] = mapped_column(
         LargeBinary, nullable=True, comment="user's current city from ods user info"
     )
@@ -88,7 +92,9 @@ class EncryptedInfo(Base):
         LargeBinary, nullable=True, comment="user's university from ods user info"
     )
     group: Mapped[bytes | None] = mapped_column(LargeBinary, nullable=True, comment="user's group from ods user info")
-    faculty: Mapped[bytes | None] = mapped_column(LargeBinary, nullable=True, comment="user's faculty from ods user info")
+    faculty: Mapped[bytes | None] = mapped_column(
+        LargeBinary, nullable=True, comment="user's faculty from ods user info"
+    )
     position: Mapped[bytes | None] = mapped_column(
         LargeBinary, nullable=True, comment="user's position in university from ods user info"
     )
