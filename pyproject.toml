@@ -19,7 +19,7 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11"
 ]
-dependencies = ["SQLAlchemy", "psycopg2-binary", "alembic"]
+dependencies = ["SQLAlchemy", "psycopg2-binary", "definitions_lib"]
 dynamic = ["version"]
 
 [project.urls]

@@ -17,7 +17,7 @@ test: venv migrate
 	python3 -m pytest --verbosity=2 --showlocals --log-level=DEBUG
 
 migrate: venv
-	alembic upgrade head
+	python3 -m definitions upgrade head
 
 # ex. make sampler func=upload_sample class_name=Info
 sampler: venv
