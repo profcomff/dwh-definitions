@@ -74,17 +74,3 @@ class Strike(Base):
     admin_id: Mapped[int] = mapped_column(comment="Идентификаор админа")
     reason: Mapped[str] = mapped_column(comment="Причина страйка")
     create_ts: Mapped[datetime] = mapped_column(comment="Timestamp страйка, мск")
-
-
-class RatingActions(Base):
-    """
-    События в рейтинге
-    """
-
-    uuid: Mapped[UUID] = mapped_column(primary_key=True)
-    action: Mapped[str] = mapped_column(comment="Совершенное действие")
-    path_to: Mapped[str | None] = mapped_column(comment="Назначение перехода")
-    response_status_code: Mapped[int]
-    user_id: Mapped[int]
-    query: Mapped[str] = mapped_column(comment="Переданные параметры запроса")
-    create_ts: Mapped[datetime] = mapped_column(comment="Таймстемп создания (московское время)")
