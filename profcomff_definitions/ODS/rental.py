@@ -74,3 +74,4 @@ class Strike(Base):
     admin_id: Mapped[int] = mapped_column(comment="Идентификаор админа")
     reason: Mapped[str] = mapped_column(comment="Причина страйка")
     create_ts: Mapped[datetime] = mapped_column(comment="Timestamp страйка, мск")
+    
