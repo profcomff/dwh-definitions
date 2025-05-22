@@ -31,8 +31,6 @@ class GitHub(Base):
     user_login: Mapped[str | None] = mapped_column(comment="Логин пользователя открывшего issue")
     issue_title: Mapped[str | None] = mapped_column(comment="Название issue")
     repository_id: Mapped[int | None] = mapped_column(comment="Идентификатор репозитория")
-    sender_id: Mapped[int | None] = mapped_column(comment="Идентификатор отправителя")
-    sender_login: Mapped[str | None] = mapped_column(comment="Логин отправителя")
     assignee_id: Mapped[int | None] = mapped_column(comment="Идентификатор назначенного исполнителем issue")
     assignee_login: Mapped[int | None] = mapped_column(comment="Логин назначенного исполнителем issue")
     created_at: Mapped[datetime | None] = mapped_column(comment="Временная метка создания issue")
