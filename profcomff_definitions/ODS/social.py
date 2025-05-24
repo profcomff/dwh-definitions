@@ -32,7 +32,7 @@ class GitHub(Base):
     issue_title: Mapped[str | None] = mapped_column(comment="Название issue")
     repository_id: Mapped[int | None] = mapped_column(comment="Идентификатор репозитория")
     assignee_id: Mapped[int | None] = mapped_column(comment="Идентификатор назначенного исполнителем issue")
-    assignee_login: Mapped[int | None] = mapped_column(comment="Логин назначенного исполнителем issue")
+    assignee_login: Mapped[str | None] = mapped_column(comment="Логин назначенного исполнителем issue")
     created_at: Mapped[datetime | None] = mapped_column(comment="Временная метка создания issue")
     updated_at: Mapped[datetime | None] = mapped_column(comment="Временная метка апдейта issue")
     closed_at: Mapped[datetime | None] = mapped_column(comment="Временная метка закрытия issue")
