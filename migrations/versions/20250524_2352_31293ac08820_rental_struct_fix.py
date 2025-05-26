@@ -22,9 +22,8 @@ depends_on = None
 
 def upgrade():
     op.drop_table('rating_actions', schema='DM_RENTAL'),
-    op.alter_column(
-        'git_hub', 'assignee_login', type_=sa.String(), existing_type=sa.Integer(), nullable=True, schema='ODS_SOCIAL'
-    )
+    op.drop_column("git_hub", "assignee_login", schema="ODS_SOCIAL")
+    op.add_column("git_hub", sa.Column("assignee_login", sa.String()), schema="ODS_SOCIAL")
 
 
 def downgrade():
@@ -64,6 +63,5 @@ def downgrade():
         schema='DM_RENTAL',
         comment='\n    Логи и ошибки. Тянутся из рейтинга\n    ',
     )
-    op.alter_column(
-        'git_hub', 'assignee_login', type_=sa.Integer(), existing_type=sa.String(), nullable=True, schema='ODS_SOCIAL'
-    )
+    op.drop_column("git_hub", "assignee_login", schema="ODS_SOCIAL")
+    op.add_column("git_hub", sa.Column("assignee_login", sa.Integer()), schema="ODS_SOCIAL")
