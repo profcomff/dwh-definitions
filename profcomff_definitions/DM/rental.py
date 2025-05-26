@@ -42,22 +42,3 @@ class DmRentalsEvents(Base):
     strike_count: Mapped[int | None] = mapped_column(comment="Количество страйков у пользователя")
     activity_max_time: Mapped[int] = mapped_column(comment="Час пиковой активности")
     activity_max: Mapped[int] = mapped_column(comment="Количество активности в час пиковой нагрузки")
-
-
-class RatingActions(Base):
-    """
-    Логи и ошибки. Тянутся из рейтинга
-    """
-
-    uuid: Mapped[UUID] = mapped_column(primary_key=True, comment="Техническое поле в dwh")
-    action: Mapped[str] = mapped_column(comment="Совершенное действие")
-    path_to: Mapped[str | None] = mapped_column(comment="Назначение перехода")
-    response_status_code: Mapped[int] = mapped_column(comment="Код статуса ответа от сервера")
-    user_id: Mapped[int] = mapped_column(comment="Идентификатор пользователя, отправившего запрос")
-    query: Mapped[str] = mapped_column(comment="Переданные параметры запроса")
-    create_ts: Mapped[datetime] = mapped_column(comment="Таймстемп создания (московское время)")
-    count_100: Mapped[int] = mapped_column(comment="Количество 100 ошибок")
-    count_200: Mapped[int] = mapped_column(comment="Количество 200 ошибок")
-    count_300: Mapped[int] = mapped_column(comment="Количество 300 ошибок")
-    count_400: Mapped[int] = mapped_column(comment="Количество 400 ошибок")
-    count_500: Mapped[int] = mapped_column(comment="Количество 500 ошибок")
