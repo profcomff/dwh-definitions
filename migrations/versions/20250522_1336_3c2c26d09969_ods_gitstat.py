@@ -31,7 +31,7 @@ def upgrade():
         sa.Column('issue_title', sa.String(), nullable=True, comment='Название issue'),
         sa.Column('repository_id', sa.Integer(), nullable=True, comment='Идентификатор репозитория'),
         sa.Column('assignee_id', sa.Integer(), nullable=True, comment='Идентификатор назначенного исполнителем issue'),
-        sa.Column('assignee_login', sa.String(), nullable=True, comment='Логин назначенного исполнителем issue'),
+        sa.Column('assignee_login', sa.Integer(), nullable=True, comment='Логин назначенного исполнителем issue'),
         sa.Column('created_at', sa.DateTime(), nullable=True, comment='Временная метка создания issue'),
         sa.Column('updated_at', sa.DateTime(), nullable=True, comment='Временная метка апдейта issue'),
         sa.Column('closed_at', sa.DateTime(), nullable=True, comment='Временная метка закрытия issue'),
