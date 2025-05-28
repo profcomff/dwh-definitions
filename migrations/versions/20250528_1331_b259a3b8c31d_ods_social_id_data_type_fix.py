@@ -33,6 +33,7 @@ def upgrade():
 
 
 def downgrade():
+    op.drop_column("git_hub", "issue_id", schema="ODS_SOCIAL")
     op.add_column("git_hub", sa.Column("issue_id", sa.Integer()), schema="ODS_SOCIAL")
     op.drop_column("git_hub", "user_id", schema="ODS_SOCIAL")
     op.add_column("git_hub", sa.Column("user_id", sa.Integer()), schema="ODS_SOCIAL")

@@ -65,4 +65,3 @@ def downgrade():
     )
     op.drop_column("git_hub", "assignee_login", schema="ODS_SOCIAL")
     op.add_column("git_hub", sa.Column("assignee_login", sa.Integer()), schema="ODS_SOCIAL")
-    op.drop_column("git_hub", "issue_id", schema="ODS_SOCIAL")
