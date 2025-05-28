@@ -32,6 +32,7 @@ def upgrade():
     op.drop_column("dm_rentals_events", "strike_count", schema="DM_RENTAL")
     op.drop_column("dm_rentals_events", "activity_max_time", schema="DM_RENTAL")
     op.drop_column("dm_rentals_events", "activity_max", schema="DM_RENTAL")
+    op.drop_column("dm_rentals_events", "type", schema="DM_RENTAL")
 
 
 def downgrade():
@@ -47,3 +48,4 @@ def downgrade():
     op.add_column("dm_rentals_events", sa.Column("strike_count", sa.Integer()), schema="DM_RENTAL")
     op.add_column("dm_rentals_events", sa.Column("activity_max_time", sa.Integer()), schema="DM_RENTAL")
     op.add_column("dm_rentals_events", sa.Column("activity_max", sa.Integer()), schema="DM_RENTAL")
+    op.add_column("dm_rentals_events", sa.Column("type", sa.String()), schema="DM_RENTAL")
