@@ -36,6 +36,7 @@ def upgrade():
     op.add_column("git_hub", sa.Column("organization_id", sa.String()), schema="ODS_SOCIAL")
 
 
+
 def downgrade():
     op.create_table(
         'rating_actions',
