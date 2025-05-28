@@ -24,16 +24,6 @@ def upgrade():
     op.drop_table('rating_actions', schema='DM_RENTAL'),
     op.drop_column("git_hub", "assignee_login", schema="ODS_SOCIAL")
     op.add_column("git_hub", sa.Column("assignee_login", sa.String()), schema="ODS_SOCIAL")
-    op.drop_column("git_hub", "issue_id", schema="ODS_SOCIAL")
-    op.add_column("git_hub", sa.Column("issue_id", sa.String()), schema="ODS_SOCIAL")
-    op.drop_column("git_hub", "user_id", schema="ODS_SOCIAL")
-    op.add_column("git_hub", sa.Column("user_id", sa.String()), schema="ODS_SOCIAL")
-    op.drop_column("git_hub", "repository_id", schema="ODS_SOCIAL")
-    op.add_column("git_hub", sa.Column("repository_id", sa.String()), schema="ODS_SOCIAL"),
-    op.drop_column("git_hub", "assignee_id", schema="ODS_SOCIAL")
-    op.add_column("git_hub", sa.Column("assignee_id", sa.String()), schema="ODS_SOCIAL")
-    op.drop_column("git_hub", "organization_id", schema="ODS_SOCIAL")
-    op.add_column("git_hub", sa.Column("organization_id", sa.String()), schema="ODS_SOCIAL")
 
 
 def downgrade():
@@ -76,12 +66,3 @@ def downgrade():
     op.drop_column("git_hub", "assignee_login", schema="ODS_SOCIAL")
     op.add_column("git_hub", sa.Column("assignee_login", sa.Integer()), schema="ODS_SOCIAL")
     op.drop_column("git_hub", "issue_id", schema="ODS_SOCIAL")
-    op.add_column("git_hub", sa.Column("issue_id", sa.Integer()), schema="ODS_SOCIAL")
-    op.drop_column("git_hub", "user_id", schema="ODS_SOCIAL")
-    op.add_column("git_hub", sa.Column("user_id", sa.Integer()), schema="ODS_SOCIAL")
-    op.drop_column("git_hub", "repository_id", schema="ODS_SOCIAL")
-    op.add_column("git_hub", sa.Column("repository_id", sa.Integer()), schema="ODS_SOCIAL"),
-    op.drop_column("git_hub", "assignee_id", schema="ODS_SOCIAL")
-    op.add_column("git_hub", sa.Column("assignee_id", sa.Integer()), schema="ODS_SOCIAL")
-    op.drop_column("git_hub", "organization_id", schema="ODS_SOCIAL")
-    op.add_column("git_hub", sa.Column("organization_id", sa.Integer()), schema="ODS_SOCIAL")
