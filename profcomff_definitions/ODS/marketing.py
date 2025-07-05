@@ -45,9 +45,9 @@ class PrinterBotsActions(Base):
     path_from: Mapped[str | None] = mapped_column(comment="Откуда совершен переход")
     path_to: Mapped[str | None] = mapped_column(comment="Назначение перехода")
     status: Mapped[str] = mapped_column(comment="Статус действия")
-    user_id: Mapped[int] = mapped_column(comment="Айди юзера в соответствующей соцсети(tg/vk)")
+    user_id: Mapped[str] = mapped_column(comment="Айди юзера в соответствующей соцсети(tg/vk)")
     surname: Mapped[str] = mapped_column(comment='Фамилия юзера')
-    number: Mapped[int] = mapped_column(comment="Номер")
+    number: Mapped[str] = mapped_column(comment="Номер")
     pin: Mapped[int | None]
     status_code: Mapped[int | None] = mapped_column(comment="Код ошибки")
     description: Mapped[str | None] = mapped_column(comment="Описание ошибки")
