@@ -25,4 +25,3 @@ def upgrade():
 
 def downgrade():
     op.drop_column('union_member', 'student_id', schema='STG_UNION_MEMBER')
-    
