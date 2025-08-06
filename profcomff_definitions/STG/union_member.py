@@ -28,5 +28,4 @@ class UnionMember(Base):
     card_date: Mapped[str | None]
     card_number: Mapped[str | None]
     card_user: Mapped[str | None]
-    card: Mapped[str | None]
     student_id: Mapped[str | None]
