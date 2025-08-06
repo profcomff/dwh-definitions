@@ -665,7 +665,7 @@ def upgrade():
         ['ALL'],
         '"ODS_USERDATA".birthday',
     )
-    op.drop_index('ix__comment_text', table_name='comment', schema='ODS_RATING', postgresql_using='gin')
+    op.execute('DROP INDEX IF EXISTS "ODS_RATING".ix__comment_text')
     op.alter_column(
         'git_hub',
         'issue_id',
