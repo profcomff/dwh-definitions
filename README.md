@@ -20,7 +20,7 @@ python3 -m venv ./venv/
 ```
 3. Установите библиотеки
 ```commandline
-pip install -r requirements.txt
+pip install -U -r requirements.dev.txt -r requirements.txt
 ```
 
 ## Использование
