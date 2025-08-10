@@ -132,7 +132,7 @@ class Position(Base):
 
 
 class StudentId(Base):
-    card_number: Mapped[str] = mapped_column(primary_key=True)
+    student_id: Mapped[str] = mapped_column(primary_key=True)
     user_id: Mapped[int] = mapped_column(primary_key=True)
     source: Mapped[str]
     created: Mapped[datetime | None]
