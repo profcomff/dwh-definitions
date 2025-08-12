@@ -23,6 +23,17 @@ class Lecturer(Base):
     valid_to_dt: Mapped[date | None] = mapped_column(comment="Дата конца действия записи")
 
 
+class LecturerRank(Base):
+    lecture_uuid: Mapped[int] = mapped_column(primary_key=True, comment="Идентификатор лектора")
+    rank: Mapped[int] = mapped_column(comment="Место в рейтинге")
+    mark_weighted: Mapped[int] = mapped_column(comment="Взвешенная оценка преподавателя")
+    mark_kindness_weighted: Mapped[int] = mapped_column(comment="Взвешенная доброта преподавателя")
+    mark_clarity_weighted: Mapped[int] =  mapped_column(comment="Взверешенная понятность преподавателя")
+    mark_freebie_weighted: Mapped[int] = mapped_column(comment="Взвешенная халявность преподавателя")
+    valid_from_dt: Mapped[date | None] = mapped_column(comment="Дата начала действия записи")
+    valid_to_dt: Mapped[date | None] = mapped_column(comment="Дата конца действия записи")
+
+
 class Comment(Base):
     """
     Комментарии в rating-api

@@ -15,11 +15,15 @@ class Lecturer(Base):
     api_id: Mapped[int] = mapped_column(comment="Идентифиактор в rating-api")
     first_name: Mapped[str] = mapped_column(comment="Имя преподавателя")
     last_name: Mapped[str] = mapped_column(comment="Фамилия преподавателя")
-    middle_name: Mapped[str] = mapped_column(comment="отчество преподавателя")
+    middle_name: Mapped[str] = mapped_column(comment="Отчество преподавателя")
     subject: Mapped[str | None] = mapped_column(comment="Список предметов преподавателя")
     avatar_link: Mapped[str | None] = mapped_column(comment="Ссылка на аватар преподавателя")
     timetable_id: Mapped[int] = mapped_column(comment="Идертификатор в timetable-api")
-
+    mark_weighted: Mapped[int] = mapped_column(comment="Взвешенная оценка преподавателя")
+    mark_kindness_weighted: Mapped[int] = mapped_column(comment="Взвешенная доброта преподавателя")
+    mark_clarity_weighted: Mapped[int] =  mapped_column(comment="Взверешенная понятность преподавателя")
+    mark_freebie_weighted: Mapped[int] = mapped_column(comment="Взвешенная халявность преподавателя")
+    rank: Mapped[int] = mapped_column(comment="Место в рейтинге")
 
 class Comment(Base):
     """

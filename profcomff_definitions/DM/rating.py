@@ -16,7 +16,12 @@ class DmLecturerCommentAct(Base):
     lecturer_full_name: Mapped[str | None] = mapped_column(comment="ФИО преподавателя")
     lecturer_first_name: Mapped[str | None] = mapped_column(comment="Имя преподавателя")
     lecturer_last_name: Mapped[str | None] = mapped_column(comment="Фамилия преподавателя")
-    lecturer_middle_name: Mapped[str | None] = mapped_column(comment="ОТчество преподавателя")
+    lecturer_middle_name: Mapped[str | None] = mapped_column(comment="Отчество преподавателя")
+    mark_weighted: Mapped[int] = mapped_column(comment="Взвешенная оценка преподавателя")
+    mark_kindness_weighted: Mapped[int] = mapped_column(comment="Взвешенная доброта преподавателя")
+    mark_clarity_weighted: Mapped[int] =  mapped_column(comment="Взверешенная понятность преподавателя")
+    mark_freebie_weighted: Mapped[int] = mapped_column(comment="Взвешенная халявность преподавателя")
+    rank: Mapped[int] = mapped_column(comment="Место в рейтинге")
     timetable_id: Mapped[int | None] = mapped_column(comment="Идертификатор в timetable-api")
     has_timetable_id: Mapped[bool] = mapped_column(comment="Флаг: есть ли преподаватель в расписании")
     lecturer_subject: Mapped[str | None] = mapped_column(comment="Предмет, относящийся к преподавателю")
@@ -35,3 +40,4 @@ class DmLecturerCommentAct(Base):
     user_full_name: Mapped[str | None] = mapped_column(comment="Имя пользователя")
     user_email: Mapped[str | None] = mapped_column(comment="Список электронных почт пользователя")
     __mapper_args__ = {"primary_key": ["comment_api_uuid", "lecturer_api_id"]}
+    
