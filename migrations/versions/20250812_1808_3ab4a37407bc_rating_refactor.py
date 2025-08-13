@@ -24,13 +24,13 @@ def upgrade():
     op.create_table(
         'lecturer_rank',
         sa.Column('lecture_uuid', sa.Integer(), nullable=False, comment='Идентификатор лектора'),
-        sa.Column('rank', sa.Integer(), nullable=False, comment='Место в рейтинге'),
-        sa.Column('mark_weighted', sa.Integer(), nullable=False, comment='Взвешенная оценка преподавателя'),
-        sa.Column('mark_kindness_weighted', sa.Integer(), nullable=False, comment='Взвешенная доброта преподавателя'),
+        sa.Column('rank', sa.Integer(), nullable=True, comment='Место в рейтинге'),
+        sa.Column('mark_weighted', sa.Integer(), nullable=True, comment='Взвешенная оценка преподавателя'),
+        sa.Column('mark_kindness_weighted', sa.Integer(), nullable=True, comment='Взвешенная доброта преподавателя'),
         sa.Column(
-            'mark_clarity_weighted', sa.Integer(), nullable=False, comment='Взверешенная понятность преподавателя'
+            'mark_clarity_weighted', sa.Integer(), nullable=True, comment='Взверешенная понятность преподавателя'
         ),
-        sa.Column('mark_freebie_weighted', sa.Integer(), nullable=False, comment='Взвешенная халявность преподавателя'),
+        sa.Column('mark_freebie_weighted', sa.Integer(), nullable=True, comment='Взвешенная халявность преподавателя'),
         sa.Column('valid_from_dt', sa.Date(), nullable=True, comment='Дата начала действия записи'),
         sa.Column('valid_to_dt', sa.Date(), nullable=True, comment='Дата конца действия записи'),
         sa.PrimaryKeyConstraint('lecture_uuid'),
@@ -41,29 +41,29 @@ def upgrade():
     op.create_index('lecturer_ts_idx', 'lecturer', ['valid_from_dt', 'valid_to_dt'], schema="DWH_RATING")
     op.add_column(
         'dm_lecturer_comment_act',
-        sa.Column('mark_weighted', sa.Integer(), nullable=False, comment='Взвешенная оценка преподавателя'),
+        sa.Column('mark_weighted', sa.Integer(), nullable=True, comment='Взвешенная оценка преподавателя'),
         schema='DM_RATING',
     )
     op.add_column(
         'dm_lecturer_comment_act',
-        sa.Column('mark_kindness_weighted', sa.Integer(), nullable=False, comment='Взвешенная доброта преподавателя'),
+        sa.Column('mark_kindness_weighted', sa.Integer(), nullable=True, comment='Взвешенная доброта преподавателя'),
         schema='DM_RATING',
     )
     op.add_column(
         'dm_lecturer_comment_act',
         sa.Column(
-            'mark_clarity_weighted', sa.Integer(), nullable=False, comment='Взверешенная понятность преподавателя'
+            'mark_clarity_weighted', sa.Integer(), nullable=True, comment='Взверешенная понятность преподавателя'
         ),
         schema='DM_RATING',
     )
     op.add_column(
         'dm_lecturer_comment_act',
-        sa.Column('mark_freebie_weighted', sa.Integer(), nullable=False, comment='Взвешенная халявность преподавателя'),
+        sa.Column('mark_freebie_weighted', sa.Integer(), nullable=True, comment='Взвешенная халявность преподавателя'),
         schema='DM_RATING',
     )
     op.add_column(
         'dm_lecturer_comment_act',
-        sa.Column('rank', sa.Integer(), nullable=False, comment='Место в рейтинге'),
+        sa.Column('rank', sa.Integer(), nullable=True, comment='Место в рейтинге'),
         schema='DM_RATING',
     )
     op.alter_column(
@@ -77,28 +77,28 @@ def upgrade():
     )
     op.add_column(
         'lecturer',
-        sa.Column('mark_weighted', sa.Integer(), nullable=False, comment='Взвешенная оценка преподавателя'),
+        sa.Column('mark_weighted', sa.Integer(), nullable=True, comment='Взвешенная оценка преподавателя'),
         schema='ODS_RATING',
     )
     op.add_column(
         'lecturer',
-        sa.Column('mark_kindness_weighted', sa.Integer(), nullable=False, comment='Взвешенная доброта преподавателя'),
+        sa.Column('mark_kindness_weighted', sa.Integer(), nullable=True, comment='Взвешенная доброта преподавателя'),
         schema='ODS_RATING',
     )
     op.add_column(
         'lecturer',
         sa.Column(
-            'mark_clarity_weighted', sa.Integer(), nullable=False, comment='Взверешенная понятность преподавателя'
+            'mark_clarity_weighted', sa.Integer(), nullable=True, comment='Взверешенная понятность преподавателя'
         ),
         schema='ODS_RATING',
     )
     op.add_column(
         'lecturer',
-        sa.Column('mark_freebie_weighted', sa.Integer(), nullable=False, comment='Взвешенная халявность преподавателя'),
+        sa.Column('mark_freebie_weighted', sa.Integer(), nullable=True, comment='Взвешенная халявность преподавателя'),
         schema='ODS_RATING',
     )
     op.add_column(
-        'lecturer', sa.Column('rank', sa.Integer(), nullable=False, comment='Место в рейтинге'), schema='ODS_RATING'
+        'lecturer', sa.Column('rank', sa.Integer(), nullable=True, comment='Место в рейтинге'), schema='ODS_RATING'
     )
     op.alter_column(
         'lecturer',
