@@ -21,7 +21,7 @@ class Lecturer(Base):
     timetable_id: Mapped[int] = mapped_column(comment="Идертификатор в timetable-api")
     mark_weighted: Mapped[int] = mapped_column(comment="Взвешенная оценка преподавателя")
     mark_kindness_weighted: Mapped[int] = mapped_column(comment="Взвешенная доброта преподавателя")
-    mark_clarity_weighted: Mapped[int] = mapped_column(comment="Взверешенная понятность преподавателя")
+    mark_clarity_weighted: Mapped[int] = mapped_column(comment="Взвешенная понятность преподавателя")
     mark_freebie_weighted: Mapped[int] = mapped_column(comment="Взвешенная халявность преподавателя")
     rank: Mapped[int] = mapped_column(comment="Место в рейтинге")
 
