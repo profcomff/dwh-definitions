@@ -20,9 +20,15 @@ class Lecturer(Base):
     avatar_link: Mapped[str | None] = mapped_column(comment="Ссылка на аватар преподавателя")
     timetable_id: Mapped[int] = mapped_column(comment="Идертификатор в timetable-api")
     mark_weighted: Mapped[int] = mapped_column(comment="Взвешенная оценка преподавателя", default=0, server_default="0")
-    mark_kindness_weighted: Mapped[int] = mapped_column(comment="Взвешенная доброта преподавателя", default=0, server_default="0")
-    mark_clarity_weighted: Mapped[int] = mapped_column(comment="Взверешенная понятность преподавателя", default=0, server_default="0")
-    mark_freebie_weighted: Mapped[int] = mapped_column(comment="Взвешенная халявность преподавателя", default=0, server_default="0")
+    mark_kindness_weighted: Mapped[int] = mapped_column(
+        comment="Взвешенная доброта преподавателя", default=0, server_default="0"
+    )
+    mark_clarity_weighted: Mapped[int] = mapped_column(
+        comment="Взверешенная понятность преподавателя", default=0, server_default="0"
+    )
+    mark_freebie_weighted: Mapped[int] = mapped_column(
+        comment="Взвешенная халявность преподавателя", default=0, server_default="0"
+    )
     rank: Mapped[int] = mapped_column(comment="Место в рейтинге", default=0, server_default="0")
 
 

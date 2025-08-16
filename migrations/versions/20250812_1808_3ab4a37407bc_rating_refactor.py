@@ -77,28 +77,48 @@ def upgrade():
     )
     op.add_column(
         'lecturer',
-        sa.Column('mark_weighted', sa.Integer(), nullable=True, comment='Взвешенная оценка преподавателя', server_default='0'),
-        schema='ODS_RATING',
-    )
-    op.add_column(
-        'lecturer',
-        sa.Column('mark_kindness_weighted', sa.Integer(), nullable=True, comment='Взвешенная доброта преподавателя', server_default='0'),
-        schema='ODS_RATING',
-    )
-    op.add_column(
-        'lecturer',
         sa.Column(
-            'mark_clarity_weighted', sa.Integer(), nullable=True, comment='Взверешенная понятность преподавателя', server_default='0'
+            'mark_weighted', sa.Integer(), nullable=True, comment='Взвешенная оценка преподавателя', server_default='0'
         ),
         schema='ODS_RATING',
     )
     op.add_column(
         'lecturer',
-        sa.Column('mark_freebie_weighted', sa.Integer(), nullable=True, comment='Взвешенная халявность преподавателя', server_default='0'),
+        sa.Column(
+            'mark_kindness_weighted',
+            sa.Integer(),
+            nullable=True,
+            comment='Взвешенная доброта преподавателя',
+            server_default='0',
+        ),
         schema='ODS_RATING',
     )
     op.add_column(
-        'lecturer', sa.Column('rank', sa.Integer(), nullable=True, comment='Место в рейтинге', server_default='0'), schema='ODS_RATING'
+        'lecturer',
+        sa.Column(
+            'mark_clarity_weighted',
+            sa.Integer(),
+            nullable=True,
+            comment='Взверешенная понятность преподавателя',
+            server_default='0',
+        ),
+        schema='ODS_RATING',
+    )
+    op.add_column(
+        'lecturer',
+        sa.Column(
+            'mark_freebie_weighted',
+            sa.Integer(),
+            nullable=True,
+            comment='Взвешенная халявность преподавателя',
+            server_default='0',
+        ),
+        schema='ODS_RATING',
+    )
+    op.add_column(
+        'lecturer',
+        sa.Column('rank', sa.Integer(), nullable=True, comment='Место в рейтинге', server_default='0'),
+        schema='ODS_RATING',
     )
     op.alter_column(
         'lecturer',
