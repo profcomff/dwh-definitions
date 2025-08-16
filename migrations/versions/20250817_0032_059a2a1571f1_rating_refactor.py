@@ -1,8 +1,8 @@
 """rating-refactor
 
-Revision ID: 3ab4a37407bc
+Revision ID: 059a2a1571f1
 Revises: dd8e7cd6c56e
-Create Date: 2025-08-12 18:08:30.371756
+Create Date: 2025-08-17 00:32:15.412638
 
 """
 
@@ -14,56 +14,37 @@ from sqlalchemy.dialects import postgresql
 
 
 # revision identifiers, used by Alembic.
-revision = '3ab4a37407bc'
+revision = '059a2a1571f1'
 down_revision = 'dd8e7cd6c56e'
 branch_labels = None
 depends_on = None
 
 
 def upgrade():
-    op.create_table(
-        'lecturer_rank',
-        sa.Column('lecture_uuid', sa.Integer(), nullable=False, comment='Идентификатор лектора'),
-        sa.Column('rank', sa.Integer(), nullable=False, comment='Место в рейтинге'),
-        sa.Column('mark_weighted', sa.Integer(), nullable=False, comment='Взвешенная оценка преподавателя'),
-        sa.Column('mark_kindness_weighted', sa.Integer(), nullable=False, comment='Взвешенная доброта преподавателя'),
-        sa.Column(
-            'mark_clarity_weighted', sa.Integer(), nullable=False, comment='Взверешенная понятность преподавателя'
-        ),
-        sa.Column('mark_freebie_weighted', sa.Integer(), nullable=False, comment='Взвешенная халявность преподавателя'),
-        sa.Column('valid_from_dt', sa.Date(), nullable=True, comment='Дата начала действия записи'),
-        sa.Column('valid_to_dt', sa.Date(), nullable=True, comment='Дата конца действия записи'),
-        sa.PrimaryKeyConstraint('lecture_uuid'),
-        schema='DWH_RATING',
-        info={'sensitive': False},
-    )
-    op.create_index('lecturer_rank_ts_idx', 'lecturer_rank', ['valid_from_dt', 'valid_to_dt'], schema="DWH_RATING")
     op.create_index('lecturer_ts_idx', 'lecturer', ['valid_from_dt', 'valid_to_dt'], schema="DWH_RATING")
     op.add_column(
         'dm_lecturer_comment_act',
-        sa.Column('mark_weighted', sa.Integer(), nullable=True, comment='Взвешенная оценка преподавателя'),
+        sa.Column('mark_weighted', sa.Float(), nullable=False, comment='Взвешенная оценка преподавателя'),
         schema='DM_RATING',
     )
     op.add_column(
         'dm_lecturer_comment_act',
-        sa.Column('mark_kindness_weighted', sa.Integer(), nullable=True, comment='Взвешенная доброта преподавателя'),
+        sa.Column('mark_kindness_weighted', sa.Float(), nullable=False, comment='Взвешенная доброта преподавателя'),
         schema='DM_RATING',
     )
     op.add_column(
         'dm_lecturer_comment_act',
-        sa.Column(
-            'mark_clarity_weighted', sa.Integer(), nullable=True, comment='Взверешенная понятность преподавателя'
-        ),
+        sa.Column('mark_clarity_weighted', sa.Float(), nullable=False, comment='Взвешенная понятность преподавателя'),
         schema='DM_RATING',
     )
     op.add_column(
         'dm_lecturer_comment_act',
-        sa.Column('mark_freebie_weighted', sa.Integer(), nullable=True, comment='Взвешенная халявность преподавателя'),
+        sa.Column('mark_freebie_weighted', sa.Float(), nullable=False, comment='Взвешенная халявность преподавателя'),
         schema='DM_RATING',
     )
     op.add_column(
         'dm_lecturer_comment_act',
-        sa.Column('rank', sa.Integer(), nullable=True, comment='Место в рейтинге'),
+        sa.Column('rank', sa.Integer(), nullable=False, comment='Место в рейтинге'),
         schema='DM_RATING',
     )
     op.alter_column(
@@ -76,9 +57,32 @@ def upgrade():
         schema='DM_RATING',
     )
     op.add_column(
+        'lecturer', sa.Column('rank', sa.Integer(), nullable=False, comment='Место в рейтинге'), schema='DWH_RATING'
+    )
+    op.add_column(
+        'lecturer',
+        sa.Column('mark_weighted', sa.Float(), nullable=False, comment='Взвешенная оценка преподавателя'),
+        schema='DWH_RATING',
+    )
+    op.add_column(
+        'lecturer',
+        sa.Column('mark_kindness_weighted', sa.Float(), nullable=False, comment='Взвешенная доброта преподавателя'),
+        schema='DWH_RATING',
+    )
+    op.add_column(
+        'lecturer',
+        sa.Column('mark_clarity_weighted', sa.Float(), nullable=False, comment='Взверешенная понятность преподавателя'),
+        schema='DWH_RATING',
+    )
+    op.add_column(
+        'lecturer',
+        sa.Column('mark_freebie_weighted', sa.Float(), nullable=False, comment='Взвешенная халявность преподавателя'),
+        schema='DWH_RATING',
+    )
+    op.add_column(
         'lecturer',
         sa.Column(
-            'mark_weighted', sa.Integer(), nullable=True, comment='Взвешенная оценка преподавателя', server_default='0'
+            'mark_weighted', sa.Float(), server_default='0', nullable=False, comment='Взвешенная оценка преподавателя'
         ),
         schema='ODS_RATING',
     )
@@ -86,10 +90,10 @@ def upgrade():
         'lecturer',
         sa.Column(
             'mark_kindness_weighted',
-            sa.Integer(),
-            nullable=True,
-            comment='Взвешенная доброта преподавателя',
+            sa.Float(),
             server_default='0',
+            nullable=False,
+            comment='Взвешенная доброта преподавателя',
         ),
         schema='ODS_RATING',
     )
@@ -97,10 +101,10 @@ def upgrade():
         'lecturer',
         sa.Column(
             'mark_clarity_weighted',
-            sa.Integer(),
-            nullable=True,
-            comment='Взверешенная понятность преподавателя',
+            sa.Float(),
             server_default='0',
+            nullable=False,
+            comment='Взверешенная понятность преподавателя',
         ),
         schema='ODS_RATING',
     )
@@ -108,16 +112,16 @@ def upgrade():
         'lecturer',
         sa.Column(
             'mark_freebie_weighted',
-            sa.Integer(),
-            nullable=True,
-            comment='Взвешенная халявность преподавателя',
+            sa.Float(),
             server_default='0',
+            nullable=False,
+            comment='Взвешенная халявность преподавателя',
         ),
         schema='ODS_RATING',
     )
     op.add_column(
         'lecturer',
-        sa.Column('rank', sa.Integer(), nullable=True, comment='Место в рейтинге', server_default='0'),
+        sa.Column('rank', sa.Integer(), server_default='0', nullable=False, comment='Место в рейтинге'),
         schema='ODS_RATING',
     )
     op.alter_column(
@@ -129,7 +133,6 @@ def upgrade():
         existing_nullable=False,
         schema='ODS_RATING',
     )
-
     op.alter_column(
         'academic_group',
         'group',
@@ -652,54 +655,6 @@ def upgrade():
     )
     op.alter_column(
         'full_name',
-        'is_deleted',
-        existing_type=sa.BOOLEAN(),
-        comment='Флаг удаления записи',
-        existing_nullable=True,
-        schema='ODS_USERDATA',
-    )
-    op.alter_column(
-        'git_hub_username',
-        'username',
-        existing_type=sa.VARCHAR(),
-        comment='Имя пользователя GitHub',
-        existing_nullable=False,
-        schema='ODS_USERDATA',
-    )
-    op.alter_column(
-        'git_hub_username',
-        'user_id',
-        existing_type=sa.INTEGER(),
-        comment='Идентификатор пользователя',
-        existing_nullable=False,
-        schema='ODS_USERDATA',
-    )
-    op.alter_column(
-        'git_hub_username',
-        'source',
-        existing_type=sa.VARCHAR(),
-        comment='Источник данных',
-        existing_nullable=False,
-        schema='ODS_USERDATA',
-    )
-    op.alter_column(
-        'git_hub_username',
-        'created',
-        existing_type=postgresql.TIMESTAMP(),
-        comment='Дата создания записи',
-        existing_nullable=True,
-        schema='ODS_USERDATA',
-    )
-    op.alter_column(
-        'git_hub_username',
-        'modified',
-        existing_type=postgresql.TIMESTAMP(),
-        comment='Дата последнего изменения записи',
-        existing_nullable=True,
-        schema='ODS_USERDATA',
-    )
-    op.alter_column(
-        'git_hub_username',
         'is_deleted',
         existing_type=sa.BOOLEAN(),
         comment='Флаг удаления записи',
@@ -2577,60 +2532,6 @@ def downgrade():
         schema='ODS_USERDATA',
     )
     op.alter_column(
-        'git_hub_username',
-        'is_deleted',
-        existing_type=sa.BOOLEAN(),
-        comment=None,
-        existing_comment='Флаг удаления записи',
-        existing_nullable=True,
-        schema='ODS_USERDATA',
-    )
-    op.alter_column(
-        'git_hub_username',
-        'modified',
-        existing_type=postgresql.TIMESTAMP(),
-        comment=None,
-        existing_comment='Дата последнего изменения записи',
-        existing_nullable=True,
-        schema='ODS_USERDATA',
-    )
-    op.alter_column(
-        'git_hub_username',
-        'created',
-        existing_type=postgresql.TIMESTAMP(),
-        comment=None,
-        existing_comment='Дата создания записи',
-        existing_nullable=True,
-        schema='ODS_USERDATA',
-    )
-    op.alter_column(
-        'git_hub_username',
-        'source',
-        existing_type=sa.VARCHAR(),
-        comment=None,
-        existing_comment='Источник данных',
-        existing_nullable=False,
-        schema='ODS_USERDATA',
-    )
-    op.alter_column(
-        'git_hub_username',
-        'user_id',
-        existing_type=sa.INTEGER(),
-        comment=None,
-        existing_comment='Идентификатор пользователя',
-        existing_nullable=False,
-        schema='ODS_USERDATA',
-    )
-    op.alter_column(
-        'git_hub_username',
-        'username',
-        existing_type=sa.VARCHAR(),
-        comment=None,
-        existing_comment='Имя пользователя GitHub',
-        existing_nullable=False,
-        schema='ODS_USERDATA',
-    )
-    op.alter_column(
         'full_name',
         'is_deleted',
         existing_type=sa.BOOLEAN(),
@@ -3238,6 +3139,11 @@ def downgrade():
     op.drop_column('lecturer', 'mark_clarity_weighted', schema='ODS_RATING')
     op.drop_column('lecturer', 'mark_kindness_weighted', schema='ODS_RATING')
     op.drop_column('lecturer', 'mark_weighted', schema='ODS_RATING')
+    op.drop_column('lecturer', 'mark_freebie_weighted', schema='DWH_RATING')
+    op.drop_column('lecturer', 'mark_clarity_weighted', schema='DWH_RATING')
+    op.drop_column('lecturer', 'mark_kindness_weighted', schema='DWH_RATING')
+    op.drop_column('lecturer', 'mark_weighted', schema='DWH_RATING')
+    op.drop_column('lecturer', 'rank', schema='DWH_RATING')
     op.alter_column(
         'dm_lecturer_comment_act',
         'lecturer_middle_name',
@@ -3253,4 +3159,3 @@ def downgrade():
     op.drop_column('dm_lecturer_comment_act', 'mark_kindness_weighted', schema='DM_RATING')
     op.drop_column('dm_lecturer_comment_act', 'mark_weighted', schema='DM_RATING')
     op.drop_index('lecturer_ts_idx', 'lecturer', schema="DWH_RATING")
-    op.drop_table('lecturer_rank', schema='DWH_RATING')
