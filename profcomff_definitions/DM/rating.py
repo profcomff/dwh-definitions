@@ -19,7 +19,7 @@ class DmLecturerCommentAct(Base):
     lecturer_middle_name: Mapped[str | None] = mapped_column(comment="Отчество преподавателя")
     mark_weighted: Mapped[int] = mapped_column(comment="Взвешенная оценка преподавателя")
     mark_kindness_weighted: Mapped[int] = mapped_column(comment="Взвешенная доброта преподавателя")
-    mark_clarity_weighted: Mapped[int] = mapped_column(comment="Взверешенная понятность преподавателя")
+    mark_clarity_weighted: Mapped[int] = mapped_column(comment="Взвешенная понятность преподавателя")
     mark_freebie_weighted: Mapped[int] = mapped_column(comment="Взвешенная халявность преподавателя")
     rank: Mapped[int] = mapped_column(comment="Место в рейтинге")
     timetable_id: Mapped[int | None] = mapped_column(comment="Идертификатор в timetable-api")
