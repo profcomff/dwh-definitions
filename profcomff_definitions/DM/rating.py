@@ -17,11 +17,17 @@ class DmLecturerCommentAct(Base):
     lecturer_first_name: Mapped[str | None] = mapped_column(comment="Имя преподавателя")
     lecturer_last_name: Mapped[str | None] = mapped_column(comment="Фамилия преподавателя")
     lecturer_middle_name: Mapped[str | None] = mapped_column(comment="Отчество преподавателя")
-    mark_weighted: Mapped[int] = mapped_column(comment="Взвешенная оценка преподавателя")
-    mark_kindness_weighted: Mapped[int] = mapped_column(comment="Взвешенная доброта преподавателя")
-    mark_clarity_weighted: Mapped[int] = mapped_column(comment="Взвешенная понятность преподавателя")
-    mark_freebie_weighted: Mapped[int] = mapped_column(comment="Взвешенная халявность преподавателя")
-    rank: Mapped[int] = mapped_column(comment="Место в рейтинге")
+    mark_weighted: Mapped[int] = mapped_column(comment="Взвешенная оценка преподавателя", default=0, server_default="0")
+    mark_kindness_weighted: Mapped[int] = mapped_column(
+        comment="Взвешенная доброта преподавателя", default=0, server_default="0"
+    )
+    mark_clarity_weighted: Mapped[int] = mapped_column(
+        comment="Взвешенная понятность преподавателя", default=0, server_default="0"
+    )
+    mark_freebie_weighted: Mapped[int] = mapped_column(
+        comment="Взвешенная халявность преподавателя", default=0, server_default="0"
+    )
+    rank: Mapped[int] = mapped_column(comment="Место в рейтинге", default=0, server_default="0")
     timetable_id: Mapped[int | None] = mapped_column(comment="Идертификатор в timetable-api")
     has_timetable_id: Mapped[bool] = mapped_column(comment="Флаг: есть ли преподаватель в расписании")
     lecturer_subject: Mapped[str | None] = mapped_column(comment="Предмет, относящийся к преподавателю")

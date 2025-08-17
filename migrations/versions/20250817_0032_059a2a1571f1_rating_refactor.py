@@ -64,7 +64,7 @@ def upgrade():
     )
     op.add_column(
         'dm_lecturer_comment_act',
-        sa.Column('rank', sa.Integer(), nullable=False, comment='Место в рейтинге', server_default='-1'),
+        sa.Column('rank', sa.Integer(), nullable=False, comment='Место в рейтинге', server_default='0'),
         schema='DM_RATING',
     )
     op.alter_column(
@@ -78,7 +78,7 @@ def upgrade():
     )
     op.add_column(
         'lecturer',
-        sa.Column('rank', sa.Integer(), nullable=False, comment='Место в рейтинге', server_default='-1'),
+        sa.Column('rank', sa.Integer(), nullable=False, comment='Место в рейтинге', server_default='0'),
         schema='DWH_RATING',
     )
     op.add_column(
@@ -126,7 +126,6 @@ def upgrade():
         sa.Column(
             'mark_weighted',
             sa.Float(),
-            server_default='0',
             nullable=False,
             comment='Взвешенная оценка преподавателя',
             server_default='0.0',
