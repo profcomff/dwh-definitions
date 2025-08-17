@@ -24,7 +24,6 @@ def upgrade():
     op.create_index('lecturer_ts_idx', 'lecturer', ['valid_from_dt', 'valid_to_dt'], schema="DWH_RATING")
     op.add_column(
         'dm_lecturer_comment_act',
-
         sa.Column(
             'mark_weighted', sa.Float(), nullable=False, comment='Взвешенная оценка преподавателя', server_default='0.0'
         ),
