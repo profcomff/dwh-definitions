@@ -24,27 +24,27 @@ def upgrade():
     op.create_index('lecturer_ts_idx', 'lecturer', ['valid_from_dt', 'valid_to_dt'], schema="DWH_RATING")
     op.add_column(
         'dm_lecturer_comment_act',
-        sa.Column('mark_weighted', sa.Float(), nullable=False, comment='Взвешенная оценка преподавателя'),
+        sa.Column('mark_weighted', sa.Float(), nullable=False, comment='Взвешенная оценка преподавателя', server_default='0.0'),
         schema='DM_RATING',
     )
     op.add_column(
         'dm_lecturer_comment_act',
-        sa.Column('mark_kindness_weighted', sa.Float(), nullable=False, comment='Взвешенная доброта преподавателя'),
+        sa.Column('mark_kindness_weighted', sa.Float(), nullable=False, comment='Взвешенная доброта преподавателя', server_default='0.0'),
         schema='DM_RATING',
     )
     op.add_column(
         'dm_lecturer_comment_act',
-        sa.Column('mark_clarity_weighted', sa.Float(), nullable=False, comment='Взвешенная понятность преподавателя'),
+        sa.Column('mark_clarity_weighted', sa.Float(), nullable=False, comment='Взвешенная понятность преподавателя', server_default='0.0'),
         schema='DM_RATING',
     )
     op.add_column(
         'dm_lecturer_comment_act',
-        sa.Column('mark_freebie_weighted', sa.Float(), nullable=False, comment='Взвешенная халявность преподавателя'),
+        sa.Column('mark_freebie_weighted', sa.Float(), nullable=False, comment='Взвешенная халявность преподавателя', server_default='0.0'),
         schema='DM_RATING',
     )
     op.add_column(
         'dm_lecturer_comment_act',
-        sa.Column('rank', sa.Integer(), nullable=False, comment='Место в рейтинге'),
+        sa.Column('rank', sa.Integer(), nullable=False, comment='Место в рейтинге', server_default='-1'),
         schema='DM_RATING',
     )
     op.alter_column(
@@ -57,32 +57,32 @@ def upgrade():
         schema='DM_RATING',
     )
     op.add_column(
-        'lecturer', sa.Column('rank', sa.Integer(), nullable=False, comment='Место в рейтинге'), schema='DWH_RATING'
+        'lecturer', sa.Column('rank', sa.Integer(), nullable=False, comment='Место в рейтинге', server_default='-1'), schema='DWH_RATING'
     )
     op.add_column(
         'lecturer',
-        sa.Column('mark_weighted', sa.Float(), nullable=False, comment='Взвешенная оценка преподавателя'),
+        sa.Column('mark_weighted', sa.Float(), nullable=False, comment='Взвешенная оценка преподавателя', server_default='0.0'),
         schema='DWH_RATING',
     )
     op.add_column(
         'lecturer',
-        sa.Column('mark_kindness_weighted', sa.Float(), nullable=False, comment='Взвешенная доброта преподавателя'),
+        sa.Column('mark_kindness_weighted', sa.Float(), nullable=False, comment='Взвешенная доброта преподавателя', server_default='0.0'),
         schema='DWH_RATING',
     )
     op.add_column(
         'lecturer',
-        sa.Column('mark_clarity_weighted', sa.Float(), nullable=False, comment='Взверешенная понятность преподавателя'),
+        sa.Column('mark_clarity_weighted', sa.Float(), nullable=False, comment='Взверешенная понятность преподавателя', server_default='0.0'),
         schema='DWH_RATING',
     )
     op.add_column(
         'lecturer',
-        sa.Column('mark_freebie_weighted', sa.Float(), nullable=False, comment='Взвешенная халявность преподавателя'),
+        sa.Column('mark_freebie_weighted', sa.Float(), nullable=False, comment='Взвешенная халявность преподавателя', server_default='0.0'),
         schema='DWH_RATING',
     )
     op.add_column(
         'lecturer',
         sa.Column(
-            'mark_weighted', sa.Float(), server_default='0', nullable=False, comment='Взвешенная оценка преподавателя'
+            'mark_weighted', sa.Float(), server_default='0', nullable=False, comment='Взвешенная оценка преподавателя', server_default='0.0'
         ),
         schema='ODS_RATING',
     )
