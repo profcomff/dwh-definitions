@@ -19,17 +19,13 @@ class Lecturer(Base):
     subject: Mapped[str | None] = mapped_column(comment="Список предметов преподавателя")
     avatar_link: Mapped[str | None] = mapped_column(comment="Ссылка на аватар преподавателя")
     timetable_id: Mapped[int] = mapped_column(comment="Идертификатор в timetable-api")
-    valid_from_dt: Mapped[date | None] = mapped_column(comment="Дата начала действия записи")
-    valid_to_dt: Mapped[date | None] = mapped_column(comment="Дата конца действия записи")
-
-
-class LecturerRank(Base):
-    lecture_uuid: Mapped[int] = mapped_column(primary_key=True, comment="Идентификатор лектора")
     rank: Mapped[int] = mapped_column(comment="Место в рейтинге")
-    mark_weighted: Mapped[int] = mapped_column(comment="Взвешенная оценка преподавателя")
-    mark_kindness_weighted: Mapped[int] = mapped_column(comment="Взвешенная доброта преподавателя")
-    mark_clarity_weighted: Mapped[int] = mapped_column(comment="Взвешенная понятность преподавателя")
-    mark_freebie_weighted: Mapped[int] = mapped_column(comment="Взвешенная халявность преподавателя")
+    mark_weighted: Mapped[float] = mapped_column(nullable=False, comment="Взвешенная оценка преподавателя")
+    mark_kindness_weighted: Mapped[float] = mapped_column(nullable=False, comment="Взвешенная доброта преподавателя")
+    mark_clarity_weighted: Mapped[float] = mapped_column(
+        nullable=False, comment="Взверешенная понятность преподавателя"
+    )
+    mark_freebie_weighted: Mapped[float] = mapped_column(nullable=False, comment="Взвешенная халявность преподавателя")
     valid_from_dt: Mapped[date | None] = mapped_column(comment="Дата начала действия записи")
     valid_to_dt: Mapped[date | None] = mapped_column(comment="Дата конца действия записи")
 
