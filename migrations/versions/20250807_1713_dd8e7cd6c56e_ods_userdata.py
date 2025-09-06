@@ -13,7 +13,6 @@ from alembic import op
 from sqlalchemy.dialects import postgresql
 
 
-# revision identifiers, used by Alembic.
 revision = 'dd8e7cd6c56e'
 down_revision = '5345485db41c'
 branch_labels = None
@@ -664,13 +663,9 @@ def upgrade():
         ['ALL'],
         '"ODS_USERDATA".birthday',
     )
-    op.drop_column('union_member', 'card', schema='STG_UNION_MEMBER')
 
 
 def downgrade():
-    op.add_column(
-        'union_member', sa.Column('card', sa.VARCHAR(), autoincrement=False, nullable=True), schema='STG_UNION_MEMBER'
-    )
     op.revoke_on_table(
         "test_dwh_ods_userdata_all" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_ods_userdata_all",
         ['ALL'],
