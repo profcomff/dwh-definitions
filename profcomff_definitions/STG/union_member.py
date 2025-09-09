@@ -7,7 +7,9 @@ class UnionMember(Base):
     id: Mapped[int] = mapped_column(primary_key=True, comment="Уникальный идентификатор пользователя")
     type_of_learning: Mapped[str | None] = mapped_column(comment="Тип обучения (дневное/вечернее, бюджет/контракт)")
     rzd_status: Mapped[str | None] = mapped_column(comment="Статус в системе РЖД")
-    academic_level: Mapped[str | None] = mapped_column(comment="Уровень образования (бакалавриат/магистратура/аспирантура)")
+    academic_level: Mapped[str | None] = mapped_column(
+        comment="Уровень образования (бакалавриат/магистратура/аспирантура)"
+    )
     status: Mapped[str | None] = mapped_column(comment="Текущий статус пользователя")
     faculty: Mapped[str | None] = mapped_column(comment="Название факультета")
     first_name: Mapped[str | None] = mapped_column(comment="Имя пользователя")
