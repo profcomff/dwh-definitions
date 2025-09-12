@@ -221,13 +221,9 @@ def upgrade():
         existing_nullable=True,
         schema='STG_UNION_MEMBER',
     )
-    op.drop_column('union_member', 'card', schema='STG_UNION_MEMBER')
 
 
 def downgrade():
-    op.add_column(
-        'union_member', sa.Column('card', sa.VARCHAR(), autoincrement=False, nullable=True), schema='STG_UNION_MEMBER'
-    )
     op.alter_column(
         'union_member',
         'student_id',
