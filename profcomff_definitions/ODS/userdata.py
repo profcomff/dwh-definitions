@@ -210,3 +210,24 @@ class WorkplaceAddress(Base):
     created: Mapped[datetime | None] = mapped_column(comment="Дата создания записи")
     modified: Mapped[datetime | None] = mapped_column(comment="Дата последнего изменения записи")
     is_deleted: Mapped[bool | None] = mapped_column(comment="Флаг удаления записи")
+
+
+class Rzd(Base):
+    rzd_number: Mapped[str] = mapped_column(primary_key=True, comment="Номер в системе РЖД")
+    rzd_status: Mapped[str] = mapped_column(comment="Статус в системе РЖД")
+    rzd_datetime: Mapped[str] = mapped_column(comment="Дата в системе РЖД")
+    user_id: Mapped[int] = mapped_column(primary_key=True, comment="Идентификатор пользователя")
+    source: Mapped[str] = mapped_column(comment="Источник данных")
+    created: Mapped[datetime | None] = mapped_column(comment="Дата создания записи")
+    modified: Mapped[datetime | None] = mapped_column(comment="Дата последнего изменения записи")
+    is_deleted: Mapped[bool | None] = mapped_column(comment="Флаг удаления записи")
+
+
+class Status(Base):
+    status: Mapped[str] = mapped_column(primary_key=True, comment="Текущий статус пользователя")
+    status_gain_date: Mapped[str] = mapped_column(comment="Дата получения текущего статуса")
+    user_id: Mapped[int] = mapped_column(primary_key=True, comment="Идентификатор пользователя")
+    source: Mapped[str] = mapped_column(comment="Источник данных")
+    created: Mapped[datetime | None] = mapped_column(comment="Дата создания записи")
+    modified: Mapped[datetime | None] = mapped_column(comment="Дата последнего изменения записи")
+    is_deleted: Mapped[bool | None] = mapped_column(comment="Флаг удаления записи")
