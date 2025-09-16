@@ -87,14 +87,6 @@ def upgrade():
     )
     op.alter_column(
         'union_member',
-        'middle_name',
-        existing_type=sa.VARCHAR(),
-        comment='Отчество пользователя',
-        existing_nullable=True,
-        schema='STG_UNION_MEMBER',
-    )
-    op.alter_column(
-        'union_member',
         'email',
         existing_type=sa.VARCHAR(),
         comment='Email пользователя',
@@ -365,15 +357,6 @@ def downgrade():
         existing_type=sa.VARCHAR(),
         comment=None,
         existing_comment='Email пользователя',
-        existing_nullable=True,
-        schema='STG_UNION_MEMBER',
-    )
-    op.alter_column(
-        'union_member',
-        'middle_name',
-        existing_type=sa.VARCHAR(),
-        comment=None,
-        existing_comment='Отчество пользователя',
         existing_nullable=True,
         schema='STG_UNION_MEMBER',
     )
