@@ -231,3 +231,16 @@ class Status(Base):
     created: Mapped[datetime | None] = mapped_column(comment="Дата создания записи")
     modified: Mapped[datetime | None] = mapped_column(comment="Дата последнего изменения записи")
     is_deleted: Mapped[bool | None] = mapped_column(comment="Флаг удаления записи")
+
+
+class Card(Base):
+    card_id: Mapped[str] = mapped_column(primary_key=True, comment="Идентификатор профсоюзного билета")
+    card_status: Mapped[str] = mapped_column(comment="Статус профсоюзного билета")
+    card_date: Mapped[str] = mapped_column(comment="Дата выдачи профсоюзного билета")
+    card_number: Mapped[str] = mapped_column(comment="Номер профсоюзного билета")
+    card_user: Mapped[str] = mapped_column(comment="Владелец профсоюзного билета")
+    user_id: Mapped[int] = mapped_column(primary_key=True, comment="Идентификатор пользователя")
+    source: Mapped[str] = mapped_column(comment="Источник данных")
+    created: Mapped[datetime | None] = mapped_column(comment="Дата создания записи")
+    modified: Mapped[datetime | None] = mapped_column(comment="Дата последнего изменения записи")
+    is_deleted: Mapped[bool | None] = mapped_column(comment="Флаг удаления записи")
