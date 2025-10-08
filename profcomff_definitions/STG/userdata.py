@@ -2,7 +2,7 @@ from datetime import datetime
 
 from sqlalchemy.orm import Mapped, mapped_column
 
-from profcomff_definitions.base import Base, sensitive, encrypted
+from profcomff_definitions.base import Base, encrypted, sensitive
 
 
 class Category(Base):

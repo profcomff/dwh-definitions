@@ -3,8 +3,7 @@ from typing import Any
 
 from definitions.custom_scripts.schemas import add_table_schema_to_model
 from sqlalchemy.ext.declarative import declared_attr
-from sqlalchemy.orm import as_declarative, configure_mappers
-from sqlalchemy import Table
+from sqlalchemy.orm import as_declarative
 
 
 def _recursive_merge(a: dict, b: dict) -> None:
@@ -32,10 +31,11 @@ def sensitive(cls):
     definitions-lib in table comparator with
     metadata_table_code.info.get("sensitive", False)
     """
-    new_table_args = recursive_merge(cls.__table_args__, {"info": {"sensitive": True}, "extend_existing": True})
+    cls.__table_args__ = recursive_merge(cls.__table_args__, {"info": {"sensitive": True}, "extend_existing": True})
     # Private function from sqlalchemy/sql/schema.py:Table
     # Can be replaced with cls.__table__ = Table(...), but will be less optimal
-    cls.__table__._init_existing(**new_table_args)
+    cls.__table__._init_existing(**cls.__table_args__)
+
     return cls
 
 
@@ -58,7 +58,7 @@ def encrypted(id_column: str, key_table: str | None):
     """
 
     def encrypted_decorator(cls):
-        new_table_args = recursive_merge(
+        cls.__table_args__ = recursive_merge(
             cls.__table_args__,
             {
                 "info": {
@@ -70,7 +70,7 @@ def encrypted(id_column: str, key_table: str | None):
             },
         )
         # See comment in function "sensitive"
-        cls.__table__._init_existing(**new_table_args)
+        cls.__table__._init_existing(**cls.__table_args__)
         return cls
 
     return encrypted_decorator
@@ -89,20 +89,18 @@ class Base:
         return re.sub(r"(?<!^)(?=[A-Z])", "_", cls.__name__).lower()
 
     @classmethod
-    @property
+    @declared_attr
     def __table_args__(cls) -> dict[str, Any]:
         schema = f'{cls.__module__.split(".")[-2].upper()}_{cls.__module__.split(".")[-1].upper()}'
         add_table_schema_to_model(schema, Base.metadata)
-        return_dict = {
+        return {
             'schema': schema,
             'comment': cls.__doc__,
             'info': {
-                'sensitive': getattr(cls, "__sensitive__", False),
-                'encrypted': getattr(cls, "__encrypted__", False),
+                'sensitive': False,
+                'encrypted': False,
             },
         }
-        recursive_merge(return_dict, getattr(cls, "__table_args_overwrite__", {}))
-        return return_dict
 
     def __repr__(self) -> str:
         attrs = []
