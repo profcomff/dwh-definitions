@@ -2,7 +2,7 @@ from datetime import datetime
 
 from sqlalchemy.orm import Mapped, mapped_column
 
-from profcomff_definitions.base import Base, SensitiveBase
+from profcomff_definitions.base import Base, sensitive, encrypted
 
 
 class Category(Base):
@@ -50,11 +50,13 @@ class Info(Base):
     is_deleted: Mapped[bool | None] = mapped_column(comment="Флаг удаления записи")
 
 
-class InfoKeys(SensitiveBase):
+@sensitive
+class InfoKeys(Base):
     id: Mapped[int] = mapped_column(primary_key=True, comment="Идентификатор ключа шифрования")
     key: Mapped[str] = mapped_column(comment="Симметричный ключ шифрования")
 
 
+@encrypted("id", "InfoKeys")
 class EncryptedInfo(Base):
     id: Mapped[int] = mapped_column(primary_key=True, comment="Идентификатор зашифрованной записи")
     param_id: Mapped[int | None] = mapped_column(comment="Идентификатор параметра")
