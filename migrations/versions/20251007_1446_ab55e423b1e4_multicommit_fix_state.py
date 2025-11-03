@@ -182,16 +182,8 @@ def upgrade():
         schema='STG_UNION_MEMBER',
     )
     op.drop_column('union_member', 'card', schema='STG_UNION_MEMBER')
-    op.drop_table('test')
-
 
 def downgrade():
-    op.create_table(
-        'test',
-        sa.Column('id', sa.INTEGER(), autoincrement=False, nullable=False),
-        sa.Column('val', sa.INTEGER(), autoincrement=False, nullable=True),
-        sa.PrimaryKeyConstraint('id', name=op.f('test_pkey')),
-    )
     op.add_column(
         'union_member', sa.Column('card', sa.VARCHAR(), autoincrement=False, nullable=True), schema='STG_UNION_MEMBER'
     )

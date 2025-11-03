@@ -39,33 +39,44 @@ def sensitive(cls):
     return cls
 
 
-def encrypted(id_column: str, key_table: str | None):
+def encrypted(id_column: str = "id", **kwargs):
     """Mark table as encrypted
 
-    - id_column: encryption keys are going to be generated for all rows and
-      will be unique for each `id_column` value. Should be a name of primary
-      key in a table.
+    Arguments:
+    - id_column (optional, default: "id"): encryption keys are going to be
+      generated for all rows and will be unique for each `id_column` value.
+      Should be a name of primary key in a table.
 
-    - key_table (optional): table name to store keys in. If unspecified,
-      generated automatically (check generated migration scripts for the actual
-      name)
+    Keyword arguments:
+    - key_table (default: <table name>_ekeys): table name to store keys in. If
+      unspecified, generated automatically (check generated migration scripts
+      for the actual name)
 
+    - columns (default: all columns except id_column): array of column names to
+      be encrypted
+
+    Action:
     Sets 'info.encrypted' attribute to True, and adds information about
     encryption in 'info.encryption' attribute.
 
+    Example:
+    # key_table defaults to "user_info_ekeys"
+    @encrypted('user_id', columns=['email', 'name'])
+    class UserInfo(Base):
+        ...
+
     Attributes can be accessesed in definitions-lib in table comparator with
-    metadata_table_code.info.get("attribute-name", default_value);
+    metadata_table_<code|db>.info.get("attribute-name", default_value);
     """
 
     def encrypted_decorator(cls):
+        _key_table = kwargs.get('key_table', cls.__tablename__ + "_ekeys")
+        _columns = kwargs.get('columns', [i.name for i in cls.__table__.columns if i.name != id_column])
+
         cls.__table_args__ = recursive_merge(
             cls.__table_args__,
             {
-                "info": {
-                    # "sensitive": True, # Not needed since table is encrypted anyways
-                    "encrypted": True,
-                    "encryption": {"id": id_column, "key": key_table},
-                },
+                "info": {"encrypted": True, "encryption": {"id": id_column, "keys": _key_table, "columns": _columns}},
                 "extend_existing": True,
             },
         )
@@ -92,6 +103,7 @@ class Base:
     @declared_attr
     def __table_args__(cls) -> dict[str, Any]:
         schema = f'{cls.__module__.split(".")[-2].upper()}_{cls.__module__.split(".")[-1].upper()}'
+        # this line is very important for definitions-lib! Without it, the library wouldn't know which schemas are present in the database
         add_table_schema_to_model(schema, Base.metadata)
         return {
             'schema': schema,

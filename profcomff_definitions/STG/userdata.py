@@ -39,6 +39,8 @@ class Source(Base):
     is_deleted: Mapped[bool | None] = mapped_column(comment="Флаг удаления записи")
 
 
+# uncomment when corresponding functionality is implemented in definitions-lib
+# @encrypted(columns=['value'])
 class Info(Base):
     id: Mapped[int] = mapped_column(primary_key=True, comment="Идентификатор информационной записи")
     param_id: Mapped[int | None] = mapped_column(comment="Идентификатор параметра")
@@ -54,15 +56,4 @@ class Info(Base):
 class InfoKeys(Base):
     id: Mapped[int] = mapped_column(primary_key=True, comment="Идентификатор ключа шифрования")
     key: Mapped[str] = mapped_column(comment="Симметричный ключ шифрования")
-
-
-@encrypted("id", "InfoKeys")
-class EncryptedInfo(Base):
-    id: Mapped[int] = mapped_column(primary_key=True, comment="Идентификатор зашифрованной записи")
-    param_id: Mapped[int | None] = mapped_column(comment="Идентификатор параметра")
-    source_id: Mapped[int | None] = mapped_column(comment="Идентификатор источника данных")
-    owner_id: Mapped[int | None] = mapped_column(comment="Идентификатор владельца данных")
-    value: Mapped[bytes | None] = mapped_column(comment="Зашифрованное значение параметра")
-    create_ts: Mapped[datetime | None] = mapped_column(comment="Время создания записи")
-    modify_ts: Mapped[datetime | None] = mapped_column(comment="Время последнего изменения записи")
-    is_deleted: Mapped[bool | None] = mapped_column(comment="Флаг удаления записи")
+    created: Mapped[datetime] = mapped_column(comment="Дата создания/обновления ключа")
