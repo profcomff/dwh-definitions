@@ -2,6 +2,7 @@ from datetime import date, datetime
 from uuid import UUID
 
 from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.schema import Index
 
 from profcomff_definitions.base import Base
 
@@ -34,6 +35,9 @@ class Lecturer(Base):
     )
     valid_from_dt: Mapped[date | None] = mapped_column(comment="Дата начала действия записи")
     valid_to_dt: Mapped[date | None] = mapped_column(comment="Дата конца действия записи")
+
+
+Index('lecturer_ts_idx', Lecturer.valid_from_dt, Lecturer.valid_to_dt)
 
 
 class Comment(Base):
