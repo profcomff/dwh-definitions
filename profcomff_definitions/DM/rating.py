@@ -17,7 +17,9 @@ class DmLecturerCommentAct(Base):
     lecturer_first_name: Mapped[str | None] = mapped_column(comment="Имя преподавателя")
     lecturer_last_name: Mapped[str | None] = mapped_column(comment="Фамилия преподавателя")
     lecturer_middle_name: Mapped[str | None] = mapped_column(comment="Отчество преподавателя")
-    mark_weighted: Mapped[float] = mapped_column(comment="Взвешенная оценка преподавателя", default=0, server_default="0")
+    mark_weighted: Mapped[float] = mapped_column(
+        comment="Взвешенная оценка преподавателя", default=0, server_default="0"
+    )
     mark_kindness_weighted: Mapped[float] = mapped_column(
         comment="Взвешенная доброта преподавателя", default=0, server_default="0"
     )
