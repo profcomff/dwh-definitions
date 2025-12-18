@@ -32,10 +32,11 @@ class DmRentalsEvents(Base):
 
 
 class DmStrike(Base):
-    __tablename__ = "dm_strike"
     """
     Витрина страйки
     """
+
+    __tablename__ = "dm_strike"
 
     strike_id: Mapped[int] = mapped_column(primary_key=True, comment="Идентификатор страйка")
     user_id: Mapped[int] = mapped_column(comment="Идентификатор пользователя")
