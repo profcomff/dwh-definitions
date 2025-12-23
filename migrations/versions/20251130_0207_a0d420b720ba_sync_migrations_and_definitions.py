@@ -371,9 +371,9 @@ def downgrade():
         ['SELECT', 'UPDATE', 'DELETE', 'TRUNCATE', 'INSERT'],
         '"STG_USERDATA".encrypted_info',
     )
-    op.add_column(
-        'union_member', sa.Column('card', sa.VARCHAR(), autoincrement=False, nullable=True), schema='STG_UNION_MEMBER'
-    )
+    # op.add_column(
+    #     'union_member', sa.Column('card', sa.VARCHAR(), autoincrement=False, nullable=True), schema='STG_UNION_MEMBER'
+    # )
     op.alter_column(
         'union_member',
         'middle_name',
