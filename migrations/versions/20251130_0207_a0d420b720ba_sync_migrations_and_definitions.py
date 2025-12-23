@@ -284,7 +284,6 @@ def upgrade():
         existing_nullable=True,
         schema='STG_UNION_MEMBER',
     )
-    op.drop_column('union_member', 'card', schema='STG_UNION_MEMBER')
     op.grant_on_table(
         "test_dwh_stg_userdata_write" if os.getenv("ENVIRONMENT") != "production" else "prod_dwh_stg_userdata_write",
         ['SELECT', 'UPDATE', 'DELETE', 'TRUNCATE', 'INSERT'],
