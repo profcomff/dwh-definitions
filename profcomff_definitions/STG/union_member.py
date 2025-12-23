@@ -10,11 +10,18 @@ class UnionMember(Base):
     academic_level: Mapped[str | None] = mapped_column(
         comment="Уровень образования (бакалавриат/магистратура/аспирантура)"
     )
+    academic_level_translated: Mapped[str | None] = mapped_column(
+        comment="Уровень образования (бакалавриат/магистратура/аспирантура) на английском"
+    )
     status: Mapped[str | None] = mapped_column(comment="Текущий статус пользователя")
     faculty: Mapped[str | None] = mapped_column(comment="Название факультета")
+    faculty_translated: Mapped[str | None] = mapped_column(comment="Название факультета на английском")
     first_name: Mapped[str | None] = mapped_column(comment="Имя пользователя")
+    first_name_translated: Mapped[str | None] = mapped_column(comment="Имя пользователя на английском")
     last_name: Mapped[str | None] = mapped_column(comment="Фамилия пользователя")
+    last_name_translated: Mapped[str | None] = mapped_column(comment="Фамилия пользователя на английском")
     middle_name: Mapped[str | None] = mapped_column(comment="Отчество пользователя")
+    middle_name_translated: Mapped[str | None] = mapped_column(comment="Отчество пользователя на английском")
     email: Mapped[str | None] = mapped_column(comment="Email пользователя")
     date_of_birth: Mapped[str | None] = mapped_column(comment="Дата рождения")
     phone_number: Mapped[str | None] = mapped_column(comment="Номер телефона")
