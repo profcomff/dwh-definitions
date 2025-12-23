@@ -12,6 +12,7 @@ import sqlalchemy as sa
 from alembic import op
 from sqlalchemy.dialects import postgresql
 
+
 # revision identifiers, used by Alembic.
 revision = 'd27b68da6902'
 down_revision = '3ac342622c64'
@@ -71,7 +72,7 @@ def upgrade():
         comment='Идентификатор issue',
         existing_nullable=True,
         schema='ODS_SOCIAL',
-        postgresql_using='issue_id::integer'
+        postgresql_using='issue_id::integer',
     )
     op.alter_column(
         'git_hub',
@@ -81,7 +82,7 @@ def upgrade():
         comment='Идентификатор пользователя открывшего issue',
         existing_nullable=True,
         schema='ODS_SOCIAL',
-        postgresql_using='user_id::integer'
+        postgresql_using='user_id::integer',
     )
     op.alter_column(
         'git_hub',
@@ -91,7 +92,7 @@ def upgrade():
         comment='Идентификатор репозитория',
         existing_nullable=True,
         schema='ODS_SOCIAL',
-        postgresql_using='repository_id::integer'
+        postgresql_using='repository_id::integer',
     )
     op.alter_column(
         'git_hub',
@@ -101,7 +102,7 @@ def upgrade():
         comment='Идентификатор назначенного исполнителем issue',
         existing_nullable=True,
         schema='ODS_SOCIAL',
-        postgresql_using='assignee_id::integer'
+        postgresql_using='assignee_id::integer',
     )
     op.alter_column(
         'git_hub',
@@ -111,7 +112,7 @@ def upgrade():
         comment='Логин назначенного исполнителем issue',
         existing_nullable=True,
         schema='ODS_SOCIAL',
-        postgresql_using='assignee_login::integer'
+        postgresql_using='assignee_login::integer',
     )
     op.alter_column(
         'git_hub',
@@ -121,7 +122,7 @@ def upgrade():
         nullable=False,
         comment='Идентификатор организации',
         schema='ODS_SOCIAL',
-        postgresql_using='organization_id::integer'
+        postgresql_using='organization_id::integer',
     )
     op.alter_column(
         'git_hub_username',
