@@ -1,0 +1,60 @@
+"""union_member_add_rows
+
+Revision ID: ac67f7273994
+Revises: a0d420b720ba
+Create Date: 2025-12-23 22:19:51.167545
+
+"""
+
+import os
+
+import sqlalchemy as sa
+from alembic import op
+
+
+# revision identifiers, used by Alembic.
+revision = 'ac67f7273994'
+down_revision = 'a0d420b720ba'
+branch_labels = None
+depends_on = None
+
+
+def upgrade():
+    op.add_column(
+        'union_member',
+        sa.Column(
+            'academic_level_translated',
+            sa.String(),
+            nullable=True,
+            comment='Уровень образования (бакалавриат/магистратура/аспирантура) на английском',
+        ),
+        schema='STG_UNION_MEMBER',
+    )
+    op.add_column(
+        'union_member',
+        sa.Column('faculty_translated', sa.String(), nullable=True, comment='Название факультета на английском'),
+        schema='STG_UNION_MEMBER',
+    )
+    op.add_column(
+        'union_member',
+        sa.Column('first_name_translated', sa.String(), nullable=True, comment='Имя пользователя на английском'),
+        schema='STG_UNION_MEMBER',
+    )
+    op.add_column(
+        'union_member',
+        sa.Column('last_name_translated', sa.String(), nullable=True, comment='Фамилия пользователя на английском'),
+        schema='STG_UNION_MEMBER',
+    )
+    op.add_column(
+        'union_member',
+        sa.Column('middle_name_translated', sa.String(), nullable=True, comment='Отчество пользователя на английском'),
+        schema='STG_UNION_MEMBER',
+    )
+
+
+def downgrade():
+    op.drop_column('union_member', 'middle_name_translated', schema='STG_UNION_MEMBER')
+    op.drop_column('union_member', 'last_name_translated', schema='STG_UNION_MEMBER')
+    op.drop_column('union_member', 'first_name_translated', schema='STG_UNION_MEMBER')
+    op.drop_column('union_member', 'faculty_translated', schema='STG_UNION_MEMBER')
+    op.drop_column('union_member', 'academic_level_translated', schema='STG_UNION_MEMBER')
