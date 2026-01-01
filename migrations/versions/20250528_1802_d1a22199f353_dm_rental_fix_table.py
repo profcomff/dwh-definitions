@@ -6,8 +6,6 @@ Create Date: 2025-05-28 18:02:42.798163
 
 """
 
-import os
-
 import sqlalchemy as sa
 from alembic import op
 
