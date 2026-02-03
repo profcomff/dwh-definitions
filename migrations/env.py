@@ -21,7 +21,9 @@ def include_object(object, name, type_, reflected, compare_to):
     Should you include this table or not?
     """
 
-    if type_ == "table" and (name in IGNORE_TABLES or object.info.get("skip_autogenerate", False)):
+    if type_ == "table" and (
+        name in IGNORE_TABLES or object.info.get("skip_autogenerate", False)
+    ):
         return False
 
     elif type_ == "column" and object.info.get("skip_autogenerate", False):
@@ -111,7 +113,9 @@ def run_migrations_online():
 
     """
     configuration = config.get_section(config.config_ini_section)
-    configuration["sqlalchemy.url"] = os.getenv("DB_DSN", "postgresql://postgres:12345@postgres:5432/postgres")
+    configuration["sqlalchemy.url"] = os.getenv(
+        "DB_DSN", "postgresql://postgres:12345@localhost:5432/postgres"
+    )
     connectable = engine_from_config(
         configuration,
         prefix="sqlalchemy.",
