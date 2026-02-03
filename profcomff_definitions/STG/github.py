@@ -249,6 +249,8 @@ class ProfcomffTeam(Base):
     repositories_url: Mapped[str | None]
     permission: Mapped[str | None]
     parent: Mapped[str | None]
+    type: Mapped[str | None]
+    organization_id: Mapped[int | None]
 
 
 class ProfcomffTeamMember(Base):
@@ -271,6 +273,7 @@ class ProfcomffTeamMember(Base):
     received_events_url: Mapped[str | None]
     type: Mapped[str | None]
     site_admin: Mapped[bool | None]
+    user_view_type: Mapped[str | None]
 
 
 class ProfcomffTeamRepo(Base):
@@ -379,6 +382,7 @@ class ProfcomffTeamRepo(Base):
     permissions_pull: Mapped[str | None]
     role_name: Mapped[str | None]
     license: Mapped[str | None]
+    owner_user_view_type: Mapped[str | None]
 
 
 class ProfcomffCommit(Base):
