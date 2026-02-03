@@ -5,6 +5,7 @@ Revises: ac67f7273994
 Create Date: 2026-02-03 18:53:36.874014
 
 """
+
 import os
 
 import sqlalchemy as sa
@@ -23,7 +24,9 @@ def upgrade():
     op.add_column('profcomff_team', sa.Column('type', sa.String(), nullable=True), schema='STG_GITHUB')
     op.add_column('profcomff_team', sa.Column('organization_id', sa.Integer(), nullable=True), schema='STG_GITHUB')
     op.add_column('profcomff_team_member', sa.Column('user_view_type', sa.String(), nullable=True), schema='STG_GITHUB')
-    op.add_column('profcomff_team_repo', sa.Column('owner_user_view_type', sa.String(), nullable=True), schema='STG_GITHUB')
+    op.add_column(
+        'profcomff_team_repo', sa.Column('owner_user_view_type', sa.String(), nullable=True), schema='STG_GITHUB'
+    )
     # ### end Alembic commands ###
 
 
